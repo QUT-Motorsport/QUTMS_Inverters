@@ -1,0 +1,968 @@
+
+MotorControl_2018.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  000005e4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000570  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000004  00800100  00800100  000005e4  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000005e4  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000614  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000090  00000000  00000000  00000654  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000fd7  00000000  00000000  000006e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000c70  00000000  00000000  000016bb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000847  00000000  00000000  0000232b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000001f8  00000000  00000000  00002b74  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000688  00000000  00000000  00002d6c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000683  00000000  00000000  000033f4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000070  00000000  00000000  00003a77  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__ctors_end>
+   4:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+   8:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+   c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  10:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  14:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  18:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  1c:	0c 94 3a 01 	jmp	0x274	; 0x274 <__vector_7>
+  20:	0c 94 5a 01 	jmp	0x2b4	; 0x2b4 <__vector_8>
+  24:	0c 94 7a 01 	jmp	0x2f4	; 0x2f4 <__vector_9>
+  28:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  2c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  30:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  34:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  38:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  3c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  40:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  44:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  48:	0c 94 ed 00 	jmp	0x1da	; 0x1da <__vector_18>
+  4c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  50:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  54:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  58:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  5c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  60:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  64:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  68:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  6c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  70:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  74:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  78:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+
+0000007c <__ctors_end>:
+  7c:	11 24       	eor	r1, r1
+  7e:	1f be       	out	0x3f, r1	; 63
+  80:	cf ef       	ldi	r28, 0xFF	; 255
+  82:	d0 e1       	ldi	r29, 0x10	; 16
+  84:	de bf       	out	0x3e, r29	; 62
+  86:	cd bf       	out	0x3d, r28	; 61
+
+00000088 <__do_clear_bss>:
+  88:	21 e0       	ldi	r18, 0x01	; 1
+  8a:	a0 e0       	ldi	r26, 0x00	; 0
+  8c:	b1 e0       	ldi	r27, 0x01	; 1
+  8e:	01 c0       	rjmp	.+2      	; 0x92 <.do_clear_bss_start>
+
+00000090 <.do_clear_bss_loop>:
+  90:	1d 92       	st	X+, r1
+
+00000092 <.do_clear_bss_start>:
+  92:	a4 30       	cpi	r26, 0x04	; 4
+  94:	b2 07       	cpc	r27, r18
+  96:	e1 f7       	brne	.-8      	; 0x90 <.do_clear_bss_loop>
+  98:	0e 94 de 01 	call	0x3bc	; 0x3bc <main>
+  9c:	0c 94 b6 02 	jmp	0x56c	; 0x56c <_exit>
+
+000000a0 <__bad_interrupt>:
+  a0:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000a4 <CAN_init>:
+/* @Return: Binary ( 0 or 1)                                            */
+/*                                                                      */
+/* @Note: None                                                          */
+/************************************************************************/
+uint8_t CAN_init()
+{
+  a4:	ef 92       	push	r14
+  a6:	ff 92       	push	r15
+  a8:	0f 93       	push	r16
+  aa:	1f 93       	push	r17
+  ac:	cf 93       	push	r28
+  ae:	df 93       	push	r29
+	
+	CANGCON = (1 << SWRES);     // Reset the CAN controller hardware and general registers.
+  b0:	81 e0       	ldi	r24, 0x01	; 1
+  b2:	80 93 d8 00 	sts	0x00D8, r24	; 0x8000d8 <__TEXT_REGION_LENGTH__+0x7e00d8>
+	for(uint8_t mobCount = 0; mobCount <= 5; mobCount++)
+  b6:	80 e0       	ldi	r24, 0x00	; 0
+	{
+		CANPAGE = (mobCount << 4);		//select the message object to modify
+  b8:	0d ee       	ldi	r16, 0xED	; 237
+  ba:	10 e0       	ldi	r17, 0x00	; 0
+		CANCDMOB = 0;					//make sure we do not do any actions on this mob.
+  bc:	6f ee       	ldi	r22, 0xEF	; 239
+  be:	70 e0       	ldi	r23, 0x00	; 0
+		CANSTMOB = 0;					//make sure no interrupts are set.
+  c0:	4e ee       	ldi	r20, 0xEE	; 238
+  c2:	50 e0       	ldi	r21, 0x00	; 0
+		CANIDM1 = 0;
+  c4:	27 ef       	ldi	r18, 0xF7	; 247
+  c6:	30 e0       	ldi	r19, 0x00	; 0
+		CANIDM2 = 0;
+  c8:	c6 ef       	ldi	r28, 0xF6	; 246
+  ca:	d0 e0       	ldi	r29, 0x00	; 0
+		CANIDM3 = 0;
+  cc:	a5 ef       	ldi	r26, 0xF5	; 245
+  ce:	b0 e0       	ldi	r27, 0x00	; 0
+		CANIDM4 = 0;					//these registers are used to control the mask which filters incoming messages
+  d0:	0f 2e       	mov	r0, r31
+  d2:	f4 ef       	ldi	r31, 0xF4	; 244
+  d4:	ef 2e       	mov	r14, r31
+  d6:	f1 2c       	mov	r15, r1
+  d8:	f0 2d       	mov	r31, r0
+{
+	
+	CANGCON = (1 << SWRES);     // Reset the CAN controller hardware and general registers.
+	for(uint8_t mobCount = 0; mobCount <= 5; mobCount++)
+	{
+		CANPAGE = (mobCount << 4);		//select the message object to modify
+  da:	98 2f       	mov	r25, r24
+  dc:	92 95       	swap	r25
+  de:	90 7f       	andi	r25, 0xF0	; 240
+  e0:	f8 01       	movw	r30, r16
+  e2:	90 83       	st	Z, r25
+		CANCDMOB = 0;					//make sure we do not do any actions on this mob.
+  e4:	fb 01       	movw	r30, r22
+  e6:	10 82       	st	Z, r1
+		CANSTMOB = 0;					//make sure no interrupts are set.
+  e8:	fa 01       	movw	r30, r20
+  ea:	10 82       	st	Z, r1
+		CANIDM1 = 0;
+  ec:	f9 01       	movw	r30, r18
+  ee:	10 82       	st	Z, r1
+		CANIDM2 = 0;
+  f0:	18 82       	st	Y, r1
+		CANIDM3 = 0;
+  f2:	1c 92       	st	X, r1
+		CANIDM4 = 0;					//these registers are used to control the mask which filters incoming messages
+  f4:	f7 01       	movw	r30, r14
+  f6:	10 82       	st	Z, r1
+/************************************************************************/
+uint8_t CAN_init()
+{
+	
+	CANGCON = (1 << SWRES);     // Reset the CAN controller hardware and general registers.
+	for(uint8_t mobCount = 0; mobCount <= 5; mobCount++)
+  f8:	8f 5f       	subi	r24, 0xFF	; 255
+  fa:	86 30       	cpi	r24, 0x06	; 6
+  fc:	71 f7       	brne	.-36     	; 0xda <CAN_init+0x36>
+		CANIDM1 = 0;
+		CANIDM2 = 0;
+		CANIDM3 = 0;
+		CANIDM4 = 0;					//these registers are used to control the mask which filters incoming messages
+	}
+	CANBT1 = 0x0E;		//these registers control speed of communication
+  fe:	8e e0       	ldi	r24, 0x0E	; 14
+ 100:	80 93 e2 00 	sts	0x00E2, r24	; 0x8000e2 <__TEXT_REGION_LENGTH__+0x7e00e2>
+	CANBT2 = 0x04;		//currently with these values, it is 250kbps (change above to 0x06 for 500k)
+ 104:	84 e0       	ldi	r24, 0x04	; 4
+ 106:	80 93 e3 00 	sts	0x00E3, r24	; 0x8000e3 <__TEXT_REGION_LENGTH__+0x7e00e3>
+	CANBT3 = 0x13;		//with 8 TQ per bit.
+ 10a:	83 e1       	ldi	r24, 0x13	; 19
+ 10c:	80 93 e4 00 	sts	0x00E4, r24	; 0x8000e4 <__TEXT_REGION_LENGTH__+0x7e00e4>
+
+	CANIE2 = (1 << IEMOB5);//|(1 << IEMOB4);		//enable interrupts on MOB 4 and 5 for receiving
+ 110:	80 e2       	ldi	r24, 0x20	; 32
+ 112:	80 93 de 00 	sts	0x00DE, r24	; 0x8000de <__TEXT_REGION_LENGTH__+0x7e00de>
+	CANGIE = (1 << ENRX)|(1 << ENIT);		//enable receive interrupt; enable global CAN interrupt (all interrupts)
+ 116:	80 ea       	ldi	r24, 0xA0	; 160
+ 118:	80 93 db 00 	sts	0x00DB, r24	; 0x8000db <__TEXT_REGION_LENGTH__+0x7e00db>
+	//put other initialisation functions here.
+
+	CANGCON = (1 << ENASTB);    // Enable the CAN.
+ 11c:	82 e0       	ldi	r24, 0x02	; 2
+ 11e:	80 93 d8 00 	sts	0x00D8, r24	; 0x8000d8 <__TEXT_REGION_LENGTH__+0x7e00d8>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 122:	ff ef       	ldi	r31, 0xFF	; 255
+ 124:	20 e7       	ldi	r18, 0x70	; 112
+ 126:	82 e0       	ldi	r24, 0x02	; 2
+ 128:	f1 50       	subi	r31, 0x01	; 1
+ 12a:	20 40       	sbci	r18, 0x00	; 0
+ 12c:	80 40       	sbci	r24, 0x00	; 0
+ 12e:	e1 f7       	brne	.-8      	; 0x128 <CAN_init+0x84>
+ 130:	00 c0       	rjmp	.+0      	; 0x132 <CAN_init+0x8e>
+ 132:	00 00       	nop
+	_delay_ms(50);
+	if(!(CANGSTA & (1<<ENFG)))return 1;
+ 134:	80 91 d9 00 	lds	r24, 0x00D9	; 0x8000d9 <__TEXT_REGION_LENGTH__+0x7e00d9>
+ 138:	82 fb       	bst	r24, 2
+ 13a:	88 27       	eor	r24, r24
+ 13c:	80 f9       	bld	r24, 0
+	return 0;
+}
+ 13e:	91 e0       	ldi	r25, 0x01	; 1
+ 140:	89 27       	eor	r24, r25
+ 142:	df 91       	pop	r29
+ 144:	cf 91       	pop	r28
+ 146:	1f 91       	pop	r17
+ 148:	0f 91       	pop	r16
+ 14a:	ff 90       	pop	r15
+ 14c:	ef 90       	pop	r14
+ 14e:	08 95       	ret
+
+00000150 <CAN_RXInit>:
+/* @Return: (type: uint8_t) Index of the mob used                       */
+/*                                                                      */
+/* @Note: None                                                          */
+/************************************************************************/
+void CAN_RXInit(int8_t mob, uint8_t numBytes, uint32_t IDmsk, uint32_t ID, uint8_t CanMode)
+{
+ 150:	cf 92       	push	r12
+ 152:	df 92       	push	r13
+ 154:	ef 92       	push	r14
+ 156:	ff 92       	push	r15
+ 158:	0f 93       	push	r16
+ 15a:	1f 93       	push	r17
+//CAN_TXMOB(mob, 2, tData, 0, 2)
+	CANPAGE = ( mob << 4);		//use the mobth mob for receiving.
+ 15c:	82 95       	swap	r24
+ 15e:	80 7f       	andi	r24, 0xF0	; 240
+ 160:	80 93 ed 00 	sts	0x00ED, r24	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
+	//IDEMSK is sent with the CAN packet, we choose to not require that it be set, and instead focus on ID match
+	CANIDM4 = 0;					//shifts the value sets RTRMSK to zero and IDEMSK to 0
+ 164:	10 92 f4 00 	sts	0x00F4, r1	; 0x8000f4 <__TEXT_REGION_LENGTH__+0x7e00f4>
+	CANIDM3 = 0;
+ 168:	10 92 f5 00 	sts	0x00F5, r1	; 0x8000f5 <__TEXT_REGION_LENGTH__+0x7e00f5>
+	CANIDM2 = (IDmsk<<5) & 0xE0;
+ 16c:	82 2f       	mov	r24, r18
+ 16e:	82 95       	swap	r24
+ 170:	88 0f       	add	r24, r24
+ 172:	80 7e       	andi	r24, 0xE0	; 224
+ 174:	80 93 f6 00 	sts	0x00F6, r24	; 0x8000f6 <__TEXT_REGION_LENGTH__+0x7e00f6>
+	CANIDM1 = (IDmsk>>3) & 0xFF;
+ 178:	da 01       	movw	r26, r20
+ 17a:	c9 01       	movw	r24, r18
+ 17c:	68 94       	set
+ 17e:	12 f8       	bld	r1, 2
+ 180:	b6 95       	lsr	r27
+ 182:	a7 95       	ror	r26
+ 184:	97 95       	ror	r25
+ 186:	87 95       	ror	r24
+ 188:	16 94       	lsr	r1
+ 18a:	d1 f7       	brne	.-12     	; 0x180 <CAN_RXInit+0x30>
+ 18c:	80 93 f7 00 	sts	0x00F7, r24	; 0x8000f7 <__TEXT_REGION_LENGTH__+0x7e00f7>
+	
+	CANIDT4 = 0;					//shifts the value sets RTRTAG, RB1TAG and RB0TAG to 0
+ 190:	10 92 f0 00 	sts	0x00F0, r1	; 0x8000f0 <__TEXT_REGION_LENGTH__+0x7e00f0>
+	CANIDT3 = 0;
+ 194:	10 92 f1 00 	sts	0x00F1, r1	; 0x8000f1 <__TEXT_REGION_LENGTH__+0x7e00f1>
+	CANIDT2 = (ID<<5) & 0xE0;
+ 198:	8e 2d       	mov	r24, r14
+ 19a:	82 95       	swap	r24
+ 19c:	88 0f       	add	r24, r24
+ 19e:	80 7e       	andi	r24, 0xE0	; 224
+ 1a0:	80 93 f2 00 	sts	0x00F2, r24	; 0x8000f2 <__TEXT_REGION_LENGTH__+0x7e00f2>
+	CANIDT1 = (ID>>3) & 0xFF;
+ 1a4:	d8 01       	movw	r26, r16
+ 1a6:	c7 01       	movw	r24, r14
+ 1a8:	68 94       	set
+ 1aa:	12 f8       	bld	r1, 2
+ 1ac:	b6 95       	lsr	r27
+ 1ae:	a7 95       	ror	r26
+ 1b0:	97 95       	ror	r25
+ 1b2:	87 95       	ror	r24
+ 1b4:	16 94       	lsr	r1
+ 1b6:	d1 f7       	brne	.-12     	; 0x1ac <CAN_RXInit+0x5c>
+ 1b8:	80 93 f3 00 	sts	0x00F3, r24	; 0x8000f3 <__TEXT_REGION_LENGTH__+0x7e00f3>
+	
+	CANCDMOB = (numBytes << DLC0)|(2<<CONMOB0)|(CanMode << IDE);		//we are expecting only numBytes bytes; also set the mob to receive mode.
+ 1bc:	80 e1       	ldi	r24, 0x10	; 16
+ 1be:	c8 9e       	mul	r12, r24
+ 1c0:	60 01       	movw	r12, r0
+ 1c2:	11 24       	eor	r1, r1
+ 1c4:	60 68       	ori	r22, 0x80	; 128
+ 1c6:	c6 2a       	or	r12, r22
+ 1c8:	c0 92 ef 00 	sts	0x00EF, r12	; 0x8000ef <__TEXT_REGION_LENGTH__+0x7e00ef>
+}
+ 1cc:	1f 91       	pop	r17
+ 1ce:	0f 91       	pop	r16
+ 1d0:	ff 90       	pop	r15
+ 1d2:	ef 90       	pop	r14
+ 1d4:	df 90       	pop	r13
+ 1d6:	cf 90       	pop	r12
+ 1d8:	08 95       	ret
+
+000001da <__vector_18>:
+uint8_t testChar = 0;
+
+volatile uint16_t rotationCounter = 0;
+volatile uint8_t motorCommand = 0;
+ISR(CAN_INT_vect)
+{
+ 1da:	1f 92       	push	r1
+ 1dc:	0f 92       	push	r0
+ 1de:	0f b6       	in	r0, 0x3f	; 63
+ 1e0:	0f 92       	push	r0
+ 1e2:	11 24       	eor	r1, r1
+ 1e4:	cf 92       	push	r12
+ 1e6:	ef 92       	push	r14
+ 1e8:	ff 92       	push	r15
+ 1ea:	0f 93       	push	r16
+ 1ec:	1f 93       	push	r17
+ 1ee:	2f 93       	push	r18
+ 1f0:	3f 93       	push	r19
+ 1f2:	4f 93       	push	r20
+ 1f4:	5f 93       	push	r21
+ 1f6:	6f 93       	push	r22
+ 1f8:	7f 93       	push	r23
+ 1fa:	8f 93       	push	r24
+ 1fc:	9f 93       	push	r25
+ 1fe:	af 93       	push	r26
+ 200:	bf 93       	push	r27
+ 202:	ef 93       	push	r30
+ 204:	ff 93       	push	r31
+	//uint8_t authority;
+	int8_t mob;
+	if((CANSIT2 & (1 << 5)))	//we received a CAN message on the reverse switch mob
+ 206:	80 91 e0 00 	lds	r24, 0x00E0	; 0x8000e0 <__TEXT_REGION_LENGTH__+0x7e00e0>
+ 20a:	85 ff       	sbrs	r24, 5
+ 20c:	1d c0       	rjmp	.+58     	; 0x248 <__vector_18+0x6e>
+	{
+		
+		CANPAGE = (5 << 4);			//set the canpage to the receiver MOB
+ 20e:	80 e5       	ldi	r24, 0x50	; 80
+ 210:	80 93 ed 00 	sts	0x00ED, r24	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
+		testChar = CANMSG;
+ 214:	ea ef       	ldi	r30, 0xFA	; 250
+ 216:	f0 e0       	ldi	r31, 0x00	; 0
+ 218:	80 81       	ld	r24, Z
+ 21a:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <testChar>
+		uint8_t tempChar1 = CANMSG;
+ 21e:	80 81       	ld	r24, Z
+		tempChar1 = CANMSG;
+ 220:	80 81       	ld	r24, Z
+		tempChar1 = CANMSG;
+ 222:	80 81       	ld	r24, Z
+		tempChar1 = CANMSG;
+ 224:	80 81       	ld	r24, Z
+		tempChar1 = CANMSG;
+ 226:	80 81       	ld	r24, Z
+		tempChar1 = CANMSG;
+ 228:	80 81       	ld	r24, Z
+		tempChar1 = CANMSG;
+ 22a:	80 81       	ld	r24, Z
+
+		CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
+ 22c:	cc 24       	eor	r12, r12
+ 22e:	c3 94       	inc	r12
+ 230:	e1 2c       	mov	r14, r1
+ 232:	f1 2c       	mov	r15, r1
+ 234:	00 e0       	ldi	r16, 0x00	; 0
+ 236:	14 e0       	ldi	r17, 0x04	; 4
+ 238:	20 e0       	ldi	r18, 0x00	; 0
+ 23a:	30 e0       	ldi	r19, 0x00	; 0
+ 23c:	40 e0       	ldi	r20, 0x00	; 0
+ 23e:	54 e0       	ldi	r21, 0x04	; 4
+ 240:	68 e0       	ldi	r22, 0x08	; 8
+ 242:	85 e0       	ldi	r24, 0x05	; 5
+ 244:	0e 94 a8 00 	call	0x150	; 0x150 <CAN_RXInit>
+	}
+}
+ 248:	ff 91       	pop	r31
+ 24a:	ef 91       	pop	r30
+ 24c:	bf 91       	pop	r27
+ 24e:	af 91       	pop	r26
+ 250:	9f 91       	pop	r25
+ 252:	8f 91       	pop	r24
+ 254:	7f 91       	pop	r23
+ 256:	6f 91       	pop	r22
+ 258:	5f 91       	pop	r21
+ 25a:	4f 91       	pop	r20
+ 25c:	3f 91       	pop	r19
+ 25e:	2f 91       	pop	r18
+ 260:	1f 91       	pop	r17
+ 262:	0f 91       	pop	r16
+ 264:	ff 90       	pop	r15
+ 266:	ef 90       	pop	r14
+ 268:	cf 90       	pop	r12
+ 26a:	0f 90       	pop	r0
+ 26c:	0f be       	out	0x3f, r0	; 63
+ 26e:	0f 90       	pop	r0
+ 270:	1f 90       	pop	r1
+ 272:	18 95       	reti
+
+00000274 <__vector_7>:
+}
+
+// skateboard ISRs below  vvv
+
+ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
+{	
+ 274:	1f 92       	push	r1
+ 276:	0f 92       	push	r0
+ 278:	0f b6       	in	r0, 0x3f	; 63
+ 27a:	0f 92       	push	r0
+ 27c:	11 24       	eor	r1, r1
+ 27e:	8f 93       	push	r24
+	rotationCounter = 0;
+ 280:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <rotationCounter+0x1>
+ 284:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <rotationCounter>
+	PHASES_ALL_HIGH_OFF;
+ 288:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+	PHASE_U_LOW_OFF;
+ 28c:	58 98       	cbi	0x0b, 0	; 11
+	PHASE_V_LOW_OFF;
+ 28e:	40 98       	cbi	0x08, 0	; 8
+	PHASE_W_LOW_OFF;
+ 290:	28 98       	cbi	0x05, 0	; 5
+		
+	if ((PIND & 64) == 64) {
+ 292:	4e 9b       	sbis	0x09, 6	; 9
+ 294:	05 c0       	rjmp	.+10     	; 0x2a0 <__vector_7+0x2c>
+		PHASE_U_LOW_ON;
+ 296:	58 9a       	sbi	0x0b, 0	; 11
+		PHASE_W_HIGH_ON;
+ 298:	80 e3       	ldi	r24, 0x30	; 48
+ 29a:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 29e:	04 c0       	rjmp	.+8      	; 0x2a8 <__vector_7+0x34>
+		} else {
+		PHASE_W_LOW_ON;
+ 2a0:	28 9a       	sbi	0x05, 0	; 5
+		PHASE_U_HIGH_ON;
+ 2a2:	83 e0       	ldi	r24, 0x03	; 3
+ 2a4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+	}
+}
+ 2a8:	8f 91       	pop	r24
+ 2aa:	0f 90       	pop	r0
+ 2ac:	0f be       	out	0x3f, r0	; 63
+ 2ae:	0f 90       	pop	r0
+ 2b0:	1f 90       	pop	r1
+ 2b2:	18 95       	reti
+
+000002b4 <__vector_8>:
+
+ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
+{
+ 2b4:	1f 92       	push	r1
+ 2b6:	0f 92       	push	r0
+ 2b8:	0f b6       	in	r0, 0x3f	; 63
+ 2ba:	0f 92       	push	r0
+ 2bc:	11 24       	eor	r1, r1
+ 2be:	8f 93       	push	r24
+	rotationCounter = 0;
+ 2c0:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <rotationCounter+0x1>
+ 2c4:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <rotationCounter>
+	PHASES_ALL_HIGH_OFF;
+ 2c8:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+	PHASE_U_LOW_OFF;
+ 2cc:	58 98       	cbi	0x0b, 0	; 11
+	PHASE_V_LOW_OFF;
+ 2ce:	40 98       	cbi	0x08, 0	; 8
+	PHASE_W_LOW_OFF;
+ 2d0:	28 98       	cbi	0x05, 0	; 5
+		
+	if ((PINB & 4) == 4) {
+ 2d2:	1a 9b       	sbis	0x03, 2	; 3
+ 2d4:	05 c0       	rjmp	.+10     	; 0x2e0 <__vector_8+0x2c>
+		PHASE_V_LOW_ON;
+ 2d6:	40 9a       	sbi	0x08, 0	; 8
+		PHASE_U_HIGH_ON;
+ 2d8:	83 e0       	ldi	r24, 0x03	; 3
+ 2da:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 2de:	04 c0       	rjmp	.+8      	; 0x2e8 <__vector_8+0x34>
+		} else {
+		PHASE_U_LOW_ON;
+ 2e0:	58 9a       	sbi	0x0b, 0	; 11
+		PHASE_V_HIGH_ON;
+ 2e2:	8c e0       	ldi	r24, 0x0C	; 12
+ 2e4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+	}
+}
+ 2e8:	8f 91       	pop	r24
+ 2ea:	0f 90       	pop	r0
+ 2ec:	0f be       	out	0x3f, r0	; 63
+ 2ee:	0f 90       	pop	r0
+ 2f0:	1f 90       	pop	r1
+ 2f2:	18 95       	reti
+
+000002f4 <__vector_9>:
+
+ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
+{
+ 2f4:	1f 92       	push	r1
+ 2f6:	0f 92       	push	r0
+ 2f8:	0f b6       	in	r0, 0x3f	; 63
+ 2fa:	0f 92       	push	r0
+ 2fc:	11 24       	eor	r1, r1
+ 2fe:	8f 93       	push	r24
+	rotationCounter = 0;
+ 300:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <rotationCounter+0x1>
+ 304:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <rotationCounter>
+	PHASES_ALL_HIGH_OFF;
+ 308:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+	PHASE_U_LOW_OFF;
+ 30c:	58 98       	cbi	0x0b, 0	; 11
+	PHASE_V_LOW_OFF;
+ 30e:	40 98       	cbi	0x08, 0	; 8
+	PHASE_W_LOW_OFF;
+ 310:	28 98       	cbi	0x05, 0	; 5
+		
+	if ((PINB & 32) == 32) {
+ 312:	1d 9b       	sbis	0x03, 5	; 3
+ 314:	05 c0       	rjmp	.+10     	; 0x320 <__vector_9+0x2c>
+		PHASE_W_LOW_ON;
+ 316:	28 9a       	sbi	0x05, 0	; 5
+		PHASE_V_HIGH_ON;
+ 318:	8c e0       	ldi	r24, 0x0C	; 12
+ 31a:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 31e:	04 c0       	rjmp	.+8      	; 0x328 <__vector_9+0x34>
+		} else {
+		PHASE_V_LOW_ON;
+ 320:	40 9a       	sbi	0x08, 0	; 8
+		PHASE_W_HIGH_ON;
+ 322:	80 e3       	ldi	r24, 0x30	; 48
+ 324:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+	}
+}
+ 328:	8f 91       	pop	r24
+ 32a:	0f 90       	pop	r0
+ 32c:	0f be       	out	0x3f, r0	; 63
+ 32e:	0f 90       	pop	r0
+ 330:	1f 90       	pop	r1
+ 332:	18 95       	reti
+
+00000334 <getMotorPosition>:
+}
+// gets an encoded version of motor position based on hall states
+// adds 4 if HALL3 is high, 2 if HALL2 is HIGH and 1 if HALL 1 is high giving positions 1..6 in total
+uint8_t getMotorPosition(void)
+{
+	return (((PINB & 32) / 8) + ((PINB & 4) / 2) + ((PIND & 64) / 64));
+ 334:	23 b1       	in	r18, 0x03	; 3
+ 336:	93 b1       	in	r25, 0x03	; 3
+ 338:	89 b1       	in	r24, 0x09	; 9
+ 33a:	20 72       	andi	r18, 0x20	; 32
+ 33c:	30 e0       	ldi	r19, 0x00	; 0
+ 33e:	a9 01       	movw	r20, r18
+ 340:	55 95       	asr	r21
+ 342:	47 95       	ror	r20
+ 344:	55 95       	asr	r21
+ 346:	47 95       	ror	r20
+ 348:	55 95       	asr	r21
+ 34a:	47 95       	ror	r20
+ 34c:	94 70       	andi	r25, 0x04	; 4
+ 34e:	29 2f       	mov	r18, r25
+ 350:	30 e0       	ldi	r19, 0x00	; 0
+ 352:	35 95       	asr	r19
+ 354:	27 95       	ror	r18
+ 356:	24 0f       	add	r18, r20
+ 358:	86 fb       	bst	r24, 6
+ 35a:	88 27       	eor	r24, r24
+ 35c:	80 f9       	bld	r24, 0
+ 35e:	82 0f       	add	r24, r18
+ 360:	08 95       	ret
+
+00000362 <kickMotor>:
+	}
+}
+
+void kickMotor(void)
+{
+	switch (getMotorPosition())
+ 362:	0e 94 9a 01 	call	0x334	; 0x334 <getMotorPosition>
+ 366:	83 30       	cpi	r24, 0x03	; 3
+ 368:	a9 f0       	breq	.+42     	; 0x394 <kickMotor+0x32>
+ 36a:	28 f4       	brcc	.+10     	; 0x376 <kickMotor+0x14>
+ 36c:	81 30       	cpi	r24, 0x01	; 1
+ 36e:	49 f0       	breq	.+18     	; 0x382 <kickMotor+0x20>
+ 370:	82 30       	cpi	r24, 0x02	; 2
+ 372:	61 f0       	breq	.+24     	; 0x38c <kickMotor+0x2a>
+ 374:	08 95       	ret
+ 376:	85 30       	cpi	r24, 0x05	; 5
+ 378:	b9 f0       	breq	.+46     	; 0x3a8 <kickMotor+0x46>
+ 37a:	88 f0       	brcs	.+34     	; 0x39e <kickMotor+0x3c>
+ 37c:	86 30       	cpi	r24, 0x06	; 6
+ 37e:	c9 f0       	breq	.+50     	; 0x3b2 <kickMotor+0x50>
+ 380:	08 95       	ret
+	{
+		case 1:
+		PHASE_U_LOW_ON;
+ 382:	58 9a       	sbi	0x0b, 0	; 11
+		PHASE_V_HIGH_ON;
+ 384:	8c e0       	ldi	r24, 0x0C	; 12
+ 386:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+		break;
+ 38a:	08 95       	ret
+		case 2:
+		PHASE_V_LOW_ON;
+ 38c:	40 9a       	sbi	0x08, 0	; 8
+		PHASE_W_HIGH_ON;
+ 38e:	80 e3       	ldi	r24, 0x30	; 48
+ 390:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+		case 3:
+		PHASE_U_LOW_ON;
+ 394:	58 9a       	sbi	0x0b, 0	; 11
+		PHASE_W_HIGH_ON;
+ 396:	80 e3       	ldi	r24, 0x30	; 48
+ 398:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+		break;
+ 39c:	08 95       	ret
+		case 4:
+		PHASE_W_LOW_ON;
+ 39e:	28 9a       	sbi	0x05, 0	; 5
+		PHASE_U_HIGH_ON;
+ 3a0:	83 e0       	ldi	r24, 0x03	; 3
+ 3a2:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+		break;
+ 3a6:	08 95       	ret
+		case 5:
+		PHASE_W_LOW_ON;
+ 3a8:	28 9a       	sbi	0x05, 0	; 5
+		PHASE_V_HIGH_ON;
+ 3aa:	8c e0       	ldi	r24, 0x0C	; 12
+ 3ac:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+		break;
+ 3b0:	08 95       	ret
+		case 6:
+		PHASE_V_LOW_ON;
+ 3b2:	40 9a       	sbi	0x08, 0	; 8
+		PHASE_U_HIGH_ON;
+ 3b4:	83 e0       	ldi	r24, 0x03	; 3
+ 3b6:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 3ba:	08 95       	ret
+
+000003bc <main>:
+	}
+}
+
+int main(void)
+{
+	DDRB |= 0b11001011;				// make the status LED an output
+ 3bc:	84 b1       	in	r24, 0x04	; 4
+ 3be:	8b 6c       	ori	r24, 0xCB	; 203
+ 3c0:	84 b9       	out	0x04, r24	; 4
+	DDRC |= 0b00000101;
+ 3c2:	87 b1       	in	r24, 0x07	; 7
+ 3c4:	85 60       	ori	r24, 0x05	; 5
+ 3c6:	87 b9       	out	0x07, r24	; 7
+	DDRD |= 0b10000001;				// PD7 is CAN STB
+ 3c8:	8a b1       	in	r24, 0x0a	; 10
+ 3ca:	81 68       	ori	r24, 0x81	; 129
+ 3cc:	8a b9       	out	0x0a, r24	; 10
+	
+	PORTB &= ~0b11001011;
+ 3ce:	85 b1       	in	r24, 0x05	; 5
+ 3d0:	84 73       	andi	r24, 0x34	; 52
+ 3d2:	85 b9       	out	0x05, r24	; 5
+	PORTC &= ~0b00000001;
+ 3d4:	40 98       	cbi	0x08, 0	; 8
+	PORTD &= ~0b00000001;
+ 3d6:	58 98       	cbi	0x0b, 0	; 11
+	
+	PORTB |= 0b00100100;	//turn hall pullups on
+ 3d8:	85 b1       	in	r24, 0x05	; 5
+ 3da:	84 62       	ori	r24, 0x24	; 36
+ 3dc:	85 b9       	out	0x05, r24	; 5
+	PORTD |= 0b01000000;
+ 3de:	5e 9a       	sbi	0x0b, 6	; 11
+	
+	//PLL
+	PLLCSR = 0x02;			//start PLL at 32MHz
+ 3e0:	82 e0       	ldi	r24, 0x02	; 2
+ 3e2:	89 bd       	out	0x29, r24	; 41
+	
+	//INTERRUPTS
+	EICRA = 0b00010101;		//turn INT0, INT1 and INT2 either edge sensing on
+ 3e4:	85 e1       	ldi	r24, 0x15	; 21
+ 3e6:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <__TEXT_REGION_LENGTH__+0x7e0069>
+	EIMSK = 0b00000111;		//enable INTs 2, 1, 0
+ 3ea:	87 e0       	ldi	r24, 0x07	; 7
+ 3ec:	8d bb       	out	0x1d, r24	; 29
+	
+	//PSC
+	POCR_RB = 256;
+ 3ee:	80 e0       	ldi	r24, 0x00	; 0
+ 3f0:	91 e0       	ldi	r25, 0x01	; 1
+ 3f2:	90 93 b3 00 	sts	0x00B3, r25	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
+ 3f6:	80 93 b2 00 	sts	0x00B2, r24	; 0x8000b2 <__TEXT_REGION_LENGTH__+0x7e00b2>
+	POCR0SA = POCR1SA = POCR2SA = 220;
+ 3fa:	8c ed       	ldi	r24, 0xDC	; 220
+ 3fc:	90 e0       	ldi	r25, 0x00	; 0
+ 3fe:	90 93 ad 00 	sts	0x00AD, r25	; 0x8000ad <__TEXT_REGION_LENGTH__+0x7e00ad>
+ 402:	80 93 ac 00 	sts	0x00AC, r24	; 0x8000ac <__TEXT_REGION_LENGTH__+0x7e00ac>
+ 406:	90 93 a7 00 	sts	0x00A7, r25	; 0x8000a7 <__TEXT_REGION_LENGTH__+0x7e00a7>
+ 40a:	80 93 a6 00 	sts	0x00A6, r24	; 0x8000a6 <__TEXT_REGION_LENGTH__+0x7e00a6>
+ 40e:	90 93 a1 00 	sts	0x00A1, r25	; 0x8000a1 <__TEXT_REGION_LENGTH__+0x7e00a1>
+ 412:	80 93 a0 00 	sts	0x00A0, r24	; 0x8000a0 <__TEXT_REGION_LENGTH__+0x7e00a0>
+	POCR0SB = POCR1SB = POCR2SB = 210;
+ 416:	82 ed       	ldi	r24, 0xD2	; 210
+ 418:	90 e0       	ldi	r25, 0x00	; 0
+ 41a:	90 93 b1 00 	sts	0x00B1, r25	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 41e:	80 93 b0 00 	sts	0x00B0, r24	; 0x8000b0 <__TEXT_REGION_LENGTH__+0x7e00b0>
+ 422:	90 93 ab 00 	sts	0x00AB, r25	; 0x8000ab <__TEXT_REGION_LENGTH__+0x7e00ab>
+ 426:	80 93 aa 00 	sts	0x00AA, r24	; 0x8000aa <__TEXT_REGION_LENGTH__+0x7e00aa>
+ 42a:	90 93 a5 00 	sts	0x00A5, r25	; 0x8000a5 <__TEXT_REGION_LENGTH__+0x7e00a5>
+ 42e:	80 93 a4 00 	sts	0x00A4, r24	; 0x8000a4 <__TEXT_REGION_LENGTH__+0x7e00a4>
+	PCNF = 0b00011100;						//centre-aligned mode
+ 432:	8c e1       	ldi	r24, 0x1C	; 28
+ 434:	80 93 b5 00 	sts	0x00B5, r24	; 0x8000b5 <__TEXT_REGION_LENGTH__+0x7e00b5>
+	PCTL = 0b00100001;						//select PLL clock with no prescale, turn the PSC on
+ 438:	81 e2       	ldi	r24, 0x21	; 33
+ 43a:	80 93 b7 00 	sts	0x00B7, r24	; 0x8000b7 <__TEXT_REGION_LENGTH__+0x7e00b7>
+	
+	// start the CAN interface
+	CAN_init();		// Initialise CAN
+ 43e:	0e 94 52 00 	call	0xa4	; 0xa4 <CAN_init>
+	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
+ 442:	cc 24       	eor	r12, r12
+ 444:	c3 94       	inc	r12
+ 446:	e1 2c       	mov	r14, r1
+ 448:	f1 2c       	mov	r15, r1
+ 44a:	00 e0       	ldi	r16, 0x00	; 0
+ 44c:	14 e0       	ldi	r17, 0x04	; 4
+ 44e:	20 e0       	ldi	r18, 0x00	; 0
+ 450:	30 e0       	ldi	r19, 0x00	; 0
+ 452:	40 e0       	ldi	r20, 0x00	; 0
+ 454:	54 e0       	ldi	r21, 0x04	; 4
+ 456:	68 e0       	ldi	r22, 0x08	; 8
+ 458:	85 e0       	ldi	r24, 0x05	; 5
+ 45a:	0e 94 a8 00 	call	0x150	; 0x150 <CAN_RXInit>
+	
+	// start the interrupts
+	sei();	
+ 45e:	78 94       	sei
+	
+	//turn the outputs off
+	PHASES_ALL_HIGH_OFF;
+ 460:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+	PHASE_U_LOW_OFF;
+ 464:	58 98       	cbi	0x0b, 0	; 11
+	PHASE_V_LOW_OFF;
+ 466:	40 98       	cbi	0x08, 0	; 8
+	PHASE_W_LOW_OFF;
+ 468:	28 98       	cbi	0x05, 0	; 5
+	
+	//kickMotor();
+	
+	uint8_t motorState = 0;
+ 46a:	80 e0       	ldi	r24, 0x00	; 0
+	
+	while(1)
+	{
+		motorCommand = 250 - testChar;
+ 46c:	0f 2e       	mov	r0, r31
+ 46e:	fa ef       	ldi	r31, 0xFA	; 250
+ 470:	5f 2e       	mov	r5, r31
+ 472:	f0 2d       	mov	r31, r0
+		if(motorCommand < 190) motorCommand = 190;
+ 474:	0f 2e       	mov	r0, r31
+ 476:	fe eb       	ldi	r31, 0xBE	; 190
+ 478:	2f 2e       	mov	r2, r31
+ 47a:	f0 2d       	mov	r31, r0
+			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
+		}
+		
+		else
+		{
+			POC = 0b00000000;
+ 47c:	c6 eb       	ldi	r28, 0xB6	; 182
+ 47e:	d0 e0       	ldi	r29, 0x00	; 0
+			PHASE_U_HIGH_ON;
+ 480:	0f 2e       	mov	r0, r31
+ 482:	f3 e0       	ldi	r31, 0x03	; 3
+ 484:	3f 2e       	mov	r3, r31
+ 486:	f0 2d       	mov	r31, r0
+	{
+		motorCommand = 250 - testChar;
+		if(motorCommand < 190) motorCommand = 190;
+		if(motorState == 1)
+		{
+			POCR0SA = POCR1SA = POCR2SA = motorCommand;
+ 488:	0f 2e       	mov	r0, r31
+ 48a:	fc ea       	ldi	r31, 0xAC	; 172
+ 48c:	af 2e       	mov	r10, r31
+ 48e:	b1 2c       	mov	r11, r1
+ 490:	f0 2d       	mov	r31, r0
+ 492:	0f 2e       	mov	r0, r31
+ 494:	f6 ea       	ldi	r31, 0xA6	; 166
+ 496:	cf 2e       	mov	r12, r31
+ 498:	d1 2c       	mov	r13, r1
+ 49a:	f0 2d       	mov	r31, r0
+ 49c:	0f 2e       	mov	r0, r31
+ 49e:	f0 ea       	ldi	r31, 0xA0	; 160
+ 4a0:	ef 2e       	mov	r14, r31
+ 4a2:	f1 2c       	mov	r15, r1
+ 4a4:	f0 2d       	mov	r31, r0
+			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
+ 4a6:	00 eb       	ldi	r16, 0xB0	; 176
+ 4a8:	10 e0       	ldi	r17, 0x00	; 0
+ 4aa:	0f 2e       	mov	r0, r31
+ 4ac:	fa ea       	ldi	r31, 0xAA	; 170
+ 4ae:	8f 2e       	mov	r8, r31
+ 4b0:	91 2c       	mov	r9, r1
+ 4b2:	f0 2d       	mov	r31, r0
+ 4b4:	0f 2e       	mov	r0, r31
+ 4b6:	f4 ea       	ldi	r31, 0xA4	; 164
+ 4b8:	6f 2e       	mov	r6, r31
+ 4ba:	71 2c       	mov	r7, r1
+ 4bc:	f0 2d       	mov	r31, r0
+			motorState = 0;
+			PORTB &= ~8;
+		}
+		else 
+		{
+			motorState = 1;
+ 4be:	44 24       	eor	r4, r4
+ 4c0:	43 94       	inc	r4
+	
+	uint8_t motorState = 0;
+	
+	while(1)
+	{
+		motorCommand = 250 - testChar;
+ 4c2:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <testChar>
+ 4c6:	25 2d       	mov	r18, r5
+ 4c8:	29 1b       	sub	r18, r25
+ 4ca:	20 93 00 01 	sts	0x0100, r18	; 0x800100 <_edata>
+		if(motorCommand < 190) motorCommand = 190;
+ 4ce:	90 91 00 01 	lds	r25, 0x0100	; 0x800100 <_edata>
+ 4d2:	9e 3b       	cpi	r25, 0xBE	; 190
+ 4d4:	10 f4       	brcc	.+4      	; 0x4da <__LOCK_REGION_LENGTH__+0xda>
+ 4d6:	20 92 00 01 	sts	0x0100, r2	; 0x800100 <_edata>
+		if(motorState == 1)
+ 4da:	81 30       	cpi	r24, 0x01	; 1
+ 4dc:	d1 f4       	brne	.+52     	; 0x512 <__LOCK_REGION_LENGTH__+0x112>
+		{
+			POCR0SA = POCR1SA = POCR2SA = motorCommand;
+ 4de:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 4e2:	90 e0       	ldi	r25, 0x00	; 0
+ 4e4:	f5 01       	movw	r30, r10
+ 4e6:	91 83       	std	Z+1, r25	; 0x01
+ 4e8:	80 83       	st	Z, r24
+ 4ea:	f6 01       	movw	r30, r12
+ 4ec:	91 83       	std	Z+1, r25	; 0x01
+ 4ee:	80 83       	st	Z, r24
+ 4f0:	f7 01       	movw	r30, r14
+ 4f2:	91 83       	std	Z+1, r25	; 0x01
+ 4f4:	80 83       	st	Z, r24
+			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
+ 4f6:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 4fa:	90 e0       	ldi	r25, 0x00	; 0
+ 4fc:	0a 97       	sbiw	r24, 0x0a	; 10
+ 4fe:	f8 01       	movw	r30, r16
+ 500:	91 83       	std	Z+1, r25	; 0x01
+ 502:	80 83       	st	Z, r24
+ 504:	f4 01       	movw	r30, r8
+ 506:	91 83       	std	Z+1, r25	; 0x01
+ 508:	80 83       	st	Z, r24
+ 50a:	f3 01       	movw	r30, r6
+ 50c:	91 83       	std	Z+1, r25	; 0x01
+ 50e:	80 83       	st	Z, r24
+ 510:	04 c0       	rjmp	.+8      	; 0x51a <__LOCK_REGION_LENGTH__+0x11a>
+		}
+		
+		else
+		{
+			POC = 0b00000000;
+ 512:	18 82       	st	Y, r1
+			PHASE_U_HIGH_ON;
+ 514:	38 82       	st	Y, r3
+			PHASE_V_LOW_OFF;
+ 516:	40 98       	cbi	0x08, 0	; 8
+			PHASE_W_LOW_OFF;
+ 518:	28 98       	cbi	0x05, 0	; 5
+		}
+		if(rotationCounter < 100) rotationCounter ++;
+ 51a:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <rotationCounter>
+ 51e:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <rotationCounter+0x1>
+ 522:	84 36       	cpi	r24, 0x64	; 100
+ 524:	91 05       	cpc	r25, r1
+ 526:	48 f4       	brcc	.+18     	; 0x53a <__LOCK_REGION_LENGTH__+0x13a>
+ 528:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <rotationCounter>
+ 52c:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <rotationCounter+0x1>
+ 530:	01 96       	adiw	r24, 0x01	; 1
+ 532:	90 93 02 01 	sts	0x0102, r25	; 0x800102 <rotationCounter+0x1>
+ 536:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <rotationCounter>
+		if(rotationCounter > 99)
+ 53a:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <rotationCounter>
+ 53e:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <rotationCounter+0x1>
+ 542:	84 36       	cpi	r24, 0x64	; 100
+ 544:	91 05       	cpc	r25, r1
+ 546:	38 f0       	brcs	.+14     	; 0x556 <__LOCK_REGION_LENGTH__+0x156>
+		{
+			motorState = 0;
+			PORTB &= ~8;
+ 548:	2b 98       	cbi	0x05, 3	; 5
+			motorState = 1;
+			PORTB |= 8;
+		}
+
+		
+		if((motorState == 0) && (motorCommand < 225))
+ 54a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 54e:	81 3e       	cpi	r24, 0xE1	; 225
+ 550:	28 f0       	brcs	.+10     	; 0x55c <__LOCK_REGION_LENGTH__+0x15c>
+ 552:	80 e0       	ldi	r24, 0x00	; 0
+ 554:	b6 cf       	rjmp	.-148    	; 0x4c2 <__LOCK_REGION_LENGTH__+0xc2>
+			PORTB &= ~8;
+		}
+		else 
+		{
+			motorState = 1;
+			PORTB |= 8;
+ 556:	2b 9a       	sbi	0x05, 3	; 5
+			motorState = 0;
+			PORTB &= ~8;
+		}
+		else 
+		{
+			motorState = 1;
+ 558:	84 2d       	mov	r24, r4
+ 55a:	b3 cf       	rjmp	.-154    	; 0x4c2 <__LOCK_REGION_LENGTH__+0xc2>
+		}
+
+		
+		if((motorState == 0) && (motorCommand < 225))
+		{
+			kickMotor();
+ 55c:	0e 94 b1 01 	call	0x362	; 0x362 <kickMotor>
+			motorState = 1;	
+			rotationCounter = 0;		
+ 560:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <rotationCounter+0x1>
+ 564:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <rotationCounter>
+
+		
+		if((motorState == 0) && (motorCommand < 225))
+		{
+			kickMotor();
+			motorState = 1;	
+ 568:	84 2d       	mov	r24, r4
+ 56a:	ab cf       	rjmp	.-170    	; 0x4c2 <__LOCK_REGION_LENGTH__+0xc2>
+
+0000056c <_exit>:
+ 56c:	f8 94       	cli
+
+0000056e <__stop_program>:
+ 56e:	ff cf       	rjmp	.-2      	; 0x56e <__stop_program>
