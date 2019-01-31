@@ -38,13 +38,16 @@ uint8_t getMotorPosition(void);
 void kickMotor(void);
 
 uint8_t testChar = 0;
+uint8_t startPhase = -1;
+uint8_t revolutions = 0;
 volatile uint16_t rotationCounter = 0;
 volatile uint8_t motorCommand = 0;
+uint8_t tData [2] = {111,111};
 
 ISR(CAN_INT_vect)
 {
 	//uint8_t authority;
-	int8_t mob;
+	//int8_t mob;
 	if((CANSIT2 & (1 << 5)))	//we received a CAN message on the reverse switch mob
 	{
 		
@@ -58,16 +61,17 @@ ISR(CAN_INT_vect)
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 		
-		printf("CAN fired");
-		printf(tempChar1);
-
+		//printf("CAN fired");
+		//printf(tempChar1);
+		
+		// Find a free Tx Mob and get its number
+		//CAN_TXMOB(4, 2, tData, 0, 2);
 		CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
 	}
 }
 
 int main(void)
 {
-	
 	/*
 	// 64MHz PLL input / 2048 = 31.25kHz PWM
 
@@ -126,6 +130,9 @@ int main(void)
 	// start the CAN interface
 	CAN_init();		// Initialise CAN
 	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);  // Recieve a message
+
+	// Create the test data
+	
 	
 	// start the interrupts
 	sei();	
@@ -135,11 +142,16 @@ int main(void)
 	PHASE_U_LOW_OFF;
 	PHASE_V_LOW_OFF;
 	PHASE_W_LOW_OFF;
+
+
 		
 	uint8_t motorState = 0;
 	
+	
 	while(1)
 	{
+	
+
 		motorCommand = 250 - testChar;
 		if(motorCommand < 190) motorCommand = 190;
 		if(motorState == 1)
@@ -189,11 +201,19 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 	PHASE_W_LOW_OFF;
 		
 	if ((PIND & 64) == 64) {
+		// 3
 		PHASE_U_LOW_ON;
 		PHASE_W_HIGH_ON;
+		if(startPhase == 3){
+			revolutions++;
+		}
 		} else {
+		// 4
 		PHASE_W_LOW_ON;
 		PHASE_U_HIGH_ON;
+		if(startPhase == 4){
+			revolutions++;
+		}
 	}
 }
 
@@ -206,11 +226,19 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 	PHASE_W_LOW_OFF;
 		
 	if ((PINB & 4) == 4) {
+		// 6
 		PHASE_V_LOW_ON;
 		PHASE_U_HIGH_ON;
+		if(startPhase == 6){
+			revolutions++;
+		}
 		} else {
+		// 1
 		PHASE_U_LOW_ON;
 		PHASE_V_HIGH_ON;
+		if(startPhase == 1){
+			revolutions++;
+		}
 	}
 }
 
@@ -223,11 +251,19 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 	PHASE_W_LOW_OFF;
 		
 	if ((PINB & 32) == 32) {
+		// 5
 		PHASE_W_LOW_ON;
 		PHASE_V_HIGH_ON;
+		if(startPhase == 5){
+			revolutions++;
+		}
 		} else {
+		// 2
 		PHASE_V_LOW_ON;
 		PHASE_W_HIGH_ON;
+		if(startPhase == 2){
+			revolutions++;
+		}
 	}
 }
 
@@ -238,25 +274,31 @@ void kickMotor(void)
 		case 1:
 		PHASE_U_LOW_ON;
 		PHASE_V_HIGH_ON;
+		startPhase = 1;
 		break;
 		case 2:
 		PHASE_V_LOW_ON;
 		PHASE_W_HIGH_ON;
+		startPhase = 2;
 		case 3:
 		PHASE_U_LOW_ON;
 		PHASE_W_HIGH_ON;
+		startPhase = 3;
 		break;
 		case 4:
 		PHASE_W_LOW_ON;
 		PHASE_U_HIGH_ON;
+		startPhase = 4;
 		break;
 		case 5:
 		PHASE_W_LOW_ON;
 		PHASE_V_HIGH_ON;
+		startPhase = 5;
 		break;
 		case 6:
 		PHASE_V_LOW_ON;
 		PHASE_U_HIGH_ON;
+		startPhase = 6;
 		break;
 		default:
 		break;
