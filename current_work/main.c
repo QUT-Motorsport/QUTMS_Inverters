@@ -129,13 +129,17 @@ int main(void)
 	
 	// start the CAN interface
 	CAN_init();		// Initialise CAN
-	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);  // Recieve a message
-
-	// Create the test data
-	
+	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);  // Receive a message	
 	
 	// start the interrupts
-	sei();	
+	sei();
+
+	// CAN
+	// Make a timer 10 Milli-seconds
+	while(1){
+		_delay_ms(1000);
+		CAN_sendTest();
+	}
 	
 	//turn the outputs off
 	PHASES_ALL_HIGH_OFF;
