@@ -20,7 +20,7 @@ int8_t CAN_sendTest()
 	// Create the test data
 	uint8_t tData [2] = {111,111};
 	// Find a free Tx Mob and get its number
-	uint8_t mob = CAN_findFreeTXMOB();
+	uint8_t mob = 1;//CAN_findFreeTXMOB();
 	// If found a free Mob, send the test data
 	if(mob>=0)CAN_TXMOB(mob, 2, tData, 0, 2); //transmit registration and do not wait for finish
 	return mob;

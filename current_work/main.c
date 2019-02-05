@@ -36,6 +36,7 @@
 /* Define functions */
 uint8_t getMotorPosition(void);
 void kickMotor(void);
+void toggle_led(void);
 
 uint8_t testChar = 0;
 uint8_t startPhase = -1;
@@ -53,6 +54,7 @@ ISR(CAN_INT_vect)
 		
 		CANPAGE = (5 << 4);			//set the canpage to the receiver MOB
 		testChar = CANMSG;
+		
 		uint8_t tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
@@ -61,12 +63,12 @@ ISR(CAN_INT_vect)
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 		
+		
 		//printf("CAN fired");
 		//printf(tempChar1);
 		
-		// Find a free Tx Mob and get its number
-		//CAN_TXMOB(4, 2, tData, 0, 2);
 		CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
+		
 	}
 }
 
@@ -108,13 +110,43 @@ int main(void)
 	/*
 	PWM code. DO NOT CHANGE
 	*/
-	//PLL
-	PLLCSR = 0x02;			//start PLL at 32MHz
+	//PLL 32MHz, for 15.62kHz PWM
+	//RPM = 15620 * (2  / 48 ) * 60
+	//RPM = Hz * (2  / poles ) * 60
+	// Hz = Cycles / sec
+	// 
+	PLLCSR = 0x02;			//start PLL at INTERRUPTS
 	
-	//INTERRUPTS
+	//32MHz
 	EICRA = 0b00010101;		//turn INT0, INT1 and INT2 either edge sensing on
-	EIMSK = 0b00000111;		//enable INTs 2, 1, 0
+	EIMSK = 0b00000111;		//enable INTs 2, 1, 0 TIMER0_OVF_vect
+
+	// start the CAN interface
+	CAN_init();		// Initialise CAN
+	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);  // Receive a message
 	
+	// start the interrupts
+	sei();
+
+	
+	// CAN
+	// Make a timer 10 Milli-seconds
+	// Create the test data
+	uint8_t tData [2] = {101,011};
+	
+	while(1){
+		_delay_ms(11);
+		toggle_led();
+		// Create the test data
+		uint8_t tData [2] = {101,011};
+		// Find a free Tx Mob and get its number
+		uint8_t mob = 1;//CAN_findFreeTXMOB();
+		//send the test data
+		CAN_TXMOB(mob, 2, tData, 0, 2); //transmit registration and do not wait for finish
+		//CAN_sendTest();
+	}
+	
+
 	//PSC
 	/*
 	PWM code. DO NOT CHANGE
@@ -127,19 +159,6 @@ int main(void)
 	PCTL = 0b00100001;						//select PLL clock with no prescale, turn the PSC on
 	/******************************************************************/
 	
-	// start the CAN interface
-	CAN_init();		// Initialise CAN
-	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);  // Receive a message	
-	
-	// start the interrupts
-	sei();
-
-	// CAN
-	// Make a timer 10 Milli-seconds
-	while(1){
-		_delay_ms(1000);
-		CAN_sendTest();
-	}
 	
 	//turn the outputs off
 	PHASES_ALL_HIGH_OFF;
@@ -211,7 +230,7 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 		if(startPhase == 3){
 			revolutions++;
 		}
-		} else {
+	} else {
 		// 4
 		PHASE_W_LOW_ON;
 		PHASE_U_HIGH_ON;
@@ -313,4 +332,8 @@ void kickMotor(void)
 uint8_t getMotorPosition(void)
 {		// ((? & 100000) / 8) +  ((? & 100) / 2)   + ((? & 1000000) / 64)
 	return (((PINB & 32) / 8) + ((PINB & 4) / 2) + ((PIND & 64) / 64));
+}
+
+void toggle_led(void){
+	PORTB ^= 0b00001000;
 }
