@@ -19,6 +19,17 @@
 
 /* Custom libraries */
 #include "AtmelCAN.h"
+//#include "compiler.h"
+//#include "tc_timeout.h"
+
+#define LED0_MASK (1 << 0)
+#define LED1_MASK (1 << 1)
+
+// Use an enum to differentiate between the different timeouts
+enum {
+	EXAMPLE_TIMEOUT_SLOW,
+	EXAMPLE_TIMEOUT_FAST,
+};
  
 /* Phases control */
 #define PHASE_U_LOW_ON PORTD |= 1 // 0b??????1?
@@ -72,6 +83,11 @@ ISR(CAN_INT_vect)
 	}
 }
 
+ISR(TIMER1_OVF_vect)
+{
+	toggle_led();
+}
+
 int main(void)
 {
 	/*
@@ -96,6 +112,7 @@ int main(void)
 		POCR0RA = w;  // Set outa low @ this count
 	}
 	*/
+	/*
 	DDRB |= 0b11001011;				// make the status LED an output
 	DDRC |= 0b00000101;
 	DDRD |= 0b10000001;				// PD7 is CAN STB
@@ -106,7 +123,7 @@ int main(void)
 	
 	PORTB |= 0b00100100;	//turn hall pullups on
 	PORTD |= 0b01000000;
-	
+	*/
 	/*
 	PWM code. DO NOT CHANGE
 	*/
@@ -114,7 +131,8 @@ int main(void)
 	//RPM = 15620 * (2  / 48 ) * 60
 	//RPM = Hz * (2  / poles ) * 60
 	// Hz = Cycles / sec
-	// 
+	//
+	/*
 	PLLCSR = 0x02;			//start PLL at INTERRUPTS
 	
 	//32MHz
@@ -124,9 +142,46 @@ int main(void)
 	// start the CAN interface
 	CAN_init();		// Initialise CAN
 	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);  // Receive a message
+	*/
+	//DDRD = (1<<DDD2);
+	/*
+	DDRD   = 1<<DDD3;    // OC0A
+	TCCR0A = (1<<WGM01); // ctc mode
+	TCCR0B = (1<<CS02);  // presc 256
+	OCR0A  = 0x1388;       // 1000 ms period 
+	*/
+
+	//Intial_Timer();
+
+	/*
+	// TIMER
+	// Set up clock source according to configuration
+	ASSR = TC_TIMEOUT_ASSR_MASK;
+	*/
 	
+	//DDRB |= 0b00001000;				// make the status LED an output
+	DDRB |= (1<<DDB5);
+	DDRB &= ~(1<<DDB7);
+
+	TCCR1B |= (1<<CS12);
+	TIMSK1 |= (1<TOIE1);
+
 	// start the interrupts
 	sei();
+
+	while(1){
+	_delay_ms(1000);
+	toggle_led();
+		/*
+		 //while(!(TIFR1 & (1<<TOV1)));// Wait until cycle completes
+		 while(!(TIFR0 & (1<<OCF0A)));
+		 DDRD   = 1<<DDD3;    // OC0A
+		 TCCR0A = (1<<WGM01); // ctc mode
+		 TCCR0B = (1<<CS02);  // presc 256
+		 OCR0A  = 0x3E8;       // 1000 ms period
+		 */
+		 //toggle_led();
+	}
 
 	
 	// CAN
@@ -134,8 +189,8 @@ int main(void)
 	// Create the test data
 	uint8_t tData [2] = {101,011};
 	
-	while(1){
-		_delay_ms(11);
+	while(0){
+		_delay_ms(11.5);
 		toggle_led();
 		// Create the test data
 		uint8_t tData [2] = {101,011};
