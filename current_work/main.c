@@ -73,46 +73,15 @@ ISR(CAN_INT_vect)
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
-		
-		
-		//printf("CAN fired");
-		//printf(tempChar1);
-		
+
 		CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
 		
 	}
 }
 
-ISR(TIMER1_OVF_vect)
-{
-	toggle_led();
-}
 
 int main(void)
-{
-	/*
-	// 64MHz PLL input / 2048 = 31.25kHz PWM
-
-	void InitializePSC()
-	{
-		
-		PLLCSR  = BIT(PLLF) | BIT(PLLE);  // PLL set to 64MHz enabled
-		
-		POC     = BIT(POEN0A);    // enable PSCOUT0A only
-		PSYNC   = 0x00;
-		PCNF    = BIT(POPA);     // Active HIGH
-		POCR_RB = 2048;          // modulo for counter
-		POCR0SA = 0x0000;        // start cycle high
-		POCR0SB = 0x0fff;        // never set B high
-		PCTL    = BIT(PCLKSEL) | BIT(PRUN);   // Select PLL clock no div
-	}
-
-	void SetPSCOutput( WORD w ) // 0-2047
-	{
-		POCR0RA = w;  // Set outa low @ this count
-	}
-	*/
-	/*
+{	
 	DDRB |= 0b11001011;				// make the status LED an output
 	DDRC |= 0b00000101;
 	DDRD |= 0b10000001;				// PD7 is CAN STB
@@ -123,16 +92,7 @@ int main(void)
 	
 	PORTB |= 0b00100100;	//turn hall pullups on
 	PORTD |= 0b01000000;
-	*/
-	/*
-	PWM code. DO NOT CHANGE
-	*/
-	//PLL 32MHz, for 15.62kHz PWM
-	//RPM = 15620 * (2  / 48 ) * 60
-	//RPM = Hz * (2  / poles ) * 60
-	// Hz = Cycles / sec
-	//
-	/*
+	
 	PLLCSR = 0x02;			//start PLL at INTERRUPTS
 	
 	//32MHz
@@ -142,65 +102,9 @@ int main(void)
 	// start the CAN interface
 	CAN_init();		// Initialise CAN
 	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);  // Receive a message
-	*/
-	//DDRD = (1<<DDD2);
-	/*
-	DDRD   = 1<<DDD3;    // OC0A
-	TCCR0A = (1<<WGM01); // ctc mode
-	TCCR0B = (1<<CS02);  // presc 256
-	OCR0A  = 0x1388;       // 1000 ms period 
-	*/
-
-	//Intial_Timer();
-
-	/*
-	// TIMER
-	// Set up clock source according to configuration
-	ASSR = TC_TIMEOUT_ASSR_MASK;
-	*/
-	
-	//DDRB |= 0b00001000;				// make the status LED an output
-	DDRB |= (1<<DDB5);
-	DDRB &= ~(1<<DDB7);
-
-	TCCR1B |= (1<<CS12);
-	TIMSK1 |= (1<TOIE1);
 
 	// start the interrupts
-	sei();
-
-	while(1){
-	_delay_ms(1000);
-	toggle_led();
-		/*
-		 //while(!(TIFR1 & (1<<TOV1)));// Wait until cycle completes
-		 while(!(TIFR0 & (1<<OCF0A)));
-		 DDRD   = 1<<DDD3;    // OC0A
-		 TCCR0A = (1<<WGM01); // ctc mode
-		 TCCR0B = (1<<CS02);  // presc 256
-		 OCR0A  = 0x3E8;       // 1000 ms period
-		 */
-		 //toggle_led();
-	}
-
-	
-	// CAN
-	// Make a timer 10 Milli-seconds
-	// Create the test data
-	uint8_t tData [2] = {101,011};
-	
-	while(0){
-		_delay_ms(11.5);
-		toggle_led();
-		// Create the test data
-		uint8_t tData [2] = {101,011};
-		// Find a free Tx Mob and get its number
-		uint8_t mob = 1;//CAN_findFreeTXMOB();
-		//send the test data
-		CAN_TXMOB(mob, 2, tData, 0, 2); //transmit registration and do not wait for finish
-		//CAN_sendTest();
-	}
-	
+	sei();	
 
 	//PSC
 	/*
@@ -213,23 +117,20 @@ int main(void)
 	PCNF = 0b00011100;						//centre-aligned mode
 	PCTL = 0b00100001;						//select PLL clock with no prescale, turn the PSC on
 	/******************************************************************/
-	
-	
+
+
 	//turn the outputs off
 	PHASES_ALL_HIGH_OFF;
 	PHASE_U_LOW_OFF;
 	PHASE_V_LOW_OFF;
 	PHASE_W_LOW_OFF;
 
-
-		
+	uint8_t mob = 1;	
 	uint8_t motorState = 0;
 	
 	
 	while(1)
 	{
-	
-
 		motorCommand = 250 - testChar;
 		if(motorCommand < 190) motorCommand = 190;
 		if(motorState == 1)
@@ -250,11 +151,15 @@ int main(void)
 		if(rotationCounter > 99)
 		{
 			motorState = 0;
+			toggle_led();
+			CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
 			PORTB &= ~8; // turn all port B off
 		}
 		else 
 		{
 			motorState = 1;
+			toggle_led();
+			CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
 			PORTB |= 8; // turn all port B on
 		}
 
@@ -392,3 +297,91 @@ uint8_t getMotorPosition(void)
 void toggle_led(void){
 	PORTB ^= 0b00001000;
 }
+/************************************************************************/
+/*					CODE CEMETERY                                       */
+/************************************************************************/
+/*
+
+//DDRD = (1<<DDD2);
+
+DDRD   = 1<<DDD3;    // OC0A
+TCCR0A = (1<<WGM01); // ctc mode
+TCCR0B = (1<<CS02);  // presc 256
+OCR0A  = 0x1388;       // 1000 ms period
+
+
+//Intial_Timer();
+
+
+// TIMER
+// Set up clock source according to configuration
+ASSR = TC_TIMEOUT_ASSR_MASK;
+
+PORTB = 0b00000000;
+DDRB |= 0b00001000;				// make the status LED an output
+DDRB |= (1<<DDB5);
+DDRB &= ~(1<<DDB7);
+
+TCCR1B |= (1<<CS12);
+TIMSK1 |= (1<TOIE1);
+
+*/
+
+/*
+	while(1){
+	_delay_ms(1000);
+	toggle_led();
+	*/
+		/*
+		 //while(!(TIFR1 & (1<<TOV1)));// Wait until cycle completes
+		 while(!(TIFR0 & (1<<OCF0A)));
+		 DDRD   = 1<<DDD3;    // OC0A
+		 TCCR0A = (1<<WGM01); // ctc mode
+		 TCCR0B = (1<<CS02);  // presc 256
+		 OCR0A  = 0x3E8;       // 1000 ms period
+		 */
+		 //toggle_led();
+	//}
+
+	/*
+	PWM code. DO NOT CHANGE
+	
+	//PLL 32MHz, for 15.62kHz PWM
+	//RPM = 15620 * (2  / 48 ) * 60
+	//RPM = Hz * (2  / poles ) * 60
+	// Hz = Cycles / sec
+	//
+
+
+	
+	// 64MHz PLL input / 2048 = 31.25kHz PWM
+
+	void InitializePSC()
+	{
+		
+		PLLCSR  = BIT(PLLF) | BIT(PLLE);  // PLL set to 64MHz enabled
+		
+		POC     = BIT(POEN0A);    // enable PSCOUT0A only
+		PSYNC   = 0x00;
+		PCNF    = BIT(POPA);     // Active HIGH
+		POCR_RB = 2048;          // modulo for counter
+		POCR0SA = 0x0000;        // start cycle high
+		POCR0SB = 0x0fff;        // never set B high
+		PCTL    = BIT(PCLKSEL) | BIT(PRUN);   // Select PLL clock no div
+	}
+
+	void SetPSCOutput( WORD w ) // 0-2047
+	{
+		POCR0RA = w;  // Set outa low @ this count
+	}
+	
+
+
+	
+ISR(TIMER1_OVF_vect)
+{
+	//toggle_led();
+}
+
+
+*/

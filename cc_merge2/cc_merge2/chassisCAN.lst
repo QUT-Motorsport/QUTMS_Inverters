@@ -1,0 +1,410 @@
+   1               		.file	"chassisCAN.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__RAMPZ__ = 0x3b
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+  10               		.cfi_sections	.debug_frame
+  11               		.section	.text.CAN_send,"ax",@progbits
+  12               	.global	CAN_send
+  14               	CAN_send:
+  15               	.LVL0:
+  16               	.LFB4:
+  17               		.file 1 "includes/chassisCAN.c"
+   1:includes/chassisCAN.c **** /**
+   2:includes/chassisCAN.c ****  * @file chassisCAN.c
+   3:includes/chassisCAN.c ****  * @author Jonn Dillon
+   4:includes/chassisCAN.c ****  * @date 16/4/2018
+   5:includes/chassisCAN.c ****  * @brief Handles functions, calls and utilities related to the CANBUS's
+   6:includes/chassisCAN.c ****  **/
+   7:includes/chassisCAN.c **** 
+   8:includes/chassisCAN.c **** #include "chassisCAN.h"
+   9:includes/chassisCAN.c **** 
+  10:includes/chassisCAN.c **** // Serves as a wrapper for MCP2515_TX in MCP2515_TX.h - for more info refer to that.
+  11:includes/chassisCAN.c **** void CAN_send(uint8_t CANbus, uint8_t numBytes, uint8_t * data, uint32_t ID) {
+  18               		.loc 1 11 78 view -0
+  19               		.cfi_startproc
+  20               		.loc 1 11 78 is_stmt 0 view .LVU1
+  21 0000 8F92      		push r8
+  22               	.LCFI0:
+  23               		.cfi_def_cfa_offset 3
+  24               		.cfi_offset 8, -2
+  25 0002 9F92      		push r9
+  26               	.LCFI1:
+  27               		.cfi_def_cfa_offset 4
+  28               		.cfi_offset 9, -3
+  29 0004 AF92      		push r10
+  30               	.LCFI2:
+  31               		.cfi_def_cfa_offset 5
+  32               		.cfi_offset 10, -4
+  33 0006 BF92      		push r11
+  34               	.LCFI3:
+  35               		.cfi_def_cfa_offset 6
+  36               		.cfi_offset 11, -5
+  37 0008 CF92      		push r12
+  38               	.LCFI4:
+  39               		.cfi_def_cfa_offset 7
+  40               		.cfi_offset 12, -6
+  41 000a DF92      		push r13
+  42               	.LCFI5:
+  43               		.cfi_def_cfa_offset 8
+  44               		.cfi_offset 13, -7
+  45 000c EF92      		push r14
+  46               	.LCFI6:
+  47               		.cfi_def_cfa_offset 9
+  48               		.cfi_offset 14, -8
+  49 000e FF92      		push r15
+  50               	.LCFI7:
+  51               		.cfi_def_cfa_offset 10
+  52               		.cfi_offset 15, -9
+  53 0010 0F93      		push r16
+  54               	.LCFI8:
+  55               		.cfi_def_cfa_offset 11
+  56               		.cfi_offset 16, -10
+  57 0012 1F93      		push r17
+  58               	.LCFI9:
+  59               		.cfi_def_cfa_offset 12
+  60               		.cfi_offset 17, -11
+  61 0014 CF93      		push r28
+  62               	.LCFI10:
+  63               		.cfi_def_cfa_offset 13
+  64               		.cfi_offset 28, -12
+  65 0016 DF93      		push r29
+  66               	.LCFI11:
+  67               		.cfi_def_cfa_offset 14
+  68               		.cfi_offset 29, -13
+  69               	/* prologue: function */
+  70               	/* frame size = 0 */
+  71               	/* stack size = 12 */
+  72               	.L__stack_usage = 12
+  73 0018 C82F      		mov r28,r24
+  74 001a D62F      		mov r29,r22
+  75 001c 6A01      		movw r12,r20
+  76 001e 4801      		movw r8,r16
+  77 0020 5901      		movw r10,r18
+  12:includes/chassisCAN.c ****     MCP2515_TX(CANbus, MCP2515_findFreeTxBuffer(CANbus), numBytes, data, ID);
+  78               		.loc 1 12 5 is_stmt 1 view .LVU2
+  79               		.loc 1 12 24 is_stmt 0 view .LVU3
+  80 0022 0E94 0000 		call MCP2515_findFreeTxBuffer
+  81               	.LVL1:
+  82               		.loc 1 12 5 view .LVU4
+  83 0026 8501      		movw r16,r10
+  84               	.LVL2:
+  85               		.loc 1 12 5 view .LVU5
+  86 0028 7401      		movw r14,r8
+  87 002a 9601      		movw r18,r12
+  88 002c 4D2F      		mov r20,r29
+  89 002e 682F      		mov r22,r24
+  90 0030 8C2F      		mov r24,r28
+  91 0032 0E94 0000 		call MCP2515_TX
+  92               	.LVL3:
+  93               	/* epilogue start */
+  13:includes/chassisCAN.c **** }
+  94               		.loc 1 13 1 view .LVU6
+  95 0036 DF91      		pop r29
+  96               	.LVL4:
+  97               		.loc 1 13 1 view .LVU7
+  98 0038 CF91      		pop r28
+  99               	.LVL5:
+ 100               		.loc 1 13 1 view .LVU8
+ 101 003a 1F91      		pop r17
+ 102 003c 0F91      		pop r16
+ 103 003e FF90      		pop r15
+ 104 0040 EF90      		pop r14
+ 105 0042 DF90      		pop r13
+ 106 0044 CF90      		pop r12
+ 107               	.LVL6:
+ 108               		.loc 1 13 1 view .LVU9
+ 109 0046 BF90      		pop r11
+ 110 0048 AF90      		pop r10
+ 111 004a 9F90      		pop r9
+ 112 004c 8F90      		pop r8
+ 113 004e 0895      		ret
+ 114               		.cfi_endproc
+ 115               	.LFE4:
+ 117               		.section	.text.CAN_ID_constructor,"ax",@progbits
+ 118               	.global	CAN_ID_constructor
+ 120               	CAN_ID_constructor:
+ 121               	.LVL7:
+ 122               	.LFB5:
+  14:includes/chassisCAN.c **** 
+  15:includes/chassisCAN.c **** // Construct a unique CAN packet identifier
+  16:includes/chassisCAN.c **** uint32_t CAN_ID_constructor(uint32_t sendingID, unsigned char type, unsigned char address, uint32_t
+ 123               		.loc 1 16 109 is_stmt 1 view -0
+ 124               		.cfi_startproc
+ 125               		.loc 1 16 109 is_stmt 0 view .LVU11
+ 126 0000 8F92      		push r8
+ 127               	.LCFI12:
+ 128               		.cfi_def_cfa_offset 3
+ 129               		.cfi_offset 8, -2
+ 130 0002 9F92      		push r9
+ 131               	.LCFI13:
+ 132               		.cfi_def_cfa_offset 4
+ 133               		.cfi_offset 9, -3
+ 134 0004 AF92      		push r10
+ 135               	.LCFI14:
+ 136               		.cfi_def_cfa_offset 5
+ 137               		.cfi_offset 10, -4
+ 138 0006 BF92      		push r11
+ 139               	.LCFI15:
+ 140               		.cfi_def_cfa_offset 6
+ 141               		.cfi_offset 11, -5
+ 142 0008 EF92      		push r14
+ 143               	.LCFI16:
+ 144               		.cfi_def_cfa_offset 7
+ 145               		.cfi_offset 14, -6
+ 146 000a FF92      		push r15
+ 147               	.LCFI17:
+ 148               		.cfi_def_cfa_offset 8
+ 149               		.cfi_offset 15, -7
+ 150 000c 0F93      		push r16
+ 151               	.LCFI18:
+ 152               		.cfi_def_cfa_offset 9
+ 153               		.cfi_offset 16, -8
+ 154 000e 1F93      		push r17
+ 155               	.LCFI19:
+ 156               		.cfi_def_cfa_offset 10
+ 157               		.cfi_offset 17, -9
+ 158               	/* prologue: function */
+ 159               	/* frame size = 0 */
+ 160               	/* stack size = 8 */
+ 161               	.L__stack_usage = 8
+ 162 0010 4B01      		movw r8,r22
+ 163 0012 5C01      		movw r10,r24
+  17:includes/chassisCAN.c ****     return (
+ 164               		.loc 1 17 5 is_stmt 1 view .LVU12
+  18:includes/chassisCAN.c ****         sendingID|                  // Sending ID, ( First 8 bits, define the device to send to)
+  19:includes/chassisCAN.c ****         ((uint32_t)type<<18)|       // What sort of command to send
+  20:includes/chassisCAN.c ****         ((uint32_t)address<<13)|    // Specific address
+ 165               		.loc 1 20 10 is_stmt 0 view .LVU13
+ 166 0014 822F      		mov r24,r18
+ 167 0016 90E0      		ldi r25,0
+ 168 0018 B0E0      		ldi r27,0
+ 169 001a A0E0      		ldi r26,0
+ 170               		.loc 1 20 27 view .LVU14
+ 171 001c 2DE0      		ldi r18,13
+ 172               		1:
+ 173 001e 880F      		lsl r24
+ 174 0020 991F      		rol r25
+ 175 0022 AA1F      		rol r26
+ 176 0024 BB1F      		rol r27
+ 177 0026 2A95      		dec r18
+ 178 0028 01F4      		brne 1b
+ 179               	.LVL8:
+ 180               		.loc 1 20 32 view .LVU15
+ 181 002a 8E28      		or r8,r14
+ 182 002c 9F28      		or r9,r15
+ 183 002e A02A      		or r10,r16
+ 184 0030 B12A      		or r11,r17
+ 185 0032 8829      		or r24,r8
+ 186 0034 9929      		or r25,r9
+ 187 0036 AA29      		or r26,r10
+ 188 0038 BB29      		or r27,r11
+  19:includes/chassisCAN.c ****         ((uint32_t)address<<13)|    // Specific address
+ 189               		.loc 1 19 10 view .LVU16
+ 190 003a 50E0      		ldi r21,0
+ 191 003c 70E0      		ldi r23,0
+ 192 003e 60E0      		ldi r22,0
+ 193               	.LVL9:
+  19:includes/chassisCAN.c ****         ((uint32_t)address<<13)|    // Specific address
+ 194               		.loc 1 19 24 view .LVU17
+ 195 0040 32E1      		ldi r19,18
+ 196               		1:
+ 197 0042 440F      		lsl r20
+ 198 0044 551F      		rol r21
+ 199 0046 661F      		rol r22
+ 200 0048 771F      		rol r23
+ 201 004a 3A95      		dec r19
+ 202 004c 01F4      		brne 1b
+ 203               	.LVL10:
+ 204               		.loc 1 20 32 view .LVU18
+ 205 004e 8C01      		movw r16,r24
+ 206 0050 9D01      		movw r18,r26
+ 207 0052 042B      		or r16,r20
+ 208 0054 152B      		or r17,r21
+ 209 0056 262B      		or r18,r22
+ 210 0058 372B      		or r19,r23
+ 211 005a C901      		movw r24,r18
+ 212 005c B801      		movw r22,r16
+ 213               	/* epilogue start */
+  21:includes/chassisCAN.c ****         status                      // SubID?
+  22:includes/chassisCAN.c ****     );
+  23:includes/chassisCAN.c **** }
+ 214               		.loc 1 23 1 view .LVU19
+ 215 005e 1F91      		pop r17
+ 216 0060 0F91      		pop r16
+ 217 0062 FF90      		pop r15
+ 218 0064 EF90      		pop r14
+ 219               	.LVL11:
+ 220               		.loc 1 23 1 view .LVU20
+ 221 0066 BF90      		pop r11
+ 222 0068 AF90      		pop r10
+ 223 006a 9F90      		pop r9
+ 224 006c 8F90      		pop r8
+ 225 006e 0895      		ret
+ 226               		.cfi_endproc
+ 227               	.LFE5:
+ 229               		.section	.text.CAN_pull_packet,"ax",@progbits
+ 230               	.global	CAN_pull_packet
+ 232               	CAN_pull_packet:
+ 233               	.LVL12:
+ 234               	.LFB6:
+  24:includes/chassisCAN.c **** 
+  25:includes/chassisCAN.c **** // Serves as a wrapper for the MCP2515_PullCanPacket(..) in MCP2515.h - For more info refer to that
+  26:includes/chassisCAN.c **** void CAN_pull_packet(uint8_t CANbus, uint8_t* numBytes, uint8_t* data, uint32_t* ID) {
+ 235               		.loc 1 26 86 is_stmt 1 view -0
+ 236               		.cfi_startproc
+ 237               		.loc 1 26 86 is_stmt 0 view .LVU22
+ 238 0000 AF92      		push r10
+ 239               	.LCFI20:
+ 240               		.cfi_def_cfa_offset 3
+ 241               		.cfi_offset 10, -2
+ 242 0002 BF92      		push r11
+ 243               	.LCFI21:
+ 244               		.cfi_def_cfa_offset 4
+ 245               		.cfi_offset 11, -3
+ 246 0004 CF92      		push r12
+ 247               	.LCFI22:
+ 248               		.cfi_def_cfa_offset 5
+ 249               		.cfi_offset 12, -4
+ 250 0006 DF92      		push r13
+ 251               	.LCFI23:
+ 252               		.cfi_def_cfa_offset 6
+ 253               		.cfi_offset 13, -5
+ 254 0008 EF92      		push r14
+ 255               	.LCFI24:
+ 256               		.cfi_def_cfa_offset 7
+ 257               		.cfi_offset 14, -6
+ 258 000a FF92      		push r15
+ 259               	.LCFI25:
+ 260               		.cfi_def_cfa_offset 8
+ 261               		.cfi_offset 15, -7
+ 262 000c 0F93      		push r16
+ 263               	.LCFI26:
+ 264               		.cfi_def_cfa_offset 9
+ 265               		.cfi_offset 16, -8
+ 266 000e 1F93      		push r17
+ 267               	.LCFI27:
+ 268               		.cfi_def_cfa_offset 10
+ 269               		.cfi_offset 17, -9
+ 270 0010 CF93      		push r28
+ 271               	.LCFI28:
+ 272               		.cfi_def_cfa_offset 11
+ 273               		.cfi_offset 28, -10
+ 274               	/* prologue: function */
+ 275               	/* frame size = 0 */
+ 276               	/* stack size = 9 */
+ 277               	.L__stack_usage = 9
+ 278 0012 C82F      		mov r28,r24
+ 279 0014 7B01      		movw r14,r22
+ 280 0016 6A01      		movw r12,r20
+ 281 0018 5901      		movw r10,r18
+  27:includes/chassisCAN.c **** 	// Receive the status of the buffers RXB0 and RXB1
+  28:includes/chassisCAN.c **** 	uint8_t status = MCP2515_check_receive_status(CANbus);
+ 282               		.loc 1 28 2 is_stmt 1 view .LVU23
+ 283               		.loc 1 28 19 is_stmt 0 view .LVU24
+ 284 001a 0E94 0000 		call MCP2515_check_receive_status
+ 285               	.LVL13:
+  29:includes/chassisCAN.c **** 	// Check which receive buffer contains the data (or if both contain) by checking bits 7:6
+  30:includes/chassisCAN.c **** 	switch(status>>6) {
+ 286               		.loc 1 30 2 is_stmt 1 view .LVU25
+ 287               		.loc 1 30 15 is_stmt 0 view .LVU26
+ 288 001e 8295      		swap r24
+ 289               	.LVL14:
+ 290               		.loc 1 30 15 view .LVU27
+ 291 0020 8695      		lsr r24
+ 292 0022 8695      		lsr r24
+ 293 0024 8370      		andi r24,lo8(3)
+ 294 0026 01F0      		breq .L3
+  31:includes/chassisCAN.c **** 		case 1:	// Message in RXB0
+  32:includes/chassisCAN.c **** 			MCP2515_PullCanPacket(CANbus, MCP2515_RXB0SIDH, numBytes, data, ID);
+ 295               		.loc 1 32 4 view .LVU28
+ 296 0028 8501      		movw r16,r10
+ 297 002a 8330      		cpi r24,lo8(3)
+ 298 002c 00F0      		brlo .L10
+ 299 002e 8330      		cpi r24,lo8(3)
+ 300 0030 01F0      		breq .L6
+ 301               	.L3:
+ 302               	/* epilogue start */
+  33:includes/chassisCAN.c **** 			break;
+  34:includes/chassisCAN.c **** 		case 2: // Message in RXB1
+  35:includes/chassisCAN.c **** 			MCP2515_PullCanPacket(CANbus, MCP2515_RXB0SIDH, numBytes, data, ID);
+  36:includes/chassisCAN.c **** 			break;
+  37:includes/chassisCAN.c **** 		case 3: // Message in both buffers
+  38:includes/chassisCAN.c **** 			MCP2515_PullCanPacket(CANbus, MCP2515_RXB0SIDH, numBytes, data, ID);
+  39:includes/chassisCAN.c **** 			MCP2515_PullCanPacket(CANbus, MCP2515_RXB0SIDH, numBytes, data, ID);
+  40:includes/chassisCAN.c **** 			break;
+  41:includes/chassisCAN.c **** 		default:
+  42:includes/chassisCAN.c **** 			break;
+  43:includes/chassisCAN.c **** 	}
+  44:includes/chassisCAN.c **** }
+ 303               		.loc 1 44 1 view .LVU29
+ 304 0032 CF91      		pop r28
+ 305               	.LVL15:
+ 306               		.loc 1 44 1 view .LVU30
+ 307 0034 1F91      		pop r17
+ 308 0036 0F91      		pop r16
+ 309 0038 FF90      		pop r15
+ 310 003a EF90      		pop r14
+ 311               	.LVL16:
+ 312               		.loc 1 44 1 view .LVU31
+ 313 003c DF90      		pop r13
+ 314 003e CF90      		pop r12
+ 315               	.LVL17:
+ 316               		.loc 1 44 1 view .LVU32
+ 317 0040 BF90      		pop r11
+ 318 0042 AF90      		pop r10
+ 319               	.LVL18:
+ 320               		.loc 1 44 1 view .LVU33
+ 321 0044 0895      		ret
+ 322               	.LVL19:
+ 323               	.L6:
+  38:includes/chassisCAN.c **** 			MCP2515_PullCanPacket(CANbus, MCP2515_RXB0SIDH, numBytes, data, ID);
+ 324               		.loc 1 38 4 is_stmt 1 view .LVU34
+ 325 0046 9601      		movw r18,r12
+ 326 0048 A701      		movw r20,r14
+ 327 004a 61E6      		ldi r22,lo8(97)
+ 328 004c 8C2F      		mov r24,r28
+ 329 004e 0E94 0000 		call MCP2515_PullCanPacket
+ 330               	.LVL20:
+ 331               	.L10:
+  39:includes/chassisCAN.c **** 			break;
+ 332               		.loc 1 39 4 view .LVU35
+ 333 0052 9601      		movw r18,r12
+ 334 0054 A701      		movw r20,r14
+ 335 0056 61E6      		ldi r22,lo8(97)
+ 336 0058 8C2F      		mov r24,r28
+ 337 005a 0E94 0000 		call MCP2515_PullCanPacket
+ 338               	.LVL21:
+  40:includes/chassisCAN.c **** 		default:
+ 339               		.loc 1 40 4 view .LVU36
+ 340               		.loc 1 44 1 is_stmt 0 view .LVU37
+ 341 005e 00C0      		rjmp .L3
+ 342               		.cfi_endproc
+ 343               	.LFE6:
+ 345               		.text
+ 346               	.Letext0:
+ 347               		.file 2 "/usr/local/Cellar/avr-gcc/8.1.0/avr/include/stdlib.h"
+ 348               		.file 3 "/usr/local/Cellar/avr-gcc/8.1.0/lib/avr-gcc/8/gcc/avr/8.1.0/include/stddef.h"
+ 349               		.file 4 "/usr/local/Cellar/avr-gcc/8.1.0/avr/include/stdint.h"
+ 350               		.file 5 "./utils/MCP2515.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 chassisCAN.c
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccKkbcrt.s:2      *ABS*:000000000000003e __SP_H__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccKkbcrt.s:3      *ABS*:000000000000003d __SP_L__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccKkbcrt.s:4      *ABS*:000000000000003f __SREG__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccKkbcrt.s:5      *ABS*:000000000000003b __RAMPZ__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccKkbcrt.s:6      *ABS*:0000000000000000 __tmp_reg__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccKkbcrt.s:7      *ABS*:0000000000000001 __zero_reg__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccKkbcrt.s:14     .text.CAN_send:0000000000000000 CAN_send
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccKkbcrt.s:120    .text.CAN_ID_constructor:0000000000000000 CAN_ID_constructor
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccKkbcrt.s:232    .text.CAN_pull_packet:0000000000000000 CAN_pull_packet
+
+UNDEFINED SYMBOLS
+MCP2515_findFreeTxBuffer
+MCP2515_TX
+MCP2515_check_receive_status
+MCP2515_PullCanPacket

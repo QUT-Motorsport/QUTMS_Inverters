@@ -1,0 +1,2108 @@
+   1               		.file	"chassisError.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__RAMPZ__ = 0x3b
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+  10               		.cfi_sections	.debug_frame
+  11               		.section	.rodata.str1.1,"aMS",@progbits,1
+  12               	.LC0:
+  13 0000 2573 2025 		.string	"%s %s"
+  13      7300 
+  14               		.section	.text.send_error_message,"ax",@progbits
+  15               	.global	send_error_message
+  17               	send_error_message:
+  18               	.LVL0:
+  19               	.LFB7:
+  20               		.file 1 "includes/chassisError.c"
+   1:includes/chassisError.c **** /**
+   2:includes/chassisError.c ****  * @brief Handles functions, calls and utilities related to the Error system
+   3:includes/chassisError.c ****  * 
+   4:includes/chassisError.c ****  * @file chassisError.c
+   5:includes/chassisError.c ****  * @author Jonn Dillon
+   6:includes/chassisError.c ****  * @date 2018-04-16
+   7:includes/chassisError.c ****  * 
+   8:includes/chassisError.c ****  */
+   9:includes/chassisError.c **** 
+  10:includes/chassisError.c **** #include "chassisError.h"
+  11:includes/chassisError.c **** 
+  12:includes/chassisError.c **** /**
+  13:includes/chassisError.c ****  * throw_error_code()
+  14:includes/chassisError.c ****  * Input:	severity	- Severity of the error (INFO, WARN, or ERROR)
+  15:includes/chassisError.c ****  * 			error_code		- Error to report
+  16:includes/chassisError.c ****  * Returns: none
+  17:includes/chassisError.c ****  * 
+  18:includes/chassisError.c ****  * Generates an error message, and takes the necessary actions depending on the severity and error.
+  19:includes/chassisError.c ****  * Uses 0 as the part number
+  20:includes/chassisError.c ****  **/
+  21:includes/chassisError.c **** void throw_error_code(uint16_t severity, uint16_t error_code)
+  22:includes/chassisError.c **** {	
+  23:includes/chassisError.c **** 	throw_error_code_with_number(severity, error_code, 0);
+  24:includes/chassisError.c **** }
+  25:includes/chassisError.c **** 
+  26:includes/chassisError.c **** /**
+  27:includes/chassisError.c ****  * throw_error_code_with_number()
+  28:includes/chassisError.c ****  * Input:	severity	- Severity of the error (INFO, WARN, or ERROR)
+  29:includes/chassisError.c ****  * 			error_code	- Error to report
+  30:includes/chassisError.c ****  * 			part_number - The number of the part generating the error (i.e. Gearbox 1, Radiator 2 etc.)
+  31:includes/chassisError.c ****  * Returns: none
+  32:includes/chassisError.c ****  * 
+  33:includes/chassisError.c ****  * Generates an error message, and takes the necessary actions depending on the severity and error
+  34:includes/chassisError.c ****  * 
+  35:includes/chassisError.c ****  * */
+  36:includes/chassisError.c **** void throw_error_code_with_number(uint16_t severity, uint16_t error_code, uint16_t part_number) 
+  37:includes/chassisError.c **** {
+  38:includes/chassisError.c **** 	switch (error_code) {
+  39:includes/chassisError.c **** 		
+  40:includes/chassisError.c ****         // case ERROR_CODE:					
+  41:includes/chassisError.c **** 		// 	switch (severity) {
+  42:includes/chassisError.c **** 		// 		case ERROR_STRING_INFO:
+  43:includes/chassisError.c **** 		// 		// Logging behaviour for Info-level logs
+  44:includes/chassisError.c **** 		// 		send_error_message(ERROR_STRING_INFO, "Info Description", part_number);
+  45:includes/chassisError.c **** 		// 		// Additional Info Handling
+  46:includes/chassisError.c **** 		// 		break;
+  47:includes/chassisError.c **** 
+  48:includes/chassisError.c **** 		// 		case ERROR_LEVEL_WARN:
+  49:includes/chassisError.c **** 		// 		// Loggging behaviour for Warning-level logs
+  50:includes/chassisError.c **** 		// 		send_error_message(ERROR_STRING_WARN, "Warning Description!", part_number);
+  51:includes/chassisError.c **** 		// 		// Additional Warning Handling
+  52:includes/chassisError.c **** 		// 		break;
+  53:includes/chassisError.c **** 
+  54:includes/chassisError.c **** 		// 		case ERROR_LEVEL_ERROR:
+  55:includes/chassisError.c **** 		// 		// Logging behaviour for Error-level logs
+  56:includes/chassisError.c **** 		// 		send_error_message(ERROR_STRING_ERROR, "ERROR DESCRIPTION", part_number);
+  57:includes/chassisError.c **** 		// 		// Additional Error Handling
+  58:includes/chassisError.c **** 		// 		break;
+  59:includes/chassisError.c **** 		//     }			
+  60:includes/chassisError.c **** 		// break;
+  61:includes/chassisError.c **** 
+  62:includes/chassisError.c ****         case ERROR_GENERAL:					
+  63:includes/chassisError.c **** 			switch (severity) {
+  64:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+  65:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+  66:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Error", part_number);
+  67:includes/chassisError.c **** 				// Additional Info Handling
+  68:includes/chassisError.c **** 				break;
+  69:includes/chassisError.c **** 
+  70:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+  71:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+  72:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Error!", part_number);
+  73:includes/chassisError.c **** 				// Additional Warning Handling
+  74:includes/chassisError.c **** 				break;
+  75:includes/chassisError.c **** 
+  76:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+  77:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+  78:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "ERROR", part_number);
+  79:includes/chassisError.c **** 				// Additional Error Handling
+  80:includes/chassisError.c **** 				break;
+  81:includes/chassisError.c **** 		    }			
+  82:includes/chassisError.c **** 		break;
+  83:includes/chassisError.c **** 
+  84:includes/chassisError.c ****         // CANBUS based errors
+  85:includes/chassisError.c ****         // --------------------------------------------------------------------
+  86:includes/chassisError.c **** 
+  87:includes/chassisError.c ****         case ERROR_CANBUS_1_NO_RESPONSE:					
+  88:includes/chassisError.c **** 			switch (severity) {
+  89:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+  90:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+  91:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "CANBUS 1 No Response", part_number);
+  92:includes/chassisError.c **** 				// Additional Info Handling
+  93:includes/chassisError.c **** 				break;
+  94:includes/chassisError.c **** 
+  95:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+  96:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+  97:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "CANBUS 1 No Response!", part_number);
+  98:includes/chassisError.c **** 				// Additional Warning Handling
+  99:includes/chassisError.c **** 				break;
+ 100:includes/chassisError.c **** 
+ 101:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 102:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 103:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "CANBUS 1 CRITICAL NO RESPONSE", part_number);
+ 104:includes/chassisError.c **** 				// Additional Error Handling
+ 105:includes/chassisError.c **** 				break;
+ 106:includes/chassisError.c **** 		    }			
+ 107:includes/chassisError.c **** 		break;
+ 108:includes/chassisError.c **** 
+ 109:includes/chassisError.c ****         case ERROR_CANBUS_1_RESPONSE_MALFORMED:					
+ 110:includes/chassisError.c **** 			switch (severity) {
+ 111:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 112:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 113:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "CANBUS 1 Malformed Packet", part_number);
+ 114:includes/chassisError.c **** 				// Additional Info Handling
+ 115:includes/chassisError.c **** 				break;
+ 116:includes/chassisError.c **** 
+ 117:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 118:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 119:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "CANBUS 1 Malformed Packet!", part_number);
+ 120:includes/chassisError.c **** 				// Additional Warning Handling
+ 121:includes/chassisError.c **** 				break;
+ 122:includes/chassisError.c **** 
+ 123:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 124:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 125:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "CANBUS 1 CRITICAL MALFORMED PACKET", part_number);
+ 126:includes/chassisError.c **** 				// Additional Error Handling
+ 127:includes/chassisError.c **** 				break;
+ 128:includes/chassisError.c **** 		    }			
+ 129:includes/chassisError.c **** 		break;
+ 130:includes/chassisError.c **** 
+ 131:includes/chassisError.c ****         case ERROR_CANBUS_2_NO_RESPONSE:					
+ 132:includes/chassisError.c **** 			switch (severity) {
+ 133:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 134:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 135:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "CANBUS 2 No Response", part_number);
+ 136:includes/chassisError.c **** 				// Additional Info Handling
+ 137:includes/chassisError.c **** 				break;
+ 138:includes/chassisError.c **** 
+ 139:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 140:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 141:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "CANBUS 2 No Response!", part_number);
+ 142:includes/chassisError.c **** 				// Additional Warning Handling
+ 143:includes/chassisError.c **** 				break;
+ 144:includes/chassisError.c **** 
+ 145:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 146:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 147:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "CANBUS 2 CRITICAL NO RESPONSE", part_number);
+ 148:includes/chassisError.c **** 				// Additional Error Handling
+ 149:includes/chassisError.c **** 				break;
+ 150:includes/chassisError.c **** 		    }			
+ 151:includes/chassisError.c **** 		break;
+ 152:includes/chassisError.c **** 
+ 153:includes/chassisError.c ****         case ERROR_CANBUS_2_RESPONSE_MALFORMED:					
+ 154:includes/chassisError.c **** 			switch (severity) {
+ 155:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 156:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 157:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "CANBUS 2 Malformed Packet", part_number);
+ 158:includes/chassisError.c **** 				// Additional Info Handling
+ 159:includes/chassisError.c **** 				break;
+ 160:includes/chassisError.c **** 
+ 161:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 162:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 163:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "CANBUS 2 Malformed Packet!", part_number);
+ 164:includes/chassisError.c **** 				// Additional Warning Handling
+ 165:includes/chassisError.c **** 				break;
+ 166:includes/chassisError.c **** 
+ 167:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 168:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 169:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "CANBUS 2 CRITICAL MALFORMED PACKET", part_number);
+ 170:includes/chassisError.c **** 				// Additional Error Handling
+ 171:includes/chassisError.c **** 				break;
+ 172:includes/chassisError.c **** 		    }			
+ 173:includes/chassisError.c **** 		break;
+ 174:includes/chassisError.c **** 
+ 175:includes/chassisError.c ****         case ERROR_CANBUS_3_NO_RESPONSE:					
+ 176:includes/chassisError.c **** 			switch (severity) {
+ 177:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 178:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 179:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "CANBUS 3 No Response", part_number);
+ 180:includes/chassisError.c **** 				// Additional Info Handling
+ 181:includes/chassisError.c **** 				break;
+ 182:includes/chassisError.c **** 
+ 183:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 184:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 185:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "CANBUS 3 No Response!", part_number);
+ 186:includes/chassisError.c **** 				// Additional Warning Handling
+ 187:includes/chassisError.c **** 				break;
+ 188:includes/chassisError.c **** 
+ 189:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 190:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 191:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "CANBUS 3 CRITICAL NO RESPONSE", part_number);
+ 192:includes/chassisError.c **** 				// Additional Error Handling
+ 193:includes/chassisError.c **** 				break;
+ 194:includes/chassisError.c **** 		    }			
+ 195:includes/chassisError.c **** 		break;
+ 196:includes/chassisError.c **** 
+ 197:includes/chassisError.c ****         case ERROR_CANBUS_3_RESPONSE_MALFORMED:					
+ 198:includes/chassisError.c **** 			switch (severity) {
+ 199:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 200:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 201:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "CANBUS 3 Malformed Packet", part_number);
+ 202:includes/chassisError.c **** 				// Additional Info Handling
+ 203:includes/chassisError.c **** 				break;
+ 204:includes/chassisError.c **** 
+ 205:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 206:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 207:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "CANBUS 3 Malformed Packet!", part_number);
+ 208:includes/chassisError.c **** 				// Additional Warning Handling
+ 209:includes/chassisError.c **** 				break;
+ 210:includes/chassisError.c **** 
+ 211:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 212:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 213:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "CANBUS 3 CRITICAL MALFORMED PACKET", part_number);
+ 214:includes/chassisError.c **** 				// Additional Error Handling
+ 215:includes/chassisError.c **** 				break;
+ 216:includes/chassisError.c **** 		    }			
+ 217:includes/chassisError.c **** 		break;
+ 218:includes/chassisError.c **** 
+ 219:includes/chassisError.c ****         // Sensor based errors
+ 220:includes/chassisError.c ****         // --------------------------------------------------------------------
+ 221:includes/chassisError.c **** 
+ 222:includes/chassisError.c **** 		case ERROR_GEARBOX_TEMPERATURE_LOW:					
+ 223:includes/chassisError.c **** 			switch (severity) {
+ 224:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 225:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 226:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Gearbox %d Temperature Normal", part_number);
+ 227:includes/chassisError.c **** 				// Additional Info Handling
+ 228:includes/chassisError.c **** 				break;
+ 229:includes/chassisError.c **** 
+ 230:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 231:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 232:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Gearbox %d Temperature Abnormally Low!", part_number);
+ 233:includes/chassisError.c **** 				// Additional Warning Handling
+ 234:includes/chassisError.c **** 				break;
+ 235:includes/chassisError.c **** 
+ 236:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 237:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 238:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "GEARBOX %d TEMPERATURE CRITICALLY LOW", part_number);
+ 239:includes/chassisError.c **** 				// Additional Error Handling
+ 240:includes/chassisError.c **** 				break;
+ 241:includes/chassisError.c **** 			}			
+ 242:includes/chassisError.c **** 		break;
+ 243:includes/chassisError.c **** 
+ 244:includes/chassisError.c **** 		case ERROR_GEARBOX_TEMPERATURE_HIGH:					
+ 245:includes/chassisError.c **** 			switch (severity) {
+ 246:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 247:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 248:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Gearbox %d Temperature Normal", part_number);
+ 249:includes/chassisError.c **** 				// Additional Info Handling
+ 250:includes/chassisError.c **** 				break;
+ 251:includes/chassisError.c **** 
+ 252:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 253:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 254:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Gearbox %d Temperature Abnormally High!", part_number);
+ 255:includes/chassisError.c **** 				// Additional Warning Handling
+ 256:includes/chassisError.c **** 				break;
+ 257:includes/chassisError.c **** 
+ 258:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 259:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 260:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "GEARBOX %d TEMPERATURE CRITICALLY HIGH", part_number);
+ 261:includes/chassisError.c **** 				// Additional Error Handling
+ 262:includes/chassisError.c **** 				break;
+ 263:includes/chassisError.c **** 			}			
+ 264:includes/chassisError.c **** 		break;
+ 265:includes/chassisError.c **** 
+ 266:includes/chassisError.c **** 		case ERROR_RADIATOR_TEMPERATURE_LOW:					
+ 267:includes/chassisError.c **** 			switch (severity) {
+ 268:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 269:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 270:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Radiator %d Temperature Normal", part_number);
+ 271:includes/chassisError.c **** 				// Additional Info Handling
+ 272:includes/chassisError.c **** 				break;
+ 273:includes/chassisError.c **** 
+ 274:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 275:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 276:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Radiator %d Temperature Abnormally Low!", part_number);
+ 277:includes/chassisError.c **** 				// Additional Warning Handling
+ 278:includes/chassisError.c **** 				break;
+ 279:includes/chassisError.c **** 
+ 280:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 281:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 282:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "RADIATOR %d TEMPERATURE CRITICALLY LOW", part_number);
+ 283:includes/chassisError.c **** 				// Additional Error Handling
+ 284:includes/chassisError.c **** 				break;
+ 285:includes/chassisError.c **** 			}			
+ 286:includes/chassisError.c **** 		break;
+ 287:includes/chassisError.c **** 
+ 288:includes/chassisError.c **** 		case ERROR_RADIATOR_TEMPERATURE_HIGH:					
+ 289:includes/chassisError.c **** 			switch (severity) {
+ 290:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 291:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 292:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Radiator %d Temperature Normal", part_number);
+ 293:includes/chassisError.c **** 				// Additional Info Handling
+ 294:includes/chassisError.c **** 				break;
+ 295:includes/chassisError.c **** 
+ 296:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 297:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 298:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Radiator %d Temperature Abnormally High!", part_number);
+ 299:includes/chassisError.c **** 				// Additional Warning Handling
+ 300:includes/chassisError.c **** 				break;
+ 301:includes/chassisError.c **** 
+ 302:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 303:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 304:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "RADIATOR %d TEMPERATURE CRITICALLY HIGH", part_number);
+ 305:includes/chassisError.c **** 				// Additional Error Handling
+ 306:includes/chassisError.c **** 				break;
+ 307:includes/chassisError.c **** 			}			
+ 308:includes/chassisError.c **** 		break;
+ 309:includes/chassisError.c **** 
+ 310:includes/chassisError.c **** 		case ERROR_BRAKES_PRESSURE_LOW:					
+ 311:includes/chassisError.c **** 			switch (severity) {
+ 312:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 313:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 314:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Brakes %d Pressure Normal", part_number);
+ 315:includes/chassisError.c **** 				// Additional Info Handling
+ 316:includes/chassisError.c **** 				break;
+ 317:includes/chassisError.c **** 
+ 318:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 319:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 320:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Brakes %d Pressure Abnormally Low!", part_number);
+ 321:includes/chassisError.c **** 				// Additional Warning Handling
+ 322:includes/chassisError.c **** 				break;
+ 323:includes/chassisError.c **** 
+ 324:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 325:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 326:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "BRAKES %d PRESSURE CRITICALLY LOW", part_number);
+ 327:includes/chassisError.c **** 				// Additional Error Handling
+ 328:includes/chassisError.c **** 				break;
+ 329:includes/chassisError.c **** 			}			
+ 330:includes/chassisError.c **** 		break;
+ 331:includes/chassisError.c **** 
+ 332:includes/chassisError.c **** 		case ERROR_BRAKES_PRESSURE_HIGH:					
+ 333:includes/chassisError.c **** 			switch (severity) {
+ 334:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 335:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 336:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Brakes %d Pressure Normal", part_number);
+ 337:includes/chassisError.c **** 				// Additional Info Handling
+ 338:includes/chassisError.c **** 				break;
+ 339:includes/chassisError.c **** 
+ 340:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 341:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 342:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Brakes %d Pressure Abnormally High!", part_number);
+ 343:includes/chassisError.c **** 				// Additional Warning Handling
+ 344:includes/chassisError.c **** 				break;
+ 345:includes/chassisError.c **** 
+ 346:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 347:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 348:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "BRAKES %d PRESSURE CRITICALLY HIGH", part_number);
+ 349:includes/chassisError.c **** 				// Additional Error Handling
+ 350:includes/chassisError.c **** 				break;
+ 351:includes/chassisError.c **** 			}			
+ 352:includes/chassisError.c **** 		break;
+ 353:includes/chassisError.c **** 
+ 354:includes/chassisError.c ****         case ERROR_BRAKES_PRESSURE:					
+ 355:includes/chassisError.c **** 			switch (severity) {
+ 356:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 357:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 358:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Brakes %d Pressure Normal", part_number);
+ 359:includes/chassisError.c **** 				// Additional Info Handling
+ 360:includes/chassisError.c **** 				break;
+ 361:includes/chassisError.c **** 
+ 362:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 363:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 364:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Brakes %d Pressure Warnning!", part_number);
+ 365:includes/chassisError.c **** 				// Additional Warning Handling
+ 366:includes/chassisError.c **** 				break;
+ 367:includes/chassisError.c **** 
+ 368:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 369:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 370:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "BRAKES %d PRESSURE CRITICAL!", part_number);
+ 371:includes/chassisError.c **** 				// Additional Error Handling
+ 372:includes/chassisError.c **** 				break;
+ 373:includes/chassisError.c **** 			}			
+ 374:includes/chassisError.c **** 		break;
+ 375:includes/chassisError.c **** 
+ 376:includes/chassisError.c **** 		case ERROR_BRAKES_POSITION_LOW:					
+ 377:includes/chassisError.c **** 			switch (severity) {
+ 378:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 379:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 380:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Brakes %d Position Normal", part_number);
+ 381:includes/chassisError.c **** 				// Additional Info Handling
+ 382:includes/chassisError.c **** 				break;
+ 383:includes/chassisError.c **** 
+ 384:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 385:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 386:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Brakes %d Position Abnormally Low!", part_number);
+ 387:includes/chassisError.c **** 				// Additional Warning Handling
+ 388:includes/chassisError.c **** 				break;
+ 389:includes/chassisError.c **** 
+ 390:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 391:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 392:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "BRAKES %d POSITION CRITICALLY LOW", part_number);
+ 393:includes/chassisError.c **** 				// Additional Error Handling
+ 394:includes/chassisError.c **** 				break;
+ 395:includes/chassisError.c **** 			}			
+ 396:includes/chassisError.c **** 		break;
+ 397:includes/chassisError.c **** 
+ 398:includes/chassisError.c **** 		case ERROR_BRAKES_POSITION_HIGH:					
+ 399:includes/chassisError.c **** 			switch (severity) {
+ 400:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 401:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 402:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Brakes %d Pressure Normal", part_number);
+ 403:includes/chassisError.c **** 				// Additional Info Handling
+ 404:includes/chassisError.c **** 				break;
+ 405:includes/chassisError.c **** 
+ 406:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 407:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 408:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Brakes %d Pressure Abnormally High!", part_number);
+ 409:includes/chassisError.c **** 				// Additional Warning Handling
+ 410:includes/chassisError.c **** 				break;
+ 411:includes/chassisError.c **** 
+ 412:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 413:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 414:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "BRAKES %d PRESSURE CRITICALLY HIGH", part_number);
+ 415:includes/chassisError.c **** 				// Additional Error Handling
+ 416:includes/chassisError.c **** 				break;
+ 417:includes/chassisError.c **** 			}			
+ 418:includes/chassisError.c **** 		break;
+ 419:includes/chassisError.c **** 
+ 420:includes/chassisError.c ****         case ERROR_BRAKES_POSITION:					
+ 421:includes/chassisError.c **** 			switch (severity) {
+ 422:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 423:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 424:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Brakes %d Position Normal", part_number);
+ 425:includes/chassisError.c **** 				// Additional Info Handling
+ 426:includes/chassisError.c **** 				break;
+ 427:includes/chassisError.c **** 
+ 428:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 429:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 430:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Brakes %d Position Warning!", part_number);
+ 431:includes/chassisError.c **** 				// Additional Warning Handling
+ 432:includes/chassisError.c **** 				break;
+ 433:includes/chassisError.c **** 
+ 434:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 435:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 436:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "BRAKES %d POSITION CRITICAL", part_number);
+ 437:includes/chassisError.c **** 				// Additional Error Handling
+ 438:includes/chassisError.c **** 				break;
+ 439:includes/chassisError.c **** 			}			
+ 440:includes/chassisError.c **** 		break;
+ 441:includes/chassisError.c **** 
+ 442:includes/chassisError.c **** 		case ERROR_STEERING_ANGLE_LEFT:					
+ 443:includes/chassisError.c **** 			switch (severity) {
+ 444:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 445:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 446:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Steering Angle Normal", part_number);
+ 447:includes/chassisError.c **** 				// Additional Info Handling
+ 448:includes/chassisError.c **** 				break;
+ 449:includes/chassisError.c **** 
+ 450:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 451:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 452:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "STEERING ANGLE OUTSIDE LEFT PARAMETER", part_number);
+ 453:includes/chassisError.c **** 				// Additional Error Handling
+ 454:includes/chassisError.c **** 				break;
+ 455:includes/chassisError.c **** 			}			
+ 456:includes/chassisError.c **** 		break;
+ 457:includes/chassisError.c **** 
+ 458:includes/chassisError.c **** 		case ERROR_STEERING_ANGLE_RIGHT:					
+ 459:includes/chassisError.c **** 			switch (severity) {
+ 460:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 461:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 462:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Steering Angle Normal", part_number);
+ 463:includes/chassisError.c **** 				// Additional Info Handling
+ 464:includes/chassisError.c **** 				break;
+ 465:includes/chassisError.c **** 
+ 466:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 467:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 468:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "STEERING ANGLE OUTSIDE RIGHT PARAMETER", part_number);
+ 469:includes/chassisError.c **** 				// Additional Error Handling
+ 470:includes/chassisError.c **** 				break;
+ 471:includes/chassisError.c **** 			}			
+ 472:includes/chassisError.c **** 		break;
+ 473:includes/chassisError.c **** 
+ 474:includes/chassisError.c **** 		case ERROR_THROTTLE_ERROR:					
+ 475:includes/chassisError.c **** 			switch (severity) {
+ 476:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 477:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 478:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Throttle Function Normal", part_number);
+ 479:includes/chassisError.c **** 				// Additional Info Handling
+ 480:includes/chassisError.c **** 				break;
+ 481:includes/chassisError.c **** 
+ 482:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 483:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 484:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "THROTTLE CRITICAL MALFUNCTION", part_number);
+ 485:includes/chassisError.c **** 				// Additional Error Handling
+ 486:includes/chassisError.c **** 				break;
+ 487:includes/chassisError.c **** 			}			
+ 488:includes/chassisError.c **** 		break;
+ 489:includes/chassisError.c **** 
+ 490:includes/chassisError.c **** 		case ERROR_CAR_UPRIGHT_ERROR:					
+ 491:includes/chassisError.c **** 			switch (severity) {
+ 492:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 493:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 494:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Car is upright", part_number);
+ 495:includes/chassisError.c **** 				// Additional Info Handling
+ 496:includes/chassisError.c **** 				break;
+ 497:includes/chassisError.c **** 
+ 498:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 499:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 500:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "CAR HAS OVERTURNED", part_number);
+ 501:includes/chassisError.c **** 				// Additional Error Handling
+ 502:includes/chassisError.c **** 				break;
+ 503:includes/chassisError.c **** 			}			
+ 504:includes/chassisError.c **** 		break;
+ 505:includes/chassisError.c **** 
+ 506:includes/chassisError.c **** 		case ERROR_BATTERY_CHARGE:					
+ 507:includes/chassisError.c **** 			switch (severity) {
+ 508:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 509:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 510:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Battery %d Charge Normal", part_number);
+ 511:includes/chassisError.c **** 				// Additional Info Handling
+ 512:includes/chassisError.c **** 				break;
+ 513:includes/chassisError.c **** 
+ 514:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 515:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 516:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Battery %d Charge Low", part_number);
+ 517:includes/chassisError.c **** 				// Additional Warning Handling
+ 518:includes/chassisError.c **** 				break;
+ 519:includes/chassisError.c **** 
+ 520:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 521:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 522:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "BATTERY %d CHARGE CRITICAL", part_number);
+ 523:includes/chassisError.c **** 				// Additional Error Handling
+ 524:includes/chassisError.c **** 				break;
+ 525:includes/chassisError.c **** 			}			
+ 526:includes/chassisError.c **** 		break;
+ 527:includes/chassisError.c **** 
+ 528:includes/chassisError.c **** 		case ERROR_BATTERY_TEMPERATURE_LOW:					
+ 529:includes/chassisError.c **** 			switch (severity) {
+ 530:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 531:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 532:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Battery %d Temperature Normal", part_number);
+ 533:includes/chassisError.c **** 				// Additional Info Handling
+ 534:includes/chassisError.c **** 				break;
+ 535:includes/chassisError.c **** 
+ 536:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 537:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 538:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Battery %d Temperature Abnormally Low!", part_number);
+ 539:includes/chassisError.c **** 				// Additional Warning Handling
+ 540:includes/chassisError.c **** 				break;
+ 541:includes/chassisError.c **** 
+ 542:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 543:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 544:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "BATTERY %d TEMPERATURE CRITICALLY LOW", part_number);
+ 545:includes/chassisError.c **** 				// Additional Error Handling
+ 546:includes/chassisError.c **** 				break;
+ 547:includes/chassisError.c **** 			}			
+ 548:includes/chassisError.c **** 		break;
+ 549:includes/chassisError.c **** 
+ 550:includes/chassisError.c **** 		case ERROR_BATTERY_TEMPERATURE_HIGH:					
+ 551:includes/chassisError.c **** 			switch (severity) {
+ 552:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 553:includes/chassisError.c **** 				// Logging behaviour for Info-level logs
+ 554:includes/chassisError.c **** 				send_error_message(ERROR_STRING_INFO, "Battery %d Temperature Normal", part_number);
+ 555:includes/chassisError.c **** 				// Additional Info Handling
+ 556:includes/chassisError.c **** 				break;
+ 557:includes/chassisError.c **** 
+ 558:includes/chassisError.c **** 				case ERROR_LEVEL_WARN:
+ 559:includes/chassisError.c **** 				// Loggging behaviour for Warning-level logs
+ 560:includes/chassisError.c **** 				send_error_message(ERROR_STRING_WARN, "Battery %d Temperature Abnormally High!", part_number);
+ 561:includes/chassisError.c **** 				// Additional Warning Handling
+ 562:includes/chassisError.c **** 				break;
+ 563:includes/chassisError.c **** 
+ 564:includes/chassisError.c **** 				case ERROR_LEVEL_ERROR:
+ 565:includes/chassisError.c **** 				// Logging behaviour for Error-level logs
+ 566:includes/chassisError.c **** 				send_error_message(ERROR_STRING_ERROR, "BATTERY %d TEMPERATURE CRITICALLY HIGH", part_number);
+ 567:includes/chassisError.c **** 				// Additional Error Handling
+ 568:includes/chassisError.c **** 				break;
+ 569:includes/chassisError.c **** 			}			
+ 570:includes/chassisError.c **** 		break;
+ 571:includes/chassisError.c **** 
+ 572:includes/chassisError.c **** 		// Template for new error codes, copy and uncomment to use
+ 573:includes/chassisError.c **** 		// If the description contains a single %d, it can be used to indicate a part number
+ 574:includes/chassisError.c **** 		// case ERROR_CODE:					
+ 575:includes/chassisError.c **** 		// 	switch (severity) {
+ 576:includes/chassisError.c **** 		// 		case ERROR_STRING_INFO:
+ 577:includes/chassisError.c **** 		// 		// Logging behaviour for Info-level logs
+ 578:includes/chassisError.c **** 		// 		send_error_message(ERROR_STRING_INFO, "Info Description", part_number);
+ 579:includes/chassisError.c **** 		//		// Additional Info Handling
+ 580:includes/chassisError.c **** 		// 		break;
+ 581:includes/chassisError.c **** 
+ 582:includes/chassisError.c **** 		// 		case ERROR_LEVEL_WARN:
+ 583:includes/chassisError.c **** 		// 		// Loggging behaviour for Warning-level logs
+ 584:includes/chassisError.c **** 		// 		send_error_message(ERROR_STRING_WARN, "Warning Description!", part_number);
+ 585:includes/chassisError.c **** 		//		// Additional Warning Handling
+ 586:includes/chassisError.c **** 		// 		break;
+ 587:includes/chassisError.c **** 
+ 588:includes/chassisError.c **** 		// 		case ERROR_LEVEL_ERROR:
+ 589:includes/chassisError.c **** 		// 		// Logging behaviour for Error-level logs
+ 590:includes/chassisError.c **** 		// 		send_error_message(ERROR_STRING_ERROR, "ERROR DESCRIPTION", part_number);
+ 591:includes/chassisError.c **** 		//		// Additional Error Handling
+ 592:includes/chassisError.c **** 		// 		break;
+ 593:includes/chassisError.c **** 		// 	}			
+ 594:includes/chassisError.c **** 		// break;
+ 595:includes/chassisError.c **** 
+ 596:includes/chassisError.c **** 	}
+ 597:includes/chassisError.c **** }
+ 598:includes/chassisError.c **** 
+ 599:includes/chassisError.c **** /**
+ 600:includes/chassisError.c ****  * send_error_message()
+ 601:includes/chassisError.c ****  * Input: 	start		- String representation of log level
+ 602:includes/chassisError.c ****  * 			message		- Message to send - should not exceed 40 characters
+ 603:includes/chassisError.c ****  * 			part_number - The number of the part generating the error (i.e. Gearbox 1, Radiator 2 etc.)
+ 604:includes/chassisError.c ****  * Returns: none
+ 605:includes/chassisError.c ****  * 
+ 606:includes/chassisError.c ****  * Formats a 50-character long log message, and sends it over UART.
+ 607:includes/chassisError.c ****  * */
+ 608:includes/chassisError.c **** void send_error_message(char start[], char message[], uint16_t part_number) 
+ 609:includes/chassisError.c **** {
+  21               		.loc 1 609 1 view -0
+  22               		.cfi_startproc
+  23               		.loc 1 609 1 is_stmt 0 view .LVU1
+  24 0000 0F93      		push r16
+  25               	.LCFI0:
+  26               		.cfi_def_cfa_offset 3
+  27               		.cfi_offset 16, -2
+  28 0002 1F93      		push r17
+  29               	.LCFI1:
+  30               		.cfi_def_cfa_offset 4
+  31               		.cfi_offset 17, -3
+  32 0004 CF93      		push r28
+  33               	.LCFI2:
+  34               		.cfi_def_cfa_offset 5
+  35               		.cfi_offset 28, -4
+  36 0006 DF93      		push r29
+  37               	.LCFI3:
+  38               		.cfi_def_cfa_offset 6
+  39               		.cfi_offset 29, -5
+  40               	/* prologue: function */
+  41               	/* frame size = 0 */
+  42               	/* stack size = 4 */
+  43               	.L__stack_usage = 4
+  44 0008 182F      		mov r17,r24
+  45 000a 092F      		mov r16,r25
+ 610:includes/chassisError.c **** 	unsigned char *messageWithNumber;
+  46               		.loc 1 610 2 is_stmt 1 view .LVU2
+ 611:includes/chassisError.c **** 	unsigned char *errorData;
+  47               		.loc 1 611 2 view .LVU3
+ 612:includes/chassisError.c **** 	
+ 613:includes/chassisError.c **** 	// Format error message with part number if given
+ 614:includes/chassisError.c **** 	snprintf(messageWithNumber, MAX_ERROR_MESSAGE_LENGTH, message, part_number);
+  48               		.loc 1 614 2 view .LVU4
+  49 000c 5F93      		push r21
+  50               	.LCFI4:
+  51               		.cfi_def_cfa_offset 7
+  52 000e 4F93      		push r20
+  53               	.LCFI5:
+  54               		.cfi_def_cfa_offset 8
+  55 0010 7F93      		push r23
+  56               	.LCFI6:
+  57               		.cfi_def_cfa_offset 9
+  58 0012 6F93      		push r22
+  59               	.LCFI7:
+  60               		.cfi_def_cfa_offset 10
+  61 0014 1F92      		push __zero_reg__
+  62               	.LCFI8:
+  63               		.cfi_def_cfa_offset 11
+  64 0016 88E2      		ldi r24,lo8(40)
+  65               	.LVL1:
+  66               		.loc 1 614 2 is_stmt 0 view .LVU5
+  67 0018 8F93      		push r24
+  68               	.LCFI9:
+  69               		.cfi_def_cfa_offset 12
+  70 001a D0E0      		ldi r29,0
+  71 001c DF93      		push r29
+  72               	.LCFI10:
+  73               		.cfi_def_cfa_offset 13
+  74 001e C0E0      		ldi r28,0
+  75 0020 CF93      		push r28
+  76               	.LCFI11:
+  77               		.cfi_def_cfa_offset 14
+  78 0022 0E94 0000 		call snprintf
+  79               	.LVL2:
+ 615:includes/chassisError.c **** 
+ 616:includes/chassisError.c **** 	// Create error data
+ 617:includes/chassisError.c **** 	snprintf(errorData, MAX_ERROR_MESSAGE_LENGTH + 10, "%s %s", start, messageWithNumber);
+  80               		.loc 1 617 2 is_stmt 1 view .LVU6
+  81 0026 DF93      		push r29
+  82               	.LCFI12:
+  83               		.cfi_def_cfa_offset 15
+  84 0028 CF93      		push r28
+  85               	.LCFI13:
+  86               		.cfi_def_cfa_offset 16
+  87 002a 0F93      		push r16
+  88               	.LCFI14:
+  89               		.cfi_def_cfa_offset 17
+  90 002c 1F93      		push r17
+  91               	.LCFI15:
+  92               		.cfi_def_cfa_offset 18
+  93 002e 80E0      		ldi r24,lo8(.LC0)
+  94 0030 90E0      		ldi r25,hi8(.LC0)
+  95 0032 9F93      		push r25
+  96               	.LCFI16:
+  97               		.cfi_def_cfa_offset 19
+  98 0034 8F93      		push r24
+  99               	.LCFI17:
+ 100               		.cfi_def_cfa_offset 20
+ 101 0036 1F92      		push __zero_reg__
+ 102               	.LCFI18:
+ 103               		.cfi_def_cfa_offset 21
+ 104 0038 82E3      		ldi r24,lo8(50)
+ 105 003a 8F93      		push r24
+ 106               	.LCFI19:
+ 107               		.cfi_def_cfa_offset 22
+ 108 003c 1F92      		push __zero_reg__
+ 109               	.LCFI20:
+ 110               		.cfi_def_cfa_offset 23
+ 111 003e 1F92      		push __zero_reg__
+ 112               	.LCFI21:
+ 113               		.cfi_def_cfa_offset 24
+ 114 0040 0E94 0000 		call snprintf
+ 115               	.LVL3:
+ 618:includes/chassisError.c **** 	
+ 619:includes/chassisError.c **** 	// Send error data over UART
+ 620:includes/chassisError.c **** 	// uart_send_data(errorData, MAX_ERROR_MESSAGE_LENGTH + 10);
+ 621:includes/chassisError.c **** }
+ 116               		.loc 1 621 1 is_stmt 0 view .LVU7
+ 117 0044 8DB7      		in r24,__SP_L__
+ 118 0046 9EB7      		in r25,__SP_H__
+ 119 0048 4296      		adiw r24,18
+ 120 004a 0FB6      		in __tmp_reg__,__SREG__
+ 121 004c F894      		cli
+ 122 004e 9EBF      		out __SP_H__,r25
+ 123 0050 0FBE      		out __SREG__,__tmp_reg__
+ 124 0052 8DBF      		out __SP_L__,r24
+ 125               	.LCFI22:
+ 126               		.cfi_def_cfa_offset 6
+ 127               	/* epilogue start */
+ 128 0054 DF91      		pop r29
+ 129 0056 CF91      		pop r28
+ 130 0058 1F91      		pop r17
+ 131 005a 0F91      		pop r16
+ 132 005c 0895      		ret
+ 133               		.cfi_endproc
+ 134               	.LFE7:
+ 136               		.section	.rodata.str1.1
+ 137               	.LC1:
+ 138 0006 4572 726F 		.string	"Error"
+ 138      7200 
+ 139               	.LC2:
+ 140 000c 494E 464F 		.string	"INFO"
+ 140      00
+ 141               	.LC3:
+ 142 0011 4572 726F 		.string	"Error!"
+ 142      7221 00
+ 143               	.LC4:
+ 144 0018 2157 4152 		.string	"!WARNING!"
+ 144      4E49 4E47 
+ 144      2100 
+ 145               	.LC5:
+ 146 0022 4552 524F 		.string	"ERROR"
+ 146      5200 
+ 147               	.LC6:
+ 148 0028 2323 4552 		.string	"##ERROR##"
+ 148      524F 5223 
+ 148      2300 
+ 149               	.LC7:
+ 150 0032 4341 4E42 		.string	"CANBUS 1 No Response"
+ 150      5553 2031 
+ 150      204E 6F20 
+ 150      5265 7370 
+ 150      6F6E 7365 
+ 151               	.LC8:
+ 152 0047 4341 4E42 		.string	"CANBUS 1 No Response!"
+ 152      5553 2031 
+ 152      204E 6F20 
+ 152      5265 7370 
+ 152      6F6E 7365 
+ 153               	.LC9:
+ 154 005d 4341 4E42 		.string	"CANBUS 1 CRITICAL NO RESPONSE"
+ 154      5553 2031 
+ 154      2043 5249 
+ 154      5449 4341 
+ 154      4C20 4E4F 
+ 155               	.LC10:
+ 156 007b 4341 4E42 		.string	"CANBUS 1 Malformed Packet"
+ 156      5553 2031 
+ 156      204D 616C 
+ 156      666F 726D 
+ 156      6564 2050 
+ 157               	.LC11:
+ 158 0095 4341 4E42 		.string	"CANBUS 1 Malformed Packet!"
+ 158      5553 2031 
+ 158      204D 616C 
+ 158      666F 726D 
+ 158      6564 2050 
+ 159               	.LC12:
+ 160 00b0 4341 4E42 		.string	"CANBUS 1 CRITICAL MALFORMED PACKET"
+ 160      5553 2031 
+ 160      2043 5249 
+ 160      5449 4341 
+ 160      4C20 4D41 
+ 161               	.LC13:
+ 162 00d3 4341 4E42 		.string	"CANBUS 2 No Response"
+ 162      5553 2032 
+ 162      204E 6F20 
+ 162      5265 7370 
+ 162      6F6E 7365 
+ 163               	.LC14:
+ 164 00e8 4341 4E42 		.string	"CANBUS 2 No Response!"
+ 164      5553 2032 
+ 164      204E 6F20 
+ 164      5265 7370 
+ 164      6F6E 7365 
+ 165               	.LC15:
+ 166 00fe 4341 4E42 		.string	"CANBUS 2 CRITICAL NO RESPONSE"
+ 166      5553 2032 
+ 166      2043 5249 
+ 166      5449 4341 
+ 166      4C20 4E4F 
+ 167               	.LC16:
+ 168 011c 4341 4E42 		.string	"CANBUS 2 Malformed Packet"
+ 168      5553 2032 
+ 168      204D 616C 
+ 168      666F 726D 
+ 168      6564 2050 
+ 169               	.LC17:
+ 170 0136 4341 4E42 		.string	"CANBUS 2 Malformed Packet!"
+ 170      5553 2032 
+ 170      204D 616C 
+ 170      666F 726D 
+ 170      6564 2050 
+ 171               	.LC18:
+ 172 0151 4341 4E42 		.string	"CANBUS 2 CRITICAL MALFORMED PACKET"
+ 172      5553 2032 
+ 172      2043 5249 
+ 172      5449 4341 
+ 172      4C20 4D41 
+ 173               	.LC19:
+ 174 0174 4341 4E42 		.string	"CANBUS 3 No Response"
+ 174      5553 2033 
+ 174      204E 6F20 
+ 174      5265 7370 
+ 174      6F6E 7365 
+ 175               	.LC20:
+ 176 0189 4341 4E42 		.string	"CANBUS 3 No Response!"
+ 176      5553 2033 
+ 176      204E 6F20 
+ 176      5265 7370 
+ 176      6F6E 7365 
+ 177               	.LC21:
+ 178 019f 4341 4E42 		.string	"CANBUS 3 CRITICAL NO RESPONSE"
+ 178      5553 2033 
+ 178      2043 5249 
+ 178      5449 4341 
+ 178      4C20 4E4F 
+ 179               	.LC22:
+ 180 01bd 4341 4E42 		.string	"CANBUS 3 Malformed Packet"
+ 180      5553 2033 
+ 180      204D 616C 
+ 180      666F 726D 
+ 180      6564 2050 
+ 181               	.LC23:
+ 182 01d7 4341 4E42 		.string	"CANBUS 3 Malformed Packet!"
+ 182      5553 2033 
+ 182      204D 616C 
+ 182      666F 726D 
+ 182      6564 2050 
+ 183               	.LC24:
+ 184 01f2 4341 4E42 		.string	"CANBUS 3 CRITICAL MALFORMED PACKET"
+ 184      5553 2033 
+ 184      2043 5249 
+ 184      5449 4341 
+ 184      4C20 4D41 
+ 185               	.LC25:
+ 186 0215 4765 6172 		.string	"Gearbox %d Temperature Normal"
+ 186      626F 7820 
+ 186      2564 2054 
+ 186      656D 7065 
+ 186      7261 7475 
+ 187               	.LC26:
+ 188 0233 4765 6172 		.string	"Gearbox %d Temperature Abnormally Low!"
+ 188      626F 7820 
+ 188      2564 2054 
+ 188      656D 7065 
+ 188      7261 7475 
+ 189               	.LC27:
+ 190 025a 4745 4152 		.string	"GEARBOX %d TEMPERATURE CRITICALLY LOW"
+ 190      424F 5820 
+ 190      2564 2054 
+ 190      454D 5045 
+ 190      5241 5455 
+ 191               	.LC28:
+ 192 0280 4765 6172 		.string	"Gearbox %d Temperature Abnormally High!"
+ 192      626F 7820 
+ 192      2564 2054 
+ 192      656D 7065 
+ 192      7261 7475 
+ 193               	.LC29:
+ 194 02a8 4745 4152 		.string	"GEARBOX %d TEMPERATURE CRITICALLY HIGH"
+ 194      424F 5820 
+ 194      2564 2054 
+ 194      454D 5045 
+ 194      5241 5455 
+ 195               	.LC30:
+ 196 02cf 5261 6469 		.string	"Radiator %d Temperature Normal"
+ 196      6174 6F72 
+ 196      2025 6420 
+ 196      5465 6D70 
+ 196      6572 6174 
+ 197               	.LC31:
+ 198 02ee 5261 6469 		.string	"Radiator %d Temperature Abnormally Low!"
+ 198      6174 6F72 
+ 198      2025 6420 
+ 198      5465 6D70 
+ 198      6572 6174 
+ 199               	.LC32:
+ 200 0316 5241 4449 		.string	"RADIATOR %d TEMPERATURE CRITICALLY LOW"
+ 200      4154 4F52 
+ 200      2025 6420 
+ 200      5445 4D50 
+ 200      4552 4154 
+ 201               	.LC33:
+ 202 033d 5261 6469 		.string	"Radiator %d Temperature Abnormally High!"
+ 202      6174 6F72 
+ 202      2025 6420 
+ 202      5465 6D70 
+ 202      6572 6174 
+ 203               	.LC34:
+ 204 0366 5241 4449 		.string	"RADIATOR %d TEMPERATURE CRITICALLY HIGH"
+ 204      4154 4F52 
+ 204      2025 6420 
+ 204      5445 4D50 
+ 204      4552 4154 
+ 205               	.LC35:
+ 206 038e 4272 616B 		.string	"Brakes %d Pressure Normal"
+ 206      6573 2025 
+ 206      6420 5072 
+ 206      6573 7375 
+ 206      7265 204E 
+ 207               	.LC36:
+ 208 03a8 4272 616B 		.string	"Brakes %d Pressure Abnormally Low!"
+ 208      6573 2025 
+ 208      6420 5072 
+ 208      6573 7375 
+ 208      7265 2041 
+ 209               	.LC37:
+ 210 03cb 4252 414B 		.string	"BRAKES %d PRESSURE CRITICALLY LOW"
+ 210      4553 2025 
+ 210      6420 5052 
+ 210      4553 5355 
+ 210      5245 2043 
+ 211               	.LC38:
+ 212 03ed 4272 616B 		.string	"Brakes %d Pressure Abnormally High!"
+ 212      6573 2025 
+ 212      6420 5072 
+ 212      6573 7375 
+ 212      7265 2041 
+ 213               	.LC39:
+ 214 0411 4252 414B 		.string	"BRAKES %d PRESSURE CRITICALLY HIGH"
+ 214      4553 2025 
+ 214      6420 5052 
+ 214      4553 5355 
+ 214      5245 2043 
+ 215               	.LC40:
+ 216 0434 4272 616B 		.string	"Brakes %d Pressure Warnning!"
+ 216      6573 2025 
+ 216      6420 5072 
+ 216      6573 7375 
+ 216      7265 2057 
+ 217               	.LC41:
+ 218 0451 4252 414B 		.string	"BRAKES %d PRESSURE CRITICAL!"
+ 218      4553 2025 
+ 218      6420 5052 
+ 218      4553 5355 
+ 218      5245 2043 
+ 219               	.LC42:
+ 220 046e 4272 616B 		.string	"Brakes %d Position Normal"
+ 220      6573 2025 
+ 220      6420 506F 
+ 220      7369 7469 
+ 220      6F6E 204E 
+ 221               	.LC43:
+ 222 0488 4272 616B 		.string	"Brakes %d Position Abnormally Low!"
+ 222      6573 2025 
+ 222      6420 506F 
+ 222      7369 7469 
+ 222      6F6E 2041 
+ 223               	.LC44:
+ 224 04ab 4252 414B 		.string	"BRAKES %d POSITION CRITICALLY LOW"
+ 224      4553 2025 
+ 224      6420 504F 
+ 224      5349 5449 
+ 224      4F4E 2043 
+ 225               	.LC45:
+ 226 04cd 4272 616B 		.string	"Brakes %d Position Warning!"
+ 226      6573 2025 
+ 226      6420 506F 
+ 226      7369 7469 
+ 226      6F6E 2057 
+ 227               	.LC46:
+ 228 04e9 4252 414B 		.string	"BRAKES %d POSITION CRITICAL"
+ 228      4553 2025 
+ 228      6420 504F 
+ 228      5349 5449 
+ 228      4F4E 2043 
+ 229               	.LC47:
+ 230 0505 5374 6565 		.string	"Steering Angle Normal"
+ 230      7269 6E67 
+ 230      2041 6E67 
+ 230      6C65 204E 
+ 230      6F72 6D61 
+ 231               	.LC48:
+ 232 051b 5354 4545 		.string	"STEERING ANGLE OUTSIDE LEFT PARAMETER"
+ 232      5249 4E47 
+ 232      2041 4E47 
+ 232      4C45 204F 
+ 232      5554 5349 
+ 233               	.LC49:
+ 234 0541 5354 4545 		.string	"STEERING ANGLE OUTSIDE RIGHT PARAMETER"
+ 234      5249 4E47 
+ 234      2041 4E47 
+ 234      4C45 204F 
+ 234      5554 5349 
+ 235               	.LC50:
+ 236 0568 5468 726F 		.string	"Throttle Function Normal"
+ 236      7474 6C65 
+ 236      2046 756E 
+ 236      6374 696F 
+ 236      6E20 4E6F 
+ 237               	.LC51:
+ 238 0581 5448 524F 		.string	"THROTTLE CRITICAL MALFUNCTION"
+ 238      5454 4C45 
+ 238      2043 5249 
+ 238      5449 4341 
+ 238      4C20 4D41 
+ 239               	.LC52:
+ 240 059f 4361 7220 		.string	"Car is upright"
+ 240      6973 2075 
+ 240      7072 6967 
+ 240      6874 00
+ 241               	.LC53:
+ 242 05ae 4341 5220 		.string	"CAR HAS OVERTURNED"
+ 242      4841 5320 
+ 242      4F56 4552 
+ 242      5455 524E 
+ 242      4544 00
+ 243               	.LC54:
+ 244 05c1 4261 7474 		.string	"Battery %d Charge Normal"
+ 244      6572 7920 
+ 244      2564 2043 
+ 244      6861 7267 
+ 244      6520 4E6F 
+ 245               	.LC55:
+ 246 05da 4261 7474 		.string	"Battery %d Charge Low"
+ 246      6572 7920 
+ 246      2564 2043 
+ 246      6861 7267 
+ 246      6520 4C6F 
+ 247               	.LC56:
+ 248 05f0 4241 5454 		.string	"BATTERY %d CHARGE CRITICAL"
+ 248      4552 5920 
+ 248      2564 2043 
+ 248      4841 5247 
+ 248      4520 4352 
+ 249               	.LC57:
+ 250 060b 4261 7474 		.string	"Battery %d Temperature Normal"
+ 250      6572 7920 
+ 250      2564 2054 
+ 250      656D 7065 
+ 250      7261 7475 
+ 251               	.LC58:
+ 252 0629 4261 7474 		.string	"Battery %d Temperature Abnormally Low!"
+ 252      6572 7920 
+ 252      2564 2054 
+ 252      656D 7065 
+ 252      7261 7475 
+ 253               	.LC59:
+ 254 0650 4241 5454 		.string	"BATTERY %d TEMPERATURE CRITICALLY LOW"
+ 254      4552 5920 
+ 254      2564 2054 
+ 254      454D 5045 
+ 254      5241 5455 
+ 255               	.LC60:
+ 256 0676 4261 7474 		.string	"Battery %d Temperature Abnormally High!"
+ 256      6572 7920 
+ 256      2564 2054 
+ 256      656D 7065 
+ 256      7261 7475 
+ 257               	.LC61:
+ 258 069e 4241 5454 		.string	"BATTERY %d TEMPERATURE CRITICALLY HIGH"
+ 258      4552 5920 
+ 258      2564 2054 
+ 258      454D 5045 
+ 258      5241 5455 
+ 259               		.section	.text.throw_error_code_with_number,"ax",@progbits
+ 260               	.global	throw_error_code_with_number
+ 262               	throw_error_code_with_number:
+ 263               	.LVL4:
+ 264               	.LFB6:
+  37:includes/chassisError.c **** 	switch (error_code) {
+ 265               		.loc 1 37 1 is_stmt 1 view -0
+ 266               		.cfi_startproc
+ 267               	/* prologue: function */
+ 268               	/* frame size = 0 */
+ 269               	/* stack size = 0 */
+ 270               	.L__stack_usage = 0
+  38:includes/chassisError.c **** 		
+ 271               		.loc 1 38 2 view .LVU9
+ 272 0000 6C30      		cpi r22,12
+ 273 0002 7105      		cpc r23,__zero_reg__
+ 274 0004 01F4      		brne .+2
+ 275 0006 00C0      		rjmp .L3
+ 276 0008 00F4      		brsh .L4
+ 277 000a 6630      		cpi r22,6
+ 278 000c 7105      		cpc r23,__zero_reg__
+ 279 000e 01F4      		brne .+2
+ 280 0010 00C0      		rjmp .L5
+ 281 0012 00F4      		brsh .L6
+ 282 0014 6330      		cpi r22,3
+ 283 0016 7105      		cpc r23,__zero_reg__
+ 284 0018 01F4      		brne .+2
+ 285 001a 00C0      		rjmp .L7
+ 286 001c 00F4      		brsh .L8
+ 287 001e 6115      		cp r22,__zero_reg__
+ 288 0020 7105      		cpc r23,__zero_reg__
+ 289 0022 01F4      		brne .+2
+ 290 0024 00C0      		rjmp .L9
+ 291 0026 6230      		cpi r22,2
+ 292 0028 7105      		cpc r23,__zero_reg__
+ 293 002a 01F4      		brne .+2
+ 294 002c 00C0      		rjmp .L10
+ 295 002e 0895      		ret
+ 296               	.L8:
+ 297 0030 6430      		cpi r22,4
+ 298 0032 7105      		cpc r23,__zero_reg__
+ 299 0034 01F4      		brne .+2
+ 300 0036 00C0      		rjmp .L12
+ 301 0038 6530      		cpi r22,5
+ 302 003a 7105      		cpc r23,__zero_reg__
+ 303 003c 01F4      		brne .+2
+ 304 003e 00C0      		rjmp .L13
+ 305 0040 0895      		ret
+ 306               	.L6:
+ 307 0042 6930      		cpi r22,9
+ 308 0044 7105      		cpc r23,__zero_reg__
+ 309 0046 01F4      		brne .+2
+ 310 0048 00C0      		rjmp .L14
+ 311 004a 00F4      		brsh .L15
+ 312 004c 6730      		cpi r22,7
+ 313 004e 7105      		cpc r23,__zero_reg__
+ 314 0050 01F4      		brne .+2
+ 315 0052 00C0      		rjmp .L18
+ 316 0054 6830      		cpi r22,8
+ 317 0056 7105      		cpc r23,__zero_reg__
+ 318 0058 01F4      		brne .+2
+ 319 005a 00C0      		rjmp .L17
+ 320 005c 0895      		ret
+ 321               	.L15:
+ 322 005e 6A30      		cpi r22,10
+ 323 0060 7105      		cpc r23,__zero_reg__
+ 324 0062 01F4      		brne .+2
+ 325 0064 00C0      		rjmp .L18
+ 326 0066 6B30      		cpi r22,11
+ 327 0068 7105      		cpc r23,__zero_reg__
+ 328 006a 01F4      		brne .+2
+ 329 006c 00C0      		rjmp .L19
+ 330 006e 0895      		ret
+ 331               	.L4:
+ 332 0070 6231      		cpi r22,18
+ 333 0072 7105      		cpc r23,__zero_reg__
+ 334 0074 01F4      		brne .+2
+ 335 0076 00C0      		rjmp .L20
+ 336 0078 00F4      		brsh .L21
+ 337 007a 6F30      		cpi r22,15
+ 338 007c 7105      		cpc r23,__zero_reg__
+ 339 007e 01F4      		brne .+2
+ 340 0080 00C0      		rjmp .L22
+ 341 0082 00F4      		brsh .L23
+ 342 0084 6D30      		cpi r22,13
+ 343 0086 7105      		cpc r23,__zero_reg__
+ 344 0088 01F4      		brne .+2
+ 345 008a 00C0      		rjmp .L24
+ 346 008c 6E30      		cpi r22,14
+ 347 008e 7105      		cpc r23,__zero_reg__
+ 348 0090 01F4      		brne .+2
+ 349 0092 00C0      		rjmp .L25
+ 350 0094 0895      		ret
+ 351               	.L23:
+ 352 0096 6031      		cpi r22,16
+ 353 0098 7105      		cpc r23,__zero_reg__
+ 354 009a 01F4      		brne .+2
+ 355 009c 00C0      		rjmp .L26
+ 356 009e 6131      		cpi r22,17
+ 357 00a0 7105      		cpc r23,__zero_reg__
+ 358 00a2 01F4      		brne .+2
+ 359 00a4 00C0      		rjmp .L27
+ 360 00a6 0895      		ret
+ 361               	.L21:
+ 362 00a8 6937      		cpi r22,121
+ 363 00aa 7105      		cpc r23,__zero_reg__
+ 364 00ac 01F4      		brne .+2
+ 365 00ae 00C0      		rjmp .L28
+ 366 00b0 00F4      		brsh .L29
+ 367 00b2 6F36      		cpi r22,111
+ 368 00b4 7105      		cpc r23,__zero_reg__
+ 369 00b6 01F0      		breq .L30
+ 370 00b8 6037      		cpi r22,112
+ 371 00ba 7105      		cpc r23,__zero_reg__
+ 372 00bc 01F4      		brne .+2
+ 373 00be 00C0      		rjmp .L31
+ 374 00c0 0895      		ret
+ 375               	.L29:
+ 376 00c2 6338      		cpi r22,-125
+ 377 00c4 7105      		cpc r23,__zero_reg__
+ 378 00c6 01F4      		brne .+2
+ 379 00c8 00C0      		rjmp .L32
+ 380 00ca 6438      		cpi r22,-124
+ 381 00cc 7105      		cpc r23,__zero_reg__
+ 382 00ce 01F4      		brne .+2
+ 383 00d0 00C0      		rjmp .L33
+ 384 00d2 6A37      		cpi r22,122
+ 385 00d4 7105      		cpc r23,__zero_reg__
+ 386 00d6 01F4      		brne .L2
+ 154:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 387               		.loc 1 154 4 view .LVU10
+ 388 00d8 8230      		cpi r24,2
+ 389 00da 9105      		cpc r25,__zero_reg__
+ 390 00dc 01F4      		brne .+2
+ 391 00de 00C0      		rjmp .L43
+ 392 00e0 8330      		cpi r24,3
+ 393 00e2 9105      		cpc r25,__zero_reg__
+ 394 00e4 01F4      		brne .+2
+ 395 00e6 00C0      		rjmp .L44
+ 157:includes/chassisError.c **** 				// Additional Info Handling
+ 396               		.loc 1 157 5 is_stmt 0 view .LVU11
+ 397 00e8 60E0      		ldi r22,lo8(.LC16)
+ 398 00ea 70E0      		ldi r23,hi8(.LC16)
+ 399               	.LVL5:
+ 157:includes/chassisError.c **** 				// Additional Info Handling
+ 400               		.loc 1 157 5 view .LVU12
+ 401 00ec 0197      		sbiw r24,1
+ 402 00ee 01F4      		brne .L2
+ 403 00f0 00C0      		rjmp .L140
+ 404               	.LVL6:
+ 405               	.L9:
+  63:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 406               		.loc 1 63 4 is_stmt 1 view .LVU13
+ 407 00f2 8230      		cpi r24,2
+ 408 00f4 9105      		cpc r25,__zero_reg__
+ 409 00f6 01F0      		breq .L35
+ 410 00f8 8330      		cpi r24,3
+ 411 00fa 9105      		cpc r25,__zero_reg__
+ 412 00fc 01F0      		breq .L36
+  66:includes/chassisError.c **** 				// Additional Info Handling
+ 413               		.loc 1 66 5 is_stmt 0 view .LVU14
+ 414 00fe 60E0      		ldi r22,lo8(.LC1)
+ 415 0100 70E0      		ldi r23,hi8(.LC1)
+ 416               	.LVL7:
+  66:includes/chassisError.c **** 				// Additional Info Handling
+ 417               		.loc 1 66 5 view .LVU15
+ 418 0102 0197      		sbiw r24,1
+ 419 0104 01F0      		breq .L140
+ 420               	.L2:
+ 421               	/* epilogue start */
+ 597:includes/chassisError.c **** 
+ 422               		.loc 1 597 1 view .LVU16
+ 423 0106 0895      		ret
+ 424               	.LVL8:
+ 425               	.L35:
+  72:includes/chassisError.c **** 				// Additional Warning Handling
+ 426               		.loc 1 72 5 is_stmt 1 view .LVU17
+ 427 0108 60E0      		ldi r22,lo8(.LC3)
+ 428 010a 70E0      		ldi r23,hi8(.LC3)
+ 429               	.LVL9:
+ 430               	.L141:
+ 560:includes/chassisError.c **** 				// Additional Warning Handling
+ 431               		.loc 1 560 5 is_stmt 0 view .LVU18
+ 432 010c 80E0      		ldi r24,lo8(.LC4)
+ 433 010e 90E0      		ldi r25,hi8(.LC4)
+ 434               	.LVL10:
+ 560:includes/chassisError.c **** 				// Additional Warning Handling
+ 435               		.loc 1 560 5 view .LVU19
+ 436 0110 00C0      		rjmp .L135
+ 437               	.LVL11:
+ 438               	.L36:
+  78:includes/chassisError.c **** 				// Additional Error Handling
+ 439               		.loc 1 78 5 is_stmt 1 view .LVU20
+ 440 0112 60E0      		ldi r22,lo8(.LC5)
+ 441 0114 70E0      		ldi r23,hi8(.LC5)
+ 442               	.LVL12:
+ 443               	.L136:
+ 566:includes/chassisError.c **** 				// Additional Error Handling
+ 444               		.loc 1 566 5 is_stmt 0 view .LVU21
+ 445 0116 80E0      		ldi r24,lo8(.LC6)
+ 446 0118 90E0      		ldi r25,hi8(.LC6)
+ 447               	.LVL13:
+ 566:includes/chassisError.c **** 				// Additional Error Handling
+ 448               		.loc 1 566 5 view .LVU22
+ 449 011a 00C0      		rjmp .L135
+ 450               	.LVL14:
+ 451               	.L30:
+  88:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 452               		.loc 1 88 4 is_stmt 1 view .LVU23
+ 453 011c 8230      		cpi r24,2
+ 454 011e 9105      		cpc r25,__zero_reg__
+ 455 0120 01F0      		breq .L37
+ 456 0122 8330      		cpi r24,3
+ 457 0124 9105      		cpc r25,__zero_reg__
+ 458 0126 01F0      		breq .L38
+ 459 0128 0197      		sbiw r24,1
+ 460 012a 01F4      		brne .L2
+  91:includes/chassisError.c **** 				// Additional Info Handling
+ 461               		.loc 1 91 5 view .LVU24
+ 462 012c 60E0      		ldi r22,lo8(.LC7)
+ 463 012e 70E0      		ldi r23,hi8(.LC7)
+ 464               	.LVL15:
+ 465               	.L140:
+  91:includes/chassisError.c **** 				// Additional Info Handling
+ 466               		.loc 1 91 5 is_stmt 0 view .LVU25
+ 467 0130 80E0      		ldi r24,lo8(.LC2)
+ 468 0132 90E0      		ldi r25,hi8(.LC2)
+ 469               	.LVL16:
+ 470               	.L135:
+ 566:includes/chassisError.c **** 				// Additional Error Handling
+ 471               		.loc 1 566 5 view .LVU26
+ 472 0134 0C94 0000 		jmp send_error_message
+ 473               	.LVL17:
+ 474               	.L37:
+  97:includes/chassisError.c **** 				// Additional Warning Handling
+ 475               		.loc 1 97 5 is_stmt 1 view .LVU27
+ 476 0138 60E0      		ldi r22,lo8(.LC8)
+ 477 013a 70E0      		ldi r23,hi8(.LC8)
+ 478               	.LVL18:
+  97:includes/chassisError.c **** 				// Additional Warning Handling
+ 479               		.loc 1 97 5 is_stmt 0 view .LVU28
+ 480 013c 00C0      		rjmp .L141
+ 481               	.LVL19:
+ 482               	.L38:
+ 103:includes/chassisError.c **** 				// Additional Error Handling
+ 483               		.loc 1 103 5 is_stmt 1 view .LVU29
+ 484 013e 60E0      		ldi r22,lo8(.LC9)
+ 485 0140 70E0      		ldi r23,hi8(.LC9)
+ 486               	.LVL20:
+ 103:includes/chassisError.c **** 				// Additional Error Handling
+ 487               		.loc 1 103 5 is_stmt 0 view .LVU30
+ 488 0142 00C0      		rjmp .L136
+ 489               	.LVL21:
+ 490               	.L31:
+ 110:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 491               		.loc 1 110 4 is_stmt 1 view .LVU31
+ 492 0144 8230      		cpi r24,2
+ 493 0146 9105      		cpc r25,__zero_reg__
+ 494 0148 01F0      		breq .L39
+ 495 014a 8330      		cpi r24,3
+ 496 014c 9105      		cpc r25,__zero_reg__
+ 497 014e 01F0      		breq .L40
+ 113:includes/chassisError.c **** 				// Additional Info Handling
+ 498               		.loc 1 113 5 is_stmt 0 view .LVU32
+ 499 0150 60E0      		ldi r22,lo8(.LC10)
+ 500 0152 70E0      		ldi r23,hi8(.LC10)
+ 501               	.LVL22:
+ 113:includes/chassisError.c **** 				// Additional Info Handling
+ 502               		.loc 1 113 5 view .LVU33
+ 503 0154 0197      		sbiw r24,1
+ 504 0156 01F4      		brne .L2
+ 505 0158 00C0      		rjmp .L140
+ 506               	.LVL23:
+ 507               	.L39:
+ 119:includes/chassisError.c **** 				// Additional Warning Handling
+ 508               		.loc 1 119 5 is_stmt 1 view .LVU34
+ 509 015a 60E0      		ldi r22,lo8(.LC11)
+ 510 015c 70E0      		ldi r23,hi8(.LC11)
+ 511               	.LVL24:
+ 119:includes/chassisError.c **** 				// Additional Warning Handling
+ 512               		.loc 1 119 5 is_stmt 0 view .LVU35
+ 513 015e 00C0      		rjmp .L141
+ 514               	.LVL25:
+ 515               	.L40:
+ 125:includes/chassisError.c **** 				// Additional Error Handling
+ 516               		.loc 1 125 5 is_stmt 1 view .LVU36
+ 517 0160 60E0      		ldi r22,lo8(.LC12)
+ 518 0162 70E0      		ldi r23,hi8(.LC12)
+ 519               	.LVL26:
+ 125:includes/chassisError.c **** 				// Additional Error Handling
+ 520               		.loc 1 125 5 is_stmt 0 view .LVU37
+ 521 0164 00C0      		rjmp .L136
+ 522               	.LVL27:
+ 523               	.L28:
+ 132:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 524               		.loc 1 132 4 is_stmt 1 view .LVU38
+ 525 0166 8230      		cpi r24,2
+ 526 0168 9105      		cpc r25,__zero_reg__
+ 527 016a 01F0      		breq .L41
+ 528 016c 8330      		cpi r24,3
+ 529 016e 9105      		cpc r25,__zero_reg__
+ 530 0170 01F0      		breq .L42
+ 135:includes/chassisError.c **** 				// Additional Info Handling
+ 531               		.loc 1 135 5 is_stmt 0 view .LVU39
+ 532 0172 60E0      		ldi r22,lo8(.LC13)
+ 533 0174 70E0      		ldi r23,hi8(.LC13)
+ 534               	.LVL28:
+ 135:includes/chassisError.c **** 				// Additional Info Handling
+ 535               		.loc 1 135 5 view .LVU40
+ 536 0176 0197      		sbiw r24,1
+ 537 0178 01F4      		brne .L2
+ 538 017a 00C0      		rjmp .L140
+ 539               	.LVL29:
+ 540               	.L41:
+ 141:includes/chassisError.c **** 				// Additional Warning Handling
+ 541               		.loc 1 141 5 is_stmt 1 view .LVU41
+ 542 017c 60E0      		ldi r22,lo8(.LC14)
+ 543 017e 70E0      		ldi r23,hi8(.LC14)
+ 544               	.LVL30:
+ 141:includes/chassisError.c **** 				// Additional Warning Handling
+ 545               		.loc 1 141 5 is_stmt 0 view .LVU42
+ 546 0180 00C0      		rjmp .L141
+ 547               	.LVL31:
+ 548               	.L42:
+ 147:includes/chassisError.c **** 				// Additional Error Handling
+ 549               		.loc 1 147 5 is_stmt 1 view .LVU43
+ 550 0182 60E0      		ldi r22,lo8(.LC15)
+ 551 0184 70E0      		ldi r23,hi8(.LC15)
+ 552               	.LVL32:
+ 147:includes/chassisError.c **** 				// Additional Error Handling
+ 553               		.loc 1 147 5 is_stmt 0 view .LVU44
+ 554 0186 00C0      		rjmp .L136
+ 555               	.LVL33:
+ 556               	.L43:
+ 163:includes/chassisError.c **** 				// Additional Warning Handling
+ 557               		.loc 1 163 5 is_stmt 1 view .LVU45
+ 558 0188 60E0      		ldi r22,lo8(.LC17)
+ 559 018a 70E0      		ldi r23,hi8(.LC17)
+ 560               	.LVL34:
+ 163:includes/chassisError.c **** 				// Additional Warning Handling
+ 561               		.loc 1 163 5 is_stmt 0 view .LVU46
+ 562 018c 00C0      		rjmp .L141
+ 563               	.LVL35:
+ 564               	.L44:
+ 169:includes/chassisError.c **** 				// Additional Error Handling
+ 565               		.loc 1 169 5 is_stmt 1 view .LVU47
+ 566 018e 60E0      		ldi r22,lo8(.LC18)
+ 567 0190 70E0      		ldi r23,hi8(.LC18)
+ 568               	.LVL36:
+ 169:includes/chassisError.c **** 				// Additional Error Handling
+ 569               		.loc 1 169 5 is_stmt 0 view .LVU48
+ 570 0192 00C0      		rjmp .L136
+ 571               	.LVL37:
+ 572               	.L32:
+ 176:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 573               		.loc 1 176 4 is_stmt 1 view .LVU49
+ 574 0194 8230      		cpi r24,2
+ 575 0196 9105      		cpc r25,__zero_reg__
+ 576 0198 01F0      		breq .L45
+ 577 019a 8330      		cpi r24,3
+ 578 019c 9105      		cpc r25,__zero_reg__
+ 579 019e 01F0      		breq .L46
+ 179:includes/chassisError.c **** 				// Additional Info Handling
+ 580               		.loc 1 179 5 is_stmt 0 view .LVU50
+ 581 01a0 60E0      		ldi r22,lo8(.LC19)
+ 582 01a2 70E0      		ldi r23,hi8(.LC19)
+ 583               	.LVL38:
+ 179:includes/chassisError.c **** 				// Additional Info Handling
+ 584               		.loc 1 179 5 view .LVU51
+ 585 01a4 0197      		sbiw r24,1
+ 586 01a6 01F0      		breq .+2
+ 587 01a8 00C0      		rjmp .L2
+ 588 01aa 00C0      		rjmp .L140
+ 589               	.LVL39:
+ 590               	.L45:
+ 185:includes/chassisError.c **** 				// Additional Warning Handling
+ 591               		.loc 1 185 5 is_stmt 1 view .LVU52
+ 592 01ac 60E0      		ldi r22,lo8(.LC20)
+ 593 01ae 70E0      		ldi r23,hi8(.LC20)
+ 594               	.LVL40:
+ 185:includes/chassisError.c **** 				// Additional Warning Handling
+ 595               		.loc 1 185 5 is_stmt 0 view .LVU53
+ 596 01b0 00C0      		rjmp .L141
+ 597               	.LVL41:
+ 598               	.L46:
+ 191:includes/chassisError.c **** 				// Additional Error Handling
+ 599               		.loc 1 191 5 is_stmt 1 view .LVU54
+ 600 01b2 60E0      		ldi r22,lo8(.LC21)
+ 601 01b4 70E0      		ldi r23,hi8(.LC21)
+ 602               	.LVL42:
+ 191:includes/chassisError.c **** 				// Additional Error Handling
+ 603               		.loc 1 191 5 is_stmt 0 view .LVU55
+ 604 01b6 00C0      		rjmp .L136
+ 605               	.LVL43:
+ 606               	.L33:
+ 198:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 607               		.loc 1 198 4 is_stmt 1 view .LVU56
+ 608 01b8 8230      		cpi r24,2
+ 609 01ba 9105      		cpc r25,__zero_reg__
+ 610 01bc 01F0      		breq .L47
+ 611 01be 8330      		cpi r24,3
+ 612 01c0 9105      		cpc r25,__zero_reg__
+ 613 01c2 01F0      		breq .L48
+ 201:includes/chassisError.c **** 				// Additional Info Handling
+ 614               		.loc 1 201 5 is_stmt 0 view .LVU57
+ 615 01c4 60E0      		ldi r22,lo8(.LC22)
+ 616 01c6 70E0      		ldi r23,hi8(.LC22)
+ 617               	.LVL44:
+ 201:includes/chassisError.c **** 				// Additional Info Handling
+ 618               		.loc 1 201 5 view .LVU58
+ 619 01c8 0197      		sbiw r24,1
+ 620 01ca 01F0      		breq .+2
+ 621 01cc 00C0      		rjmp .L2
+ 622 01ce 00C0      		rjmp .L140
+ 623               	.LVL45:
+ 624               	.L47:
+ 207:includes/chassisError.c **** 				// Additional Warning Handling
+ 625               		.loc 1 207 5 is_stmt 1 view .LVU59
+ 626 01d0 60E0      		ldi r22,lo8(.LC23)
+ 627 01d2 70E0      		ldi r23,hi8(.LC23)
+ 628               	.LVL46:
+ 207:includes/chassisError.c **** 				// Additional Warning Handling
+ 629               		.loc 1 207 5 is_stmt 0 view .LVU60
+ 630 01d4 00C0      		rjmp .L141
+ 631               	.LVL47:
+ 632               	.L48:
+ 213:includes/chassisError.c **** 				// Additional Error Handling
+ 633               		.loc 1 213 5 is_stmt 1 view .LVU61
+ 634 01d6 60E0      		ldi r22,lo8(.LC24)
+ 635 01d8 70E0      		ldi r23,hi8(.LC24)
+ 636               	.LVL48:
+ 213:includes/chassisError.c **** 				// Additional Error Handling
+ 637               		.loc 1 213 5 is_stmt 0 view .LVU62
+ 638 01da 00C0      		rjmp .L136
+ 639               	.LVL49:
+ 640               	.L10:
+ 223:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 641               		.loc 1 223 4 is_stmt 1 view .LVU63
+ 642 01dc 8230      		cpi r24,2
+ 643 01de 9105      		cpc r25,__zero_reg__
+ 644 01e0 01F0      		breq .L49
+ 645 01e2 8330      		cpi r24,3
+ 646 01e4 9105      		cpc r25,__zero_reg__
+ 647 01e6 01F0      		breq .L50
+ 648               	.L124:
+ 226:includes/chassisError.c **** 				// Additional Info Handling
+ 649               		.loc 1 226 5 is_stmt 0 view .LVU64
+ 650 01e8 60E0      		ldi r22,lo8(.LC25)
+ 651 01ea 70E0      		ldi r23,hi8(.LC25)
+ 652               	.LVL50:
+ 226:includes/chassisError.c **** 				// Additional Info Handling
+ 653               		.loc 1 226 5 view .LVU65
+ 654 01ec 0197      		sbiw r24,1
+ 655 01ee 01F0      		breq .+2
+ 656 01f0 00C0      		rjmp .L2
+ 657 01f2 00C0      		rjmp .L140
+ 658               	.LVL51:
+ 659               	.L49:
+ 232:includes/chassisError.c **** 				// Additional Warning Handling
+ 660               		.loc 1 232 5 is_stmt 1 view .LVU66
+ 661 01f4 60E0      		ldi r22,lo8(.LC26)
+ 662 01f6 70E0      		ldi r23,hi8(.LC26)
+ 663               	.LVL52:
+ 232:includes/chassisError.c **** 				// Additional Warning Handling
+ 664               		.loc 1 232 5 is_stmt 0 view .LVU67
+ 665 01f8 00C0      		rjmp .L141
+ 666               	.LVL53:
+ 667               	.L50:
+ 238:includes/chassisError.c **** 				// Additional Error Handling
+ 668               		.loc 1 238 5 is_stmt 1 view .LVU68
+ 669 01fa 60E0      		ldi r22,lo8(.LC27)
+ 670 01fc 70E0      		ldi r23,hi8(.LC27)
+ 671               	.LVL54:
+ 238:includes/chassisError.c **** 				// Additional Error Handling
+ 672               		.loc 1 238 5 is_stmt 0 view .LVU69
+ 673 01fe 00C0      		rjmp .L136
+ 674               	.LVL55:
+ 675               	.L7:
+ 245:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 676               		.loc 1 245 4 is_stmt 1 view .LVU70
+ 677 0200 8230      		cpi r24,2
+ 678 0202 9105      		cpc r25,__zero_reg__
+ 679 0204 01F0      		breq .L51
+ 680 0206 8330      		cpi r24,3
+ 681 0208 9105      		cpc r25,__zero_reg__
+ 682 020a 01F4      		brne .L124
+ 260:includes/chassisError.c **** 				// Additional Error Handling
+ 683               		.loc 1 260 5 view .LVU71
+ 684 020c 60E0      		ldi r22,lo8(.LC29)
+ 685 020e 70E0      		ldi r23,hi8(.LC29)
+ 686               	.LVL56:
+ 260:includes/chassisError.c **** 				// Additional Error Handling
+ 687               		.loc 1 260 5 is_stmt 0 view .LVU72
+ 688 0210 00C0      		rjmp .L136
+ 689               	.LVL57:
+ 690               	.L51:
+ 254:includes/chassisError.c **** 				// Additional Warning Handling
+ 691               		.loc 1 254 5 is_stmt 1 view .LVU73
+ 692 0212 60E0      		ldi r22,lo8(.LC28)
+ 693 0214 70E0      		ldi r23,hi8(.LC28)
+ 694               	.LVL58:
+ 254:includes/chassisError.c **** 				// Additional Warning Handling
+ 695               		.loc 1 254 5 is_stmt 0 view .LVU74
+ 696 0216 00C0      		rjmp .L141
+ 697               	.LVL59:
+ 698               	.L12:
+ 267:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 699               		.loc 1 267 4 is_stmt 1 view .LVU75
+ 700 0218 8230      		cpi r24,2
+ 701 021a 9105      		cpc r25,__zero_reg__
+ 702 021c 01F0      		breq .L54
+ 703 021e 8330      		cpi r24,3
+ 704 0220 9105      		cpc r25,__zero_reg__
+ 705 0222 01F0      		breq .L55
+ 706               	.L126:
+ 270:includes/chassisError.c **** 				// Additional Info Handling
+ 707               		.loc 1 270 5 is_stmt 0 view .LVU76
+ 708 0224 60E0      		ldi r22,lo8(.LC30)
+ 709 0226 70E0      		ldi r23,hi8(.LC30)
+ 710               	.LVL60:
+ 270:includes/chassisError.c **** 				// Additional Info Handling
+ 711               		.loc 1 270 5 view .LVU77
+ 712 0228 0197      		sbiw r24,1
+ 713 022a 01F0      		breq .+2
+ 714 022c 00C0      		rjmp .L2
+ 715 022e 00C0      		rjmp .L140
+ 716               	.LVL61:
+ 717               	.L54:
+ 276:includes/chassisError.c **** 				// Additional Warning Handling
+ 718               		.loc 1 276 5 is_stmt 1 view .LVU78
+ 719 0230 60E0      		ldi r22,lo8(.LC31)
+ 720 0232 70E0      		ldi r23,hi8(.LC31)
+ 721               	.LVL62:
+ 276:includes/chassisError.c **** 				// Additional Warning Handling
+ 722               		.loc 1 276 5 is_stmt 0 view .LVU79
+ 723 0234 00C0      		rjmp .L141
+ 724               	.LVL63:
+ 725               	.L55:
+ 282:includes/chassisError.c **** 				// Additional Error Handling
+ 726               		.loc 1 282 5 is_stmt 1 view .LVU80
+ 727 0236 60E0      		ldi r22,lo8(.LC32)
+ 728 0238 70E0      		ldi r23,hi8(.LC32)
+ 729               	.LVL64:
+ 282:includes/chassisError.c **** 				// Additional Error Handling
+ 730               		.loc 1 282 5 is_stmt 0 view .LVU81
+ 731 023a 00C0      		rjmp .L136
+ 732               	.LVL65:
+ 733               	.L13:
+ 289:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 734               		.loc 1 289 4 is_stmt 1 view .LVU82
+ 735 023c 8230      		cpi r24,2
+ 736 023e 9105      		cpc r25,__zero_reg__
+ 737 0240 01F0      		breq .L56
+ 738 0242 8330      		cpi r24,3
+ 739 0244 9105      		cpc r25,__zero_reg__
+ 740 0246 01F4      		brne .L126
+ 304:includes/chassisError.c **** 				// Additional Error Handling
+ 741               		.loc 1 304 5 view .LVU83
+ 742 0248 60E0      		ldi r22,lo8(.LC34)
+ 743 024a 70E0      		ldi r23,hi8(.LC34)
+ 744               	.LVL66:
+ 304:includes/chassisError.c **** 				// Additional Error Handling
+ 745               		.loc 1 304 5 is_stmt 0 view .LVU84
+ 746 024c 00C0      		rjmp .L136
+ 747               	.LVL67:
+ 748               	.L56:
+ 298:includes/chassisError.c **** 				// Additional Warning Handling
+ 749               		.loc 1 298 5 is_stmt 1 view .LVU85
+ 750 024e 60E0      		ldi r22,lo8(.LC33)
+ 751 0250 70E0      		ldi r23,hi8(.LC33)
+ 752               	.LVL68:
+ 298:includes/chassisError.c **** 				// Additional Warning Handling
+ 753               		.loc 1 298 5 is_stmt 0 view .LVU86
+ 754 0252 00C0      		rjmp .L141
+ 755               	.LVL69:
+ 756               	.L5:
+ 311:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 757               		.loc 1 311 4 is_stmt 1 view .LVU87
+ 758 0254 8230      		cpi r24,2
+ 759 0256 9105      		cpc r25,__zero_reg__
+ 760 0258 01F0      		breq .L59
+ 761 025a 8330      		cpi r24,3
+ 762 025c 9105      		cpc r25,__zero_reg__
+ 763 025e 01F0      		breq .L60
+ 764               	.L128:
+ 314:includes/chassisError.c **** 				// Additional Info Handling
+ 765               		.loc 1 314 5 is_stmt 0 view .LVU88
+ 766 0260 60E0      		ldi r22,lo8(.LC35)
+ 767 0262 70E0      		ldi r23,hi8(.LC35)
+ 768               	.LVL70:
+ 314:includes/chassisError.c **** 				// Additional Info Handling
+ 769               		.loc 1 314 5 view .LVU89
+ 770 0264 0197      		sbiw r24,1
+ 771 0266 01F0      		breq .+2
+ 772 0268 00C0      		rjmp .L2
+ 773 026a 00C0      		rjmp .L140
+ 774               	.LVL71:
+ 775               	.L59:
+ 320:includes/chassisError.c **** 				// Additional Warning Handling
+ 776               		.loc 1 320 5 is_stmt 1 view .LVU90
+ 777 026c 60E0      		ldi r22,lo8(.LC36)
+ 778 026e 70E0      		ldi r23,hi8(.LC36)
+ 779               	.LVL72:
+ 320:includes/chassisError.c **** 				// Additional Warning Handling
+ 780               		.loc 1 320 5 is_stmt 0 view .LVU91
+ 781 0270 00C0      		rjmp .L141
+ 782               	.LVL73:
+ 783               	.L60:
+ 326:includes/chassisError.c **** 				// Additional Error Handling
+ 784               		.loc 1 326 5 is_stmt 1 view .LVU92
+ 785 0272 60E0      		ldi r22,lo8(.LC37)
+ 786 0274 70E0      		ldi r23,hi8(.LC37)
+ 787               	.LVL74:
+ 326:includes/chassisError.c **** 				// Additional Error Handling
+ 788               		.loc 1 326 5 is_stmt 0 view .LVU93
+ 789 0276 00C0      		rjmp .L136
+ 790               	.LVL75:
+ 791               	.L61:
+ 342:includes/chassisError.c **** 				// Additional Warning Handling
+ 792               		.loc 1 342 5 is_stmt 1 view .LVU94
+ 793 0278 60E0      		ldi r22,lo8(.LC38)
+ 794 027a 70E0      		ldi r23,hi8(.LC38)
+ 795               	.LVL76:
+ 342:includes/chassisError.c **** 				// Additional Warning Handling
+ 796               		.loc 1 342 5 is_stmt 0 view .LVU95
+ 797 027c 00C0      		rjmp .L141
+ 798               	.LVL77:
+ 799               	.L17:
+ 355:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 800               		.loc 1 355 4 is_stmt 1 view .LVU96
+ 801 027e 8230      		cpi r24,2
+ 802 0280 9105      		cpc r25,__zero_reg__
+ 803 0282 01F0      		breq .L64
+ 804 0284 8330      		cpi r24,3
+ 805 0286 9105      		cpc r25,__zero_reg__
+ 806 0288 01F4      		brne .L128
+ 370:includes/chassisError.c **** 				// Additional Error Handling
+ 807               		.loc 1 370 5 view .LVU97
+ 808 028a 60E0      		ldi r22,lo8(.LC41)
+ 809 028c 70E0      		ldi r23,hi8(.LC41)
+ 810               	.LVL78:
+ 370:includes/chassisError.c **** 				// Additional Error Handling
+ 811               		.loc 1 370 5 is_stmt 0 view .LVU98
+ 812 028e 00C0      		rjmp .L136
+ 813               	.LVL79:
+ 814               	.L64:
+ 364:includes/chassisError.c **** 				// Additional Warning Handling
+ 815               		.loc 1 364 5 is_stmt 1 view .LVU99
+ 816 0290 60E0      		ldi r22,lo8(.LC40)
+ 817 0292 70E0      		ldi r23,hi8(.LC40)
+ 818               	.LVL80:
+ 364:includes/chassisError.c **** 				// Additional Warning Handling
+ 819               		.loc 1 364 5 is_stmt 0 view .LVU100
+ 820 0294 00C0      		rjmp .L141
+ 821               	.LVL81:
+ 822               	.L14:
+ 377:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 823               		.loc 1 377 4 is_stmt 1 view .LVU101
+ 824 0296 8230      		cpi r24,2
+ 825 0298 9105      		cpc r25,__zero_reg__
+ 826 029a 01F0      		breq .L66
+ 827 029c 8330      		cpi r24,3
+ 828 029e 9105      		cpc r25,__zero_reg__
+ 829 02a0 01F0      		breq .L67
+ 830               	.L132:
+ 380:includes/chassisError.c **** 				// Additional Info Handling
+ 831               		.loc 1 380 5 is_stmt 0 view .LVU102
+ 832 02a2 60E0      		ldi r22,lo8(.LC42)
+ 833 02a4 70E0      		ldi r23,hi8(.LC42)
+ 834               	.LVL82:
+ 380:includes/chassisError.c **** 				// Additional Info Handling
+ 835               		.loc 1 380 5 view .LVU103
+ 836 02a6 0197      		sbiw r24,1
+ 837 02a8 01F0      		breq .+2
+ 838 02aa 00C0      		rjmp .L2
+ 839 02ac 00C0      		rjmp .L140
+ 840               	.LVL83:
+ 841               	.L66:
+ 386:includes/chassisError.c **** 				// Additional Warning Handling
+ 842               		.loc 1 386 5 is_stmt 1 view .LVU104
+ 843 02ae 60E0      		ldi r22,lo8(.LC43)
+ 844 02b0 70E0      		ldi r23,hi8(.LC43)
+ 845               	.LVL84:
+ 386:includes/chassisError.c **** 				// Additional Warning Handling
+ 846               		.loc 1 386 5 is_stmt 0 view .LVU105
+ 847 02b2 00C0      		rjmp .L141
+ 848               	.LVL85:
+ 849               	.L67:
+ 392:includes/chassisError.c **** 				// Additional Error Handling
+ 850               		.loc 1 392 5 is_stmt 1 view .LVU106
+ 851 02b4 60E0      		ldi r22,lo8(.LC44)
+ 852 02b6 70E0      		ldi r23,hi8(.LC44)
+ 853               	.LVL86:
+ 392:includes/chassisError.c **** 				// Additional Error Handling
+ 854               		.loc 1 392 5 is_stmt 0 view .LVU107
+ 855 02b8 00C0      		rjmp .L136
+ 856               	.LVL87:
+ 857               	.L18:
+ 399:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 858               		.loc 1 399 4 is_stmt 1 view .LVU108
+ 859 02ba 8230      		cpi r24,2
+ 860 02bc 9105      		cpc r25,__zero_reg__
+ 861 02be 01F0      		breq .L61
+ 862 02c0 8330      		cpi r24,3
+ 863 02c2 9105      		cpc r25,__zero_reg__
+ 864 02c4 01F4      		brne .L128
+ 348:includes/chassisError.c **** 				// Additional Error Handling
+ 865               		.loc 1 348 5 view .LVU109
+ 866 02c6 60E0      		ldi r22,lo8(.LC39)
+ 867 02c8 70E0      		ldi r23,hi8(.LC39)
+ 868               	.LVL88:
+ 348:includes/chassisError.c **** 				// Additional Error Handling
+ 869               		.loc 1 348 5 is_stmt 0 view .LVU110
+ 870 02ca 00C0      		rjmp .L136
+ 871               	.LVL89:
+ 872               	.L19:
+ 421:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 873               		.loc 1 421 4 is_stmt 1 view .LVU111
+ 874 02cc 8230      		cpi r24,2
+ 875 02ce 9105      		cpc r25,__zero_reg__
+ 876 02d0 01F0      		breq .L68
+ 877 02d2 8330      		cpi r24,3
+ 878 02d4 9105      		cpc r25,__zero_reg__
+ 879 02d6 01F4      		brne .L132
+ 436:includes/chassisError.c **** 				// Additional Error Handling
+ 880               		.loc 1 436 5 view .LVU112
+ 881 02d8 60E0      		ldi r22,lo8(.LC46)
+ 882 02da 70E0      		ldi r23,hi8(.LC46)
+ 883               	.LVL90:
+ 436:includes/chassisError.c **** 				// Additional Error Handling
+ 884               		.loc 1 436 5 is_stmt 0 view .LVU113
+ 885 02dc 00C0      		rjmp .L136
+ 886               	.LVL91:
+ 887               	.L68:
+ 430:includes/chassisError.c **** 				// Additional Warning Handling
+ 888               		.loc 1 430 5 is_stmt 1 view .LVU114
+ 889 02de 60E0      		ldi r22,lo8(.LC45)
+ 890 02e0 70E0      		ldi r23,hi8(.LC45)
+ 891               	.LVL92:
+ 430:includes/chassisError.c **** 				// Additional Warning Handling
+ 892               		.loc 1 430 5 is_stmt 0 view .LVU115
+ 893 02e2 00C0      		rjmp .L141
+ 894               	.LVL93:
+ 895               	.L3:
+ 443:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 896               		.loc 1 443 4 is_stmt 1 view .LVU116
+ 897 02e4 8130      		cpi r24,1
+ 898 02e6 9105      		cpc r25,__zero_reg__
+ 899 02e8 01F0      		breq .L71
+ 900 02ea 0397      		sbiw r24,3
+ 901 02ec 01F0      		breq .L72
+ 902 02ee 0895      		ret
+ 903               	.L71:
+ 446:includes/chassisError.c **** 				// Additional Info Handling
+ 904               		.loc 1 446 5 view .LVU117
+ 905 02f0 60E0      		ldi r22,lo8(.LC47)
+ 906 02f2 70E0      		ldi r23,hi8(.LC47)
+ 907               	.LVL94:
+ 446:includes/chassisError.c **** 				// Additional Info Handling
+ 908               		.loc 1 446 5 is_stmt 0 view .LVU118
+ 909 02f4 00C0      		rjmp .L140
+ 910               	.LVL95:
+ 911               	.L72:
+ 452:includes/chassisError.c **** 				// Additional Error Handling
+ 912               		.loc 1 452 5 is_stmt 1 view .LVU119
+ 913 02f6 60E0      		ldi r22,lo8(.LC48)
+ 914 02f8 70E0      		ldi r23,hi8(.LC48)
+ 915               	.LVL96:
+ 452:includes/chassisError.c **** 				// Additional Error Handling
+ 916               		.loc 1 452 5 is_stmt 0 view .LVU120
+ 917 02fa 00C0      		rjmp .L136
+ 918               	.LVL97:
+ 919               	.L24:
+ 459:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 920               		.loc 1 459 4 is_stmt 1 view .LVU121
+ 921 02fc 8130      		cpi r24,1
+ 922 02fe 9105      		cpc r25,__zero_reg__
+ 923 0300 01F0      		breq .L71
+ 468:includes/chassisError.c **** 				// Additional Error Handling
+ 924               		.loc 1 468 5 is_stmt 0 view .LVU122
+ 925 0302 60E0      		ldi r22,lo8(.LC49)
+ 926 0304 70E0      		ldi r23,hi8(.LC49)
+ 927               	.LVL98:
+ 468:includes/chassisError.c **** 				// Additional Error Handling
+ 928               		.loc 1 468 5 view .LVU123
+ 929 0306 0397      		sbiw r24,3
+ 930 0308 01F4      		brne .+2
+ 931 030a 00C0      		rjmp .L136
+ 932 030c 00C0      		rjmp .L2
+ 933               	.LVL99:
+ 934               	.L25:
+ 475:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 935               		.loc 1 475 4 is_stmt 1 view .LVU124
+ 936 030e 8130      		cpi r24,1
+ 937 0310 9105      		cpc r25,__zero_reg__
+ 938 0312 01F0      		breq .L73
+ 939 0314 0397      		sbiw r24,3
+ 940 0316 01F0      		breq .L74
+ 941 0318 0895      		ret
+ 942               	.L73:
+ 478:includes/chassisError.c **** 				// Additional Info Handling
+ 943               		.loc 1 478 5 view .LVU125
+ 944 031a 60E0      		ldi r22,lo8(.LC50)
+ 945 031c 70E0      		ldi r23,hi8(.LC50)
+ 946               	.LVL100:
+ 478:includes/chassisError.c **** 				// Additional Info Handling
+ 947               		.loc 1 478 5 is_stmt 0 view .LVU126
+ 948 031e 00C0      		rjmp .L140
+ 949               	.LVL101:
+ 950               	.L74:
+ 484:includes/chassisError.c **** 				// Additional Error Handling
+ 951               		.loc 1 484 5 is_stmt 1 view .LVU127
+ 952 0320 60E0      		ldi r22,lo8(.LC51)
+ 953 0322 70E0      		ldi r23,hi8(.LC51)
+ 954               	.LVL102:
+ 484:includes/chassisError.c **** 				// Additional Error Handling
+ 955               		.loc 1 484 5 is_stmt 0 view .LVU128
+ 956 0324 00C0      		rjmp .L136
+ 957               	.LVL103:
+ 958               	.L22:
+ 491:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 959               		.loc 1 491 4 is_stmt 1 view .LVU129
+ 960 0326 8130      		cpi r24,1
+ 961 0328 9105      		cpc r25,__zero_reg__
+ 962 032a 01F0      		breq .L75
+ 963 032c 0397      		sbiw r24,3
+ 964 032e 01F0      		breq .L76
+ 965 0330 0895      		ret
+ 966               	.L75:
+ 494:includes/chassisError.c **** 				// Additional Info Handling
+ 967               		.loc 1 494 5 view .LVU130
+ 968 0332 60E0      		ldi r22,lo8(.LC52)
+ 969 0334 70E0      		ldi r23,hi8(.LC52)
+ 970               	.LVL104:
+ 494:includes/chassisError.c **** 				// Additional Info Handling
+ 971               		.loc 1 494 5 is_stmt 0 view .LVU131
+ 972 0336 00C0      		rjmp .L140
+ 973               	.LVL105:
+ 974               	.L76:
+ 500:includes/chassisError.c **** 				// Additional Error Handling
+ 975               		.loc 1 500 5 is_stmt 1 view .LVU132
+ 976 0338 60E0      		ldi r22,lo8(.LC53)
+ 977 033a 70E0      		ldi r23,hi8(.LC53)
+ 978               	.LVL106:
+ 500:includes/chassisError.c **** 				// Additional Error Handling
+ 979               		.loc 1 500 5 is_stmt 0 view .LVU133
+ 980 033c 00C0      		rjmp .L136
+ 981               	.LVL107:
+ 982               	.L26:
+ 507:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 983               		.loc 1 507 4 is_stmt 1 view .LVU134
+ 984 033e 8230      		cpi r24,2
+ 985 0340 9105      		cpc r25,__zero_reg__
+ 986 0342 01F0      		breq .L77
+ 987 0344 8330      		cpi r24,3
+ 988 0346 9105      		cpc r25,__zero_reg__
+ 989 0348 01F0      		breq .L78
+ 510:includes/chassisError.c **** 				// Additional Info Handling
+ 990               		.loc 1 510 5 is_stmt 0 view .LVU135
+ 991 034a 60E0      		ldi r22,lo8(.LC54)
+ 992 034c 70E0      		ldi r23,hi8(.LC54)
+ 993               	.LVL108:
+ 510:includes/chassisError.c **** 				// Additional Info Handling
+ 994               		.loc 1 510 5 view .LVU136
+ 995 034e 0197      		sbiw r24,1
+ 996 0350 01F0      		breq .+2
+ 997 0352 00C0      		rjmp .L2
+ 998 0354 00C0      		rjmp .L140
+ 999               	.LVL109:
+ 1000               	.L77:
+ 516:includes/chassisError.c **** 				// Additional Warning Handling
+ 1001               		.loc 1 516 5 is_stmt 1 view .LVU137
+ 1002 0356 60E0      		ldi r22,lo8(.LC55)
+ 1003 0358 70E0      		ldi r23,hi8(.LC55)
+ 1004               	.LVL110:
+ 516:includes/chassisError.c **** 				// Additional Warning Handling
+ 1005               		.loc 1 516 5 is_stmt 0 view .LVU138
+ 1006 035a 00C0      		rjmp .L141
+ 1007               	.LVL111:
+ 1008               	.L78:
+ 522:includes/chassisError.c **** 				// Additional Error Handling
+ 1009               		.loc 1 522 5 is_stmt 1 view .LVU139
+ 1010 035c 60E0      		ldi r22,lo8(.LC56)
+ 1011 035e 70E0      		ldi r23,hi8(.LC56)
+ 1012               	.LVL112:
+ 522:includes/chassisError.c **** 				// Additional Error Handling
+ 1013               		.loc 1 522 5 is_stmt 0 view .LVU140
+ 1014 0360 00C0      		rjmp .L136
+ 1015               	.LVL113:
+ 1016               	.L27:
+ 529:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 1017               		.loc 1 529 4 is_stmt 1 view .LVU141
+ 1018 0362 8230      		cpi r24,2
+ 1019 0364 9105      		cpc r25,__zero_reg__
+ 1020 0366 01F0      		breq .L79
+ 1021 0368 8330      		cpi r24,3
+ 1022 036a 9105      		cpc r25,__zero_reg__
+ 1023 036c 01F0      		breq .L80
+ 1024               	.L134:
+ 532:includes/chassisError.c **** 				// Additional Info Handling
+ 1025               		.loc 1 532 5 is_stmt 0 view .LVU142
+ 1026 036e 60E0      		ldi r22,lo8(.LC57)
+ 1027 0370 70E0      		ldi r23,hi8(.LC57)
+ 1028               	.LVL114:
+ 532:includes/chassisError.c **** 				// Additional Info Handling
+ 1029               		.loc 1 532 5 view .LVU143
+ 1030 0372 0197      		sbiw r24,1
+ 1031 0374 01F0      		breq .+2
+ 1032 0376 00C0      		rjmp .L2
+ 1033 0378 00C0      		rjmp .L140
+ 1034               	.LVL115:
+ 1035               	.L79:
+ 538:includes/chassisError.c **** 				// Additional Warning Handling
+ 1036               		.loc 1 538 5 is_stmt 1 view .LVU144
+ 1037 037a 60E0      		ldi r22,lo8(.LC58)
+ 1038 037c 70E0      		ldi r23,hi8(.LC58)
+ 1039               	.LVL116:
+ 538:includes/chassisError.c **** 				// Additional Warning Handling
+ 1040               		.loc 1 538 5 is_stmt 0 view .LVU145
+ 1041 037e 00C0      		rjmp .L141
+ 1042               	.LVL117:
+ 1043               	.L80:
+ 544:includes/chassisError.c **** 				// Additional Error Handling
+ 1044               		.loc 1 544 5 is_stmt 1 view .LVU146
+ 1045 0380 60E0      		ldi r22,lo8(.LC59)
+ 1046 0382 70E0      		ldi r23,hi8(.LC59)
+ 1047               	.LVL118:
+ 544:includes/chassisError.c **** 				// Additional Error Handling
+ 1048               		.loc 1 544 5 is_stmt 0 view .LVU147
+ 1049 0384 00C0      		rjmp .L136
+ 1050               	.LVL119:
+ 1051               	.L20:
+ 551:includes/chassisError.c **** 				case ERROR_LEVEL_INFO:
+ 1052               		.loc 1 551 4 is_stmt 1 view .LVU148
+ 1053 0386 8230      		cpi r24,2
+ 1054 0388 9105      		cpc r25,__zero_reg__
+ 1055 038a 01F0      		breq .L81
+ 1056 038c 8330      		cpi r24,3
+ 1057 038e 9105      		cpc r25,__zero_reg__
+ 1058 0390 01F4      		brne .L134
+ 566:includes/chassisError.c **** 				// Additional Error Handling
+ 1059               		.loc 1 566 5 view .LVU149
+ 1060 0392 60E0      		ldi r22,lo8(.LC61)
+ 1061 0394 70E0      		ldi r23,hi8(.LC61)
+ 1062               	.LVL120:
+ 566:includes/chassisError.c **** 				// Additional Error Handling
+ 1063               		.loc 1 566 5 is_stmt 0 view .LVU150
+ 1064 0396 00C0      		rjmp .L136
+ 1065               	.LVL121:
+ 1066               	.L81:
+ 560:includes/chassisError.c **** 				// Additional Warning Handling
+ 1067               		.loc 1 560 5 is_stmt 1 view .LVU151
+ 1068 0398 60E0      		ldi r22,lo8(.LC60)
+ 1069 039a 70E0      		ldi r23,hi8(.LC60)
+ 1070               	.LVL122:
+ 560:includes/chassisError.c **** 				// Additional Warning Handling
+ 1071               		.loc 1 560 5 is_stmt 0 view .LVU152
+ 1072 039c 00C0      		rjmp .L141
+ 1073               		.cfi_endproc
+ 1074               	.LFE6:
+ 1076               		.section	.text.throw_error_code,"ax",@progbits
+ 1077               	.global	throw_error_code
+ 1079               	throw_error_code:
+ 1080               	.LVL123:
+ 1081               	.LFB5:
+  22:includes/chassisError.c **** 	throw_error_code_with_number(severity, error_code, 0);
+ 1082               		.loc 1 22 1 is_stmt 1 view -0
+ 1083               		.cfi_startproc
+ 1084               	/* prologue: function */
+ 1085               	/* frame size = 0 */
+ 1086               	/* stack size = 0 */
+ 1087               	.L__stack_usage = 0
+  23:includes/chassisError.c **** }
+ 1088               		.loc 1 23 2 view .LVU154
+ 1089 0000 50E0      		ldi r21,0
+ 1090 0002 40E0      		ldi r20,0
+ 1091 0004 0C94 0000 		jmp throw_error_code_with_number
+ 1092               	.LVL124:
+  23:includes/chassisError.c **** }
+ 1093               		.loc 1 23 2 is_stmt 0 view .LVU155
+ 1094               		.cfi_endproc
+ 1095               	.LFE5:
+ 1097               		.text
+ 1098               	.Letext0:
+ 1099               		.file 2 "/usr/local/Cellar/avr-gcc/8.1.0/avr/include/stdlib.h"
+ 1100               		.file 3 "/usr/local/Cellar/avr-gcc/8.1.0/lib/avr-gcc/8/gcc/avr/8.1.0/include/stddef.h"
+ 1101               		.file 4 "/usr/local/Cellar/avr-gcc/8.1.0/avr/include/stdint.h"
+ 1102               		.file 5 "/usr/local/Cellar/avr-gcc/8.1.0/avr/include/stdio.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 chassisError.c
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc5S7PLG.s:2      *ABS*:000000000000003e __SP_H__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc5S7PLG.s:3      *ABS*:000000000000003d __SP_L__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc5S7PLG.s:4      *ABS*:000000000000003f __SREG__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc5S7PLG.s:5      *ABS*:000000000000003b __RAMPZ__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc5S7PLG.s:6      *ABS*:0000000000000000 __tmp_reg__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc5S7PLG.s:7      *ABS*:0000000000000001 __zero_reg__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc5S7PLG.s:17     .text.send_error_message:0000000000000000 send_error_message
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc5S7PLG.s:262    .text.throw_error_code_with_number:0000000000000000 throw_error_code_with_number
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc5S7PLG.s:1079   .text.throw_error_code:0000000000000000 throw_error_code
+
+UNDEFINED SYMBOLS
+snprintf
+__do_copy_data

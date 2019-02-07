@@ -1,0 +1,160 @@
+   1               		.file	"a2dUtil.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__RAMPZ__ = 0x3b
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+  10               		.cfi_sections	.debug_frame
+  11               		.section	.text.adc_read_avg,"ax",@progbits
+  12               	.global	adc_read_avg
+  14               	adc_read_avg:
+  15               	.LVL0:
+  16               	.LFB4:
+  17               		.file 1 "includes/a2dUtil.c"
+   1:includes/a2dUtil.c **** /**
+   2:includes/a2dUtil.c ****  * @brief Analog to Digital Utilities
+   3:includes/a2dUtil.c ****  * 
+   4:includes/a2dUtil.c ****  * @file a2dUtil.c
+   5:includes/a2dUtil.c ****  * @author 
+   6:includes/a2dUtil.c ****  * @date 
+   7:includes/a2dUtil.c ****  */
+   8:includes/a2dUtil.c **** 
+   9:includes/a2dUtil.c **** #include "a2dUtil.h"
+  10:includes/a2dUtil.c **** 
+  11:includes/a2dUtil.c **** #define ADC_SAMPLES (10)
+  12:includes/a2dUtil.c **** 
+  13:includes/a2dUtil.c **** /**
+  14:includes/a2dUtil.c ****  * @brief The inbuilt ADC is used to convert an analog input voltage at the specified channel to a 
+  15:includes/a2dUtil.c ****  * value through successive approximation.
+  16:includes/a2dUtil.c ****  * This is done <ADC_SAMPLES> times and the results are averaged in order to obtain a more accurate
+  17:includes/a2dUtil.c ****  * Reference: ATmega Datasheet Chapter 26 (ADC - Analog to Digital Converter)
+  18:includes/a2dUtil.c ****  * 
+  19:includes/a2dUtil.c ****  * @param ch The analog input channel
+  20:includes/a2dUtil.c ****  * @return uint16_t 10 bit digital value representative of the analog input in the specified channe
+  21:includes/a2dUtil.c ****  */
+  22:includes/a2dUtil.c **** uint16_t adc_read_avg(uint8_t ch)
+  23:includes/a2dUtil.c **** {
+  18               		.loc 1 23 1 view -0
+  19               		.cfi_startproc
+  20               		.loc 1 23 1 is_stmt 0 view .LVU1
+  21 0000 CF92      		push r12
+  22               	.LCFI0:
+  23               		.cfi_def_cfa_offset 3
+  24               		.cfi_offset 12, -2
+  25 0002 DF92      		push r13
+  26               	.LCFI1:
+  27               		.cfi_def_cfa_offset 4
+  28               		.cfi_offset 13, -3
+  29 0004 EF92      		push r14
+  30               	.LCFI2:
+  31               		.cfi_def_cfa_offset 5
+  32               		.cfi_offset 14, -4
+  33 0006 FF92      		push r15
+  34               	.LCFI3:
+  35               		.cfi_def_cfa_offset 6
+  36               		.cfi_offset 15, -5
+  37 0008 CF93      		push r28
+  38               	.LCFI4:
+  39               		.cfi_def_cfa_offset 7
+  40               		.cfi_offset 28, -6
+  41 000a DF93      		push r29
+  42               	.LCFI5:
+  43               		.cfi_def_cfa_offset 8
+  44               		.cfi_offset 29, -7
+  45               	/* prologue: function */
+  46               	/* frame size = 0 */
+  47               	/* stack size = 6 */
+  48               	.L__stack_usage = 6
+  49 000c D82F      		mov r29,r24
+  24:includes/a2dUtil.c **** 	uint32_t adcSUM = 0;
+  50               		.loc 1 24 2 is_stmt 1 view .LVU2
+  51               	.LVL1:
+  25:includes/a2dUtil.c **** 	for(uint8_t i = 0; i<ADC_SAMPLES; i++)
+  52               		.loc 1 25 2 view .LVU3
+  53               	.LBB2:
+  54               		.loc 1 25 6 view .LVU4
+  55               		.loc 1 25 6 is_stmt 0 view .LVU5
+  56               	.LBE2:
+  23:includes/a2dUtil.c **** 	uint32_t adcSUM = 0;
+  57               		.loc 1 23 1 view .LVU6
+  58 000e CAE0      		ldi r28,lo8(10)
+  24:includes/a2dUtil.c **** 	uint32_t adcSUM = 0;
+  59               		.loc 1 24 11 view .LVU7
+  60 0010 C12C      		mov r12,__zero_reg__
+  61 0012 D12C      		mov r13,__zero_reg__
+  62 0014 7601      		movw r14,r12
+  63               	.LVL2:
+  64               	.L2:
+  65               	.LBB3:
+  26:includes/a2dUtil.c **** 	{
+  27:includes/a2dUtil.c **** 		adcSUM += a2d_10bitCh(ch);
+  66               		.loc 1 27 3 is_stmt 1 discriminator 3 view .LVU8
+  67               		.loc 1 27 13 is_stmt 0 discriminator 3 view .LVU9
+  68 0016 8D2F      		mov r24,r29
+  69 0018 0E94 0000 		call a2d_10bitCh
+  70               	.LVL3:
+  71               		.loc 1 27 10 discriminator 3 view .LVU10
+  72 001c C80E      		add r12,r24
+  73 001e D91E      		adc r13,r25
+  74 0020 E11C      		adc r14,__zero_reg__
+  75 0022 F11C      		adc r15,__zero_reg__
+  76               	.LVL4:
+  77               		.loc 1 27 10 discriminator 3 view .LVU11
+  78 0024 C150      		subi r28,lo8(-(-1))
+  79               	.LVL5:
+  25:includes/a2dUtil.c **** 	{
+  80               		.loc 1 25 2 discriminator 3 view .LVU12
+  81 0026 01F4      		brne .L2
+  82               	.LBE3:
+  28:includes/a2dUtil.c **** 	}
+  29:includes/a2dUtil.c **** 	return (uint16_t)(adcSUM/ADC_SAMPLES);
+  83               		.loc 1 29 2 is_stmt 1 view .LVU13
+  84               		.loc 1 29 26 is_stmt 0 view .LVU14
+  85 0028 C701      		movw r24,r14
+  86 002a B601      		movw r22,r12
+  87 002c 2AE0      		ldi r18,lo8(10)
+  88 002e 30E0      		ldi r19,0
+  89 0030 40E0      		ldi r20,0
+  90 0032 50E0      		ldi r21,0
+  91 0034 0E94 0000 		call __udivmodsi4
+  30:includes/a2dUtil.c **** }...
+  92               		.loc 1 30 1 view .LVU15
+  93 0038 C901      		movw r24,r18
+  94               	/* epilogue start */
+  95 003a DF91      		pop r29
+  96               	.LVL6:
+  97               		.loc 1 30 1 view .LVU16
+  98 003c CF91      		pop r28
+  99               	.LVL7:
+ 100               		.loc 1 30 1 view .LVU17
+ 101 003e FF90      		pop r15
+ 102 0040 EF90      		pop r14
+ 103 0042 DF90      		pop r13
+ 104 0044 CF90      		pop r12
+ 105               	.LVL8:
+ 106               		.loc 1 30 1 view .LVU18
+ 107 0046 0895      		ret
+ 108               		.cfi_endproc
+ 109               	.LFE4:
+ 111               		.text
+ 112               	.Letext0:
+ 113               		.file 2 "/usr/local/Cellar/avr-gcc/8.1.0/avr/include/stdlib.h"
+ 114               		.file 3 "/usr/local/Cellar/avr-gcc/8.1.0/lib/avr-gcc/8/gcc/avr/8.1.0/include/stddef.h"
+ 115               		.file 4 "/usr/local/Cellar/avr-gcc/8.1.0/avr/include/stdint.h"
+ 116               		.file 5 "./utils/a2d.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 a2dUtil.c
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccmhG5pa.s:2      *ABS*:000000000000003e __SP_H__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccmhG5pa.s:3      *ABS*:000000000000003d __SP_L__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccmhG5pa.s:4      *ABS*:000000000000003f __SREG__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccmhG5pa.s:5      *ABS*:000000000000003b __RAMPZ__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccmhG5pa.s:6      *ABS*:0000000000000000 __tmp_reg__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccmhG5pa.s:7      *ABS*:0000000000000001 __zero_reg__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//ccmhG5pa.s:14     .text.adc_read_avg:0000000000000000 adc_read_avg
+
+UNDEFINED SYMBOLS
+a2d_10bitCh
+__udivmodsi4

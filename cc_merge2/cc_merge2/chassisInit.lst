@@ -1,0 +1,360 @@
+   1               		.file	"chassisInit.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__RAMPZ__ = 0x3b
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+  10               		.cfi_sections	.debug_frame
+  11               		.comm	portKey,1,1
+  12               		.section	.text.external_interrupt_init,"ax",@progbits
+  13               	.global	external_interrupt_init
+  15               	external_interrupt_init:
+  16               	.LFB5:
+  17               		.file 1 "includes/chassisInit.c"
+   1:includes/chassisInit.c **** 
+   2:includes/chassisInit.c **** /**
+   3:includes/chassisInit.c ****  * @file chassisInit.c
+   4:includes/chassisInit.c ****  * @author Jonn Dillon
+   5:includes/chassisInit.c ****  * @date 16/4/2018
+   6:includes/chassisInit.c ****  * @brief Handles all initialisation processes for the chassis controller
+   7:includes/chassisInit.c ****  **/
+   8:includes/chassisInit.c **** 
+   9:includes/chassisInit.c **** 
+  10:includes/chassisInit.c **** #include "chassisInit.h"
+  11:includes/chassisInit.c **** 
+  12:includes/chassisInit.c **** /**
+  13:includes/chassisInit.c ****  * @brief Sets up the microcontroller to allow external interrupts. The External Interrupts are tri
+  14:includes/chassisInit.c ****  * 
+  15:includes/chassisInit.c ****  * Reference: ATmega Datasheet Chapter 15 (External Interrupts)
+  16:includes/chassisInit.c ****  * 
+  17:includes/chassisInit.c ****  */
+  18:includes/chassisInit.c **** void external_interrupt_init()
+  19:includes/chassisInit.c **** {
+  18               		.loc 1 19 1 view -0
+  19               		.cfi_startproc
+  20               	/* prologue: function */
+  21               	/* frame size = 0 */
+  22               	/* stack size = 0 */
+  23               	.L__stack_usage = 0
+  20:includes/chassisInit.c **** 	//INT1 for CAN1, INT0 for CAN2, PCINT7 for CAN3
+  21:includes/chassisInit.c **** 	EICRA |= (2<<ISC00)|(2<<ISC10);
+  24               		.loc 1 21 2 view .LVU1
+  25               		.loc 1 21 8 is_stmt 0 view .LVU2
+  26 0000 E9E6      		ldi r30,lo8(105)
+  27 0002 F0E0      		ldi r31,0
+  28 0004 8081      		ld r24,Z
+  29 0006 8A60      		ori r24,lo8(10)
+  30 0008 8083      		st Z,r24
+  22:includes/chassisInit.c **** 	EIMSK  = (1<<INT0) | (1<<INT1);
+  31               		.loc 1 22 2 is_stmt 1 view .LVU3
+  32               		.loc 1 22 9 is_stmt 0 view .LVU4
+  33 000a 83E0      		ldi r24,lo8(3)
+  34 000c 8DBB      		out 0x1d,r24
+  23:includes/chassisInit.c **** 	//Enable interrupts for PCINT7:0
+  24:includes/chassisInit.c **** 	PCICR  = (1<<PCIE0)|(1<<PCIE1);
+  35               		.loc 1 24 2 is_stmt 1 view .LVU5
+  36               		.loc 1 24 9 is_stmt 0 view .LVU6
+  37 000e 8093 6800 		sts 104,r24
+  25:includes/chassisInit.c **** 	PCMSK0 = (1<<PCINT7);
+  38               		.loc 1 25 2 is_stmt 1 view .LVU7
+  39               		.loc 1 25 9 is_stmt 0 view .LVU8
+  40 0012 80E8      		ldi r24,lo8(-128)
+  41 0014 8093 6B00 		sts 107,r24
+  26:includes/chassisInit.c **** 	PCMSK1 = (1<<PCINT15);
+  42               		.loc 1 26 2 is_stmt 1 view .LVU9
+  43               		.loc 1 26 9 is_stmt 0 view .LVU10
+  44 0018 8093 6C00 		sts 108,r24
+  45               	/* epilogue start */
+  27:includes/chassisInit.c **** }
+  46               		.loc 1 27 1 view .LVU11
+  47 001c 0895      		ret
+  48               		.cfi_endproc
+  49               	.LFE5:
+  51               		.section	.text.io_init,"ax",@progbits
+  52               	.global	io_init
+  54               	io_init:
+  55               	.LFB6:
+  28:includes/chassisInit.c **** 
+  29:includes/chassisInit.c **** /**
+  30:includes/chassisInit.c ****  * @brief Configures the pins required for IO. Each port pin consists of three register bits: DDxn,
+  31:includes/chassisInit.c ****  * 
+  32:includes/chassisInit.c ****  * 	DDRx   - Sets the direction of PINxn in bit DDxn (1 -> output, 0 -> input)
+  33:includes/chassisInit.c ****  * 
+  34:includes/chassisInit.c ****  * 	PORTx  - Activates the pull-up resistor for PINxn in bit PORTxn. The pull-up resistor will only
+  35:includes/chassisInit.c ****  * 
+  36:includes/chassisInit.c ****  *  PINx   - The Port Input Pins I/O location is read only. 
+  37:includes/chassisInit.c ****  *           Writing a logic one to a bit in the PINx Register, will result in a toggle in the corr
+  38:includes/chassisInit.c ****  * 		     Writing a logic one to PINxn toggles the value of PORTxn, independent on the value of DDR
+  39:includes/chassisInit.c ****  * 
+  40:includes/chassisInit.c ****  * Reference: ATmega Datasheet Chapter 13 (I/O-Ports)
+  41:includes/chassisInit.c ****  * 
+  42:includes/chassisInit.c ****  */
+  43:includes/chassisInit.c **** void io_init()
+  44:includes/chassisInit.c **** {
+  56               		.loc 1 44 1 is_stmt 1 view -0
+  57               		.cfi_startproc
+  58               	/* prologue: function */
+  59               	/* frame size = 0 */
+  60               	/* stack size = 0 */
+  61               	.L__stack_usage = 0
+  45:includes/chassisInit.c **** 	//pins 8, 9 and 14 for MCP2515_STB high so the things respond (PE6, PE7, PH2)
+  46:includes/chassisInit.c **** 	DDRE  = 0b11000010;		//PE0 = RS232 RX1; PE1 = RS232 TX1;  PE6 = STB_CAN1; PE7 = STB_CAN2;
+  62               		.loc 1 46 2 view .LVU13
+  63               		.loc 1 46 8 is_stmt 0 view .LVU14
+  64 0000 82EC      		ldi r24,lo8(-62)
+  65 0002 8DB9      		out 0xd,r24
+  47:includes/chassisInit.c **** 	PORTE = 0b00000000;		
+  66               		.loc 1 47 2 is_stmt 1 view .LVU15
+  67               		.loc 1 47 8 is_stmt 0 view .LVU16
+  68 0004 1EB8      		out 0xe,__zero_reg__
+  48:includes/chassisInit.c **** 	DDRH  = 0b00000111;		//PH0 = CS_CAN1; PH1 = CS_CAN2; PH2 = STB_CAN3
+  69               		.loc 1 48 2 is_stmt 1 view .LVU17
+  70               		.loc 1 48 8 is_stmt 0 view .LVU18
+  71 0006 87E0      		ldi r24,lo8(7)
+  72 0008 8093 0101 		sts 257,r24
+  49:includes/chassisInit.c **** 	PORTH = 0b00000011;		//CS_CAN1 high; CS_CAN2 high;
+  73               		.loc 1 49 2 is_stmt 1 view .LVU19
+  74               		.loc 1 49 8 is_stmt 0 view .LVU20
+  75 000c 83E0      		ldi r24,lo8(3)
+  76 000e 8093 0201 		sts 258,r24
+  50:includes/chassisInit.c **** 	//pins 12, 13, 19 for the CS for each MCP2515 PH0, PH1, PB0)
+  51:includes/chassisInit.c **** 
+  52:includes/chassisInit.c **** 	//pin 21 for MOSI, pin 20  for SCK (PB2, PB1)
+  53:includes/chassisInit.c **** 	DDRB  = 0b01100111;		//PB0 = CS_CAN3; PB1 = SCK; PB2 = MOSI; PB3 = MISO; PB5 = High drive A; PB6 =
+  77               		.loc 1 53 2 is_stmt 1 view .LVU21
+  78               		.loc 1 53 8 is_stmt 0 view .LVU22
+  79 0012 87E6      		ldi r24,lo8(103)
+  80 0014 84B9      		out 0x4,r24
+  54:includes/chassisInit.c **** 	PORTB = 0b00000001;		//set CS_CAN3 high;
+  81               		.loc 1 54 2 is_stmt 1 view .LVU23
+  82               		.loc 1 54 8 is_stmt 0 view .LVU24
+  83 0016 81E0      		ldi r24,lo8(1)
+  84 0018 85B9      		out 0x5,r24
+  55:includes/chassisInit.c **** 	
+  56:includes/chassisInit.c **** 	DDRL  = 0b00011000;		//PB3 = High drive B; PB4 = Low Drive B;
+  85               		.loc 1 56 2 is_stmt 1 view .LVU25
+  86               		.loc 1 56 8 is_stmt 0 view .LVU26
+  87 001a 88E1      		ldi r24,lo8(24)
+  88 001c 8093 0A01 		sts 266,r24
+  57:includes/chassisInit.c **** 	PORTL = 0b00000000;
+  89               		.loc 1 57 2 is_stmt 1 view .LVU27
+  90               		.loc 1 57 8 is_stmt 0 view .LVU28
+  91 0020 1092 0B01 		sts 267,__zero_reg__
+  58:includes/chassisInit.c **** 	
+  59:includes/chassisInit.c **** 	DDRD  = 0b11001000;		//PD0 = CAN2_INT; PD1 = CAN1_INT; PD2 = RS232 RX2; PD3 = RS232 TX2; PD6 = CAN
+  92               		.loc 1 59 2 is_stmt 1 view .LVU29
+  93               		.loc 1 59 8 is_stmt 0 view .LVU30
+  94 0024 98EC      		ldi r25,lo8(-56)
+  95 0026 9AB9      		out 0xa,r25
+  60:includes/chassisInit.c **** 	DDRD  = 0b00000000;
+  96               		.loc 1 60 2 is_stmt 1 view .LVU31
+  97               		.loc 1 60 8 is_stmt 0 view .LVU32
+  98 0028 1AB8      		out 0xa,__zero_reg__
+  61:includes/chassisInit.c **** 	
+  62:includes/chassisInit.c **** 	DDRC  = 0b00001000;		//PC3 = CAN3_TXPIN;
+  99               		.loc 1 62 2 is_stmt 1 view .LVU33
+ 100               		.loc 1 62 8 is_stmt 0 view .LVU34
+ 101 002a 98E0      		ldi r25,lo8(8)
+ 102 002c 97B9      		out 0x7,r25
+  63:includes/chassisInit.c **** 	PORTC = 0b00000000;
+ 103               		.loc 1 63 2 is_stmt 1 view .LVU35
+ 104               		.loc 1 63 8 is_stmt 0 view .LVU36
+ 105 002e 18B8      		out 0x8,__zero_reg__
+  64:includes/chassisInit.c **** 	
+  65:includes/chassisInit.c **** 	DDRJ  = 0b00000000;		//PORTJ is used for digital input;
+ 106               		.loc 1 65 2 is_stmt 1 view .LVU37
+ 107               		.loc 1 65 8 is_stmt 0 view .LVU38
+ 108 0030 1092 0401 		sts 260,__zero_reg__
+  66:includes/chassisInit.c **** 	
+  67:includes/chassisInit.c **** 	DDRA  = 0b00011000;		//PA3 = ENABLE_B; PA4 = ENABLE_A; PA1 = dig input; PA2 = dig input;
+ 109               		.loc 1 67 2 is_stmt 1 view .LVU39
+ 110               		.loc 1 67 8 is_stmt 0 view .LVU40
+ 111 0034 81B9      		out 0x1,r24
+  68:includes/chassisInit.c **** 	PORTA = 0b00010000;
+ 112               		.loc 1 68 2 is_stmt 1 view .LVU41
+ 113               		.loc 1 68 8 is_stmt 0 view .LVU42
+ 114 0036 80E1      		ldi r24,lo8(16)
+ 115 0038 82B9      		out 0x2,r24
+  69:includes/chassisInit.c **** 
+  70:includes/chassisInit.c **** 	DDRK  = 0b00100000;		//PK5 = debugging LED;
+ 116               		.loc 1 70 2 is_stmt 1 view .LVU43
+ 117               		.loc 1 70 8 is_stmt 0 view .LVU44
+ 118 003a 80E2      		ldi r24,lo8(32)
+ 119 003c 8093 0701 		sts 263,r24
+  71:includes/chassisInit.c **** 	// PORTK = 0b00100000;
+  72:includes/chassisInit.c **** 	
+  73:includes/chassisInit.c **** 	// Enable external interrupts in order for the CAN bus to communicate with us
+  74:includes/chassisInit.c **** 	external_interrupt_init();
+ 120               		.loc 1 74 2 is_stmt 1 view .LVU45
+ 121 0040 0C94 0000 		jmp external_interrupt_init
+ 122               	.LVL0:
+ 123               		.cfi_endproc
+ 124               	.LFE6:
+ 126               		.section	.text.firmware_init,"ax",@progbits
+ 127               	.global	firmware_init
+ 129               	firmware_init:
+ 130               	.LFB7:
+  75:includes/chassisInit.c **** }
+  76:includes/chassisInit.c **** 
+  77:includes/chassisInit.c **** /**
+  78:includes/chassisInit.c ****  * @brief Set up all devices in the ATmega and MCP2515. Initiates structs to hold data from other d
+  79:includes/chassisInit.c ****  * 
+  80:includes/chassisInit.c ****  */
+  81:includes/chassisInit.c **** void firmware_init()
+  82:includes/chassisInit.c **** {
+ 131               		.loc 1 82 1 view -0
+ 132               		.cfi_startproc
+ 133               	/* prologue: function */
+ 134               	/* frame size = 0 */
+ 135               	/* stack size = 0 */
+ 136               	.L__stack_usage = 0
+  83:includes/chassisInit.c **** 	io_init();
+ 137               		.loc 1 83 2 view .LVU47
+ 138 0000 0E94 0000 		call io_init
+ 139               	.LVL1:
+  84:includes/chassisInit.c **** 	// SPI_init();
+  85:includes/chassisInit.c ****     // // uart_init(UART_BAUD_SELECT(19200, 16UL));
+  86:includes/chassisInit.c ****     uart_init(19200);
+ 140               		.loc 1 86 5 view .LVU48
+ 141 0004 80E0      		ldi r24,0
+ 142 0006 9BE4      		ldi r25,lo8(75)
+ 143 0008 0E94 0000 		call uart_init
+ 144               	.LVL2:
+  87:includes/chassisInit.c ****     uart1_init(19200);
+ 145               		.loc 1 87 5 view .LVU49
+ 146 000c 80E0      		ldi r24,0
+ 147 000e 9BE4      		ldi r25,lo8(75)
+ 148 0010 0E94 0000 		call uart1_init
+ 149               	.LVL3:
+  88:includes/chassisInit.c **** 	a2dInit(ADC_PRESCALE_DIV64, ADC_REFERENCE_AVCC); // Turns ON ADC
+ 150               		.loc 1 88 2 view .LVU50
+ 151 0014 61E0      		ldi r22,lo8(1)
+ 152 0016 86E0      		ldi r24,lo8(6)
+ 153 0018 0C94 0000 		jmp a2dInit
+ 154               	.LVL4:
+ 155               		.cfi_endproc
+ 156               	.LFE7:
+ 158               		.section	.text.timer_init,"ax",@progbits
+ 159               	.global	timer_init
+ 161               	timer_init:
+ 162               	.LFB8:
+  89:includes/chassisInit.c **** 	// MCP2515_init(TRACTIVE_CAN);
+  90:includes/chassisInit.c **** 	// MCP2515_init(POWER_CAN);
+  91:includes/chassisInit.c **** 	// MCP2515_init(DATA_CAN);
+  92:includes/chassisInit.c **** 
+  93:includes/chassisInit.c **** 	// Enable the pullup on the input. This allows the pin to be active low
+  94:includes/chassisInit.c **** 	// PORTJ |= (1<<PINJ6);
+  95:includes/chassisInit.c **** 
+  96:includes/chassisInit.c **** 	// Initialise inverter structs
+  97:includes/chassisInit.c **** 	// for(uint8_t i = 0; i < NUM_INVERTERS; i++)
+  98:includes/chassisInit.c **** 	// {
+  99:includes/chassisInit.c **** 	// 	inverters[i].ID=1<<i;
+ 100:includes/chassisInit.c **** 	// 	inverters[i].current = 0;
+ 101:includes/chassisInit.c **** 	// 	inverters[i].duty = 0;
+ 102:includes/chassisInit.c **** 	// 	inverters[i].RPM = 0;
+ 103:includes/chassisInit.c **** 	// 	inverters[i].temperature = 0;
+ 104:includes/chassisInit.c **** 	// }
+ 105:includes/chassisInit.c **** 
+ 106:includes/chassisInit.c **** 	// accumulators[0].ID=ACCUMULATOR_FRONT;
+ 107:includes/chassisInit.c **** }
+ 108:includes/chassisInit.c **** 
+ 109:includes/chassisInit.c **** /**
+ 110:includes/chassisInit.c ****  * @brief Initiates a timer set on Clear Timer Compare Match (CTC) Mode.
+ 111:includes/chassisInit.c ****  * 
+ 112:includes/chassisInit.c ****  * Reference: ATmega Datasheet Chapter 17 (16-bit Timer/Counter)
+ 113:includes/chassisInit.c ****  * 
+ 114:includes/chassisInit.c ****  */
+ 115:includes/chassisInit.c **** void timer_init()
+ 116:includes/chassisInit.c **** {
+ 163               		.loc 1 116 1 view -0
+ 164               		.cfi_startproc
+ 165               	/* prologue: function */
+ 166               	/* frame size = 0 */
+ 167               	/* stack size = 0 */
+ 168               	.L__stack_usage = 0
+ 117:includes/chassisInit.c ****     // http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2549-8-bit-AVR-Microcontroller-ATmega6
+ 118:includes/chassisInit.c ****     // Set up 1Khz timer
+ 119:includes/chassisInit.c ****     TCCR0A |= (1 << WGM01);                 // Setting CTC on timer0
+ 169               		.loc 1 119 5 view .LVU52
+ 170               		.loc 1 119 12 is_stmt 0 view .LVU53
+ 171 0000 84B5      		in r24,0x24
+ 172 0002 8260      		ori r24,lo8(2)
+ 173 0004 84BD      		out 0x24,r24
+ 120:includes/chassisInit.c ****     TCCR0B |= (1 << CS01)|(1 << CS00);      // Set up 64 prescaler (16Mhz / 64)
+ 174               		.loc 1 120 5 is_stmt 1 view .LVU54
+ 175               		.loc 1 120 12 is_stmt 0 view .LVU55
+ 176 0006 85B5      		in r24,0x25
+ 177 0008 8360      		ori r24,lo8(3)
+ 178 000a 85BD      		out 0x25,r24
+ 121:includes/chassisInit.c ****     OCR0A = 250;                            // (16*10^6) / (1000 * 64) assuming 16Mhz chip = 1Khz
+ 179               		.loc 1 121 5 is_stmt 1 view .LVU56
+ 180               		.loc 1 121 11 is_stmt 0 view .LVU57
+ 181 000c 8AEF      		ldi r24,lo8(-6)
+ 182 000e 87BD      		out 0x27,r24
+ 122:includes/chassisInit.c ****     TIMSK0 |= (1 << OCIE0A);                // Enable COMPA interupt
+ 183               		.loc 1 122 5 is_stmt 1 view .LVU58
+ 184               		.loc 1 122 12 is_stmt 0 view .LVU59
+ 185 0010 EEE6      		ldi r30,lo8(110)
+ 186 0012 F0E0      		ldi r31,0
+ 187 0014 8081      		ld r24,Z
+ 188 0016 8260      		ori r24,lo8(2)
+ 189 0018 8083      		st Z,r24
+ 123:includes/chassisInit.c **** 
+ 124:includes/chassisInit.c ****     // Set up 50Hz comm timer
+ 125:includes/chassisInit.c **** 	TCCR1A = 0b00000000;			//
+ 190               		.loc 1 125 2 is_stmt 1 view .LVU60
+ 191               		.loc 1 125 9 is_stmt 0 view .LVU61
+ 192 001a 1092 8000 		sts 128,__zero_reg__
+ 126:includes/chassisInit.c **** 	TCCR1B = 0b00001101;			// CTC mode & prescale clock by 1024
+ 193               		.loc 1 126 2 is_stmt 1 view .LVU62
+ 194               		.loc 1 126 9 is_stmt 0 view .LVU63
+ 195 001e 8DE0      		ldi r24,lo8(13)
+ 196 0020 8093 8100 		sts 129,r24
+ 127:includes/chassisInit.c **** 	OCR1A =  15000;					// 312 gives 50Hz main comms speed
+ 197               		.loc 1 127 2 is_stmt 1 view .LVU64
+ 198               		.loc 1 127 8 is_stmt 0 view .LVU65
+ 199 0024 88E9      		ldi r24,lo8(-104)
+ 200 0026 9AE3      		ldi r25,lo8(58)
+ 201 0028 9093 8900 		sts 136+1,r25
+ 202 002c 8093 8800 		sts 136,r24
+ 128:includes/chassisInit.c **** 	TIMSK1 = 0b00000010;			// Turn on compare interrupt for OCR1A
+ 203               		.loc 1 128 2 is_stmt 1 view .LVU66
+ 204               		.loc 1 128 9 is_stmt 0 view .LVU67
+ 205 0030 82E0      		ldi r24,lo8(2)
+ 206 0032 8093 6F00 		sts 111,r24
+ 207               	/* epilogue start */
+ 129:includes/chassisInit.c **** }...
+ 208               		.loc 1 129 1 view .LVU68
+ 209 0036 0895      		ret
+ 210               		.cfi_endproc
+ 211               	.LFE8:
+ 213               		.text
+ 214               	.Letext0:
+ 215               		.file 2 "/usr/local/Cellar/avr-gcc/8.1.0/avr/include/stdint.h"
+ 216               		.file 3 "/usr/local/Cellar/avr-gcc/8.1.0/lib/avr-gcc/8/gcc/avr/8.1.0/include/stddef.h"
+ 217               		.file 4 "/usr/local/Cellar/avr-gcc/8.1.0/avr/include/stdio.h"
+ 218               		.file 5 "/usr/local/Cellar/avr-gcc/8.1.0/avr/include/stdlib.h"
+ 219               		.file 6 "./utils/uart.h"
+ 220               		.file 7 "./utils/a2d.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 chassisInit.c
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc10AGji.s:2      *ABS*:000000000000003e __SP_H__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc10AGji.s:3      *ABS*:000000000000003d __SP_L__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc10AGji.s:4      *ABS*:000000000000003f __SREG__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc10AGji.s:5      *ABS*:000000000000003b __RAMPZ__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc10AGji.s:6      *ABS*:0000000000000000 __tmp_reg__
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc10AGji.s:7      *ABS*:0000000000000001 __zero_reg__
+                            *COM*:0000000000000001 portKey
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc10AGji.s:15     .text.external_interrupt_init:0000000000000000 external_interrupt_init
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc10AGji.s:54     .text.io_init:0000000000000000 io_init
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc10AGji.s:129    .text.firmware_init:0000000000000000 firmware_init
+/var/folders/my/0z6f376568j9tywzmdyvysy80000gn/T//cc10AGji.s:161    .text.timer_init:0000000000000000 timer_init
+
+UNDEFINED SYMBOLS
+uart_init
+uart1_init
+a2dInit
+__do_clear_bss
