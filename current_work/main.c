@@ -49,6 +49,31 @@ uint8_t getMotorPosition(void);
 void kickMotor(void);
 void toggle_led(void);
 
+void mil_timer(uint8_t millis){
+	TCCR0A |= (1<<WGM01);
+	TCCR1B |= (1<<CS02)|(1<<CS00);
+
+	OCR0A = millis*7;
+
+	TIMSK0 |= (1<<OCIE0A);
+}
+
+
+int main(void)
+{
+	DDRB |= (1<<DDB5);
+	DDRB &= ~(1<<DDB7);
+
+	sei();
+
+	while(1){
+
+	}
+
+}
+
+
+/*
 uint8_t testChar = 0;
 uint8_t startPhase = -1;
 uint8_t revolutions = 0;
@@ -107,17 +132,13 @@ int main(void)
 	sei();	
 
 	//PSC
-	/*
-	PWM code. DO NOT CHANGE
-	*/
-	/******************************************************************/
+	// PWM setup code.
+	
 	POCR_RB = 256;
 	POCR0SA = POCR1SA = POCR2SA = 220;
 	POCR0SB = POCR1SB = POCR2SB = 210;
 	PCNF = 0b00011100;						//centre-aligned mode
 	PCTL = 0b00100001;						//select PLL clock with no prescale, turn the PSC on
-	/******************************************************************/
-
 
 	//turn the outputs off
 	PHASES_ALL_HIGH_OFF;
@@ -136,6 +157,7 @@ int main(void)
 		if(motorState == 1)
 		{
 			// PWM code.
+			// 
 			POCR0SA = POCR1SA = POCR2SA = motorCommand;
 			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
 		}
@@ -293,6 +315,7 @@ uint8_t getMotorPosition(void)
 {		// ((? & 100000) / 8) +  ((? & 100) / 2)   + ((? & 1000000) / 64)
 	return (((PINB & 32) / 8) + ((PINB & 4) / 2) + ((PIND & 64) / 64));
 }
+*/
 
 void toggle_led(void){
 	PORTB ^= 0b00001000;
