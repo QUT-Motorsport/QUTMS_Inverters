@@ -13,21 +13,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000007e0  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000098  00000000  00000000  00000820  2**0
+  5 .debug_aranges 000000a0  00000000  00000000  00000820  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000010c5  00000000  00000000  000008b8  2**0
+  6 .debug_info   000010f0  00000000  00000000  000008c0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000c9c  00000000  00000000  0000197d  2**0
+  7 .debug_abbrev 00000cc5  00000000  00000000  000019b0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000008dd  00000000  00000000  00002619  2**0
+  8 .debug_line   00000906  00000000  00000000  00002675  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000208  00000000  00000000  00002ef8  2**2
+  9 .debug_frame  00000218  00000000  00000000  00002f7c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000006f3  00000000  00000000  00003100  2**0
+ 10 .debug_str    00000704  00000000  00000000  00003194  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000683  00000000  00000000  000037f3  2**0
+ 11 .debug_loc    000006a4  00000000  00000000  00003898  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000078  00000000  00000000  00003e76  2**0
+ 12 .debug_ranges 00000080  00000000  00000000  00003f3c  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -849,11 +849,10 @@ int main(void)
 	// start the interrupts
 	sei();	
  588:	78 94       	sei
+
 	//PSC
-	/*
-	PWM code. DO NOT CHANGE
-	*/
-	/******************************************************************/
+	// PWM setup code.
+	
 	POCR_RB = 256;
  58a:	80 e0       	ldi	r24, 0x00	; 0
  58c:	91 e0       	ldi	r25, 0x01	; 1
@@ -883,8 +882,6 @@ int main(void)
 	PCTL = 0b00100001;						//select PLL clock with no prescale, turn the PSC on
  5d4:	81 e2       	ldi	r24, 0x21	; 33
  5d6:	80 93 b7 00 	sts	0x00B7, r24	; 0x8000b7 <__TEXT_REGION_LENGTH__+0x7e00b7>
-	/******************************************************************/
-
 
 	//turn the outputs off
 	PHASES_ALL_HIGH_OFF;
@@ -926,11 +923,11 @@ int main(void)
  5fc:	f3 e0       	ldi	r31, 0x03	; 3
  5fe:	3f 2e       	mov	r3, r31
  600:	f0 2d       	mov	r31, r0
-		motorCommand = 250 - testChar;
 		if(motorCommand < 190) motorCommand = 190;
 		if(motorState == 1)
 		{
 			// PWM code.
+			// 
 			POCR0SA = POCR1SA = POCR2SA = motorCommand;
  602:	0f 2e       	mov	r0, r31
  604:	fc ea       	ldi	r31, 0xAC	; 172
@@ -978,6 +975,7 @@ int main(void)
  64e:	d9 f4       	brne	.+54     	; 0x686 <main+0x150>
 		{
 			// PWM code.
+			// 
 			POCR0SA = POCR1SA = POCR2SA = motorCommand;
  650:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <__data_end>
  654:	90 e0       	ldi	r25, 0x00	; 0

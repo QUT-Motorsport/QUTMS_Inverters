@@ -49,6 +49,7 @@ uint8_t getMotorPosition(void);
 void kickMotor(void);
 void toggle_led(void);
 
+/*
 void mil_timer(uint8_t millis){
 	TCCR0A |= (1<<WGM01);
 	TCCR1B |= (1<<CS02)|(1<<CS00);
@@ -71,9 +72,9 @@ int main(void)
 	}
 
 }
+*/
 
 
-/*
 uint8_t testChar = 0;
 uint8_t startPhase = -1;
 uint8_t revolutions = 0;
@@ -315,7 +316,7 @@ uint8_t getMotorPosition(void)
 {		// ((? & 100000) / 8) +  ((? & 100) / 2)   + ((? & 1000000) / 64)
 	return (((PINB & 32) / 8) + ((PINB & 4) / 2) + ((PIND & 64) / 64));
 }
-*/
+
 
 void toggle_led(void){
 	PORTB ^= 0b00001000;
