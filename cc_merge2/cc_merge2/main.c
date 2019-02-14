@@ -9,6 +9,8 @@ uint8_t armedState = 0;
 
 uint8_t shutdownState = 0;
 
+uint8_t RecievedMsgInv = 1;
+
 volatile uint8_t testError = 0;
 
 uint8_t inverterArray[8] = {0,0,0,0,0,0,0,0};
@@ -27,7 +29,7 @@ int main(void) {
     shutdownState = 0;
 	_delay_ms(500);
     // Enable Interupts
-    sei();					
+    sei();		
     // Main Poll
     // ------------------------------------------------------------------------
     while(1) {
@@ -99,13 +101,17 @@ void oneKHzTimer(void)
      //------------------------------------------------------------------------
     
 	
-	 inverterArray[0] = INPUT_accelerationPedal;
+	 inverterArray[0] = INPUT_accelerationPedal;//CAN_HEARTBEAT_TIME_INVERTERS
 	 if(CANheartbeatCountInverters >= CAN_HEARTBEAT_TIME_INVERTERS)
 	 {
 		 // Reset inverter heartbeat counter
 		 CANheartbeatCountInverters = 0;
-		 // Send inverter system heartbeat
-		 CAN_send(TRACTIVE_CAN, 8, inverterArray, 0b0100100000000000000000000011110);
+		 // To wait for Inv message
+		 RecievedMsgInv = 0;
+		 // Send inverter system heartbeat 0b0100100000000000000000000011110
+		 CAN_send(TRACTIVE_CAN, 8, inverterArray, 0x4666666);
+	 }else if(CANheartbeatCountInverters > CAN_HEARTBEAT_TIME_INVERTERS * 2){
+		// Inverter dead, shutdown
 	 }
 	 
 	 if(CANheartbeatCountWheel > CAN_HEARTBEAT_TIME_WHEEL)
@@ -113,7 +119,7 @@ void oneKHzTimer(void)
 		 // Reset data heartbeat counter
 		 CANheartbeatCountWheel = 0;
 		 // Send data system heartbeat
-		 //CAN_send(DATA_CAN, 8, WheelArray, HEARTBEAT_WHEEL_ID | 1);
+		 CAN_send(DATA_CAN, 8, WheelArray, HEARTBEAT_WHEEL_ID | 1);
 		 
 	 }
 	 
@@ -122,14 +128,16 @@ void oneKHzTimer(void)
 		 // Reset power heartbeat counter
 		 CANheartbeatCountPDM = 0;
 		 // Send power system heartbeat
-		 if(armedState == 1)
-		 {
-			PDMarray[0] |= 255; //192
-		 }
-		 else
-		 {
-			PDMarray[0] &= ~255;
-		 }
+		 //if(armedState == 1)PDMarray[0] |= 255; //192
+		 PDMarray[0] |= 255; // testing CAN
+		 PDMarray[1] |= 255; // testing CAN
+		 PDMarray[2] |= 255; // testing CAN
+		 PDMarray[3] |= 255; // testing CAN
+		 PDMarray[4] |= 0; // testing CAN
+		 PDMarray[5] |= 0; // testing CAN
+		 PDMarray[6] |= 0; // testing CAN
+		 PDMarray[7] |= 0; // testing CAN
+		 //else PDMarray[0] &= ~255;
 		 CAN_send(POWER_CAN, 8, PDMarray, HEARTBEAT_PDM_ID | 1);
 	 }
 	 
@@ -149,6 +157,7 @@ void oneKHzTimer(void)
 		 //CAN_send(POWER_CAN, 8, PDMarray, HEARTBEAT_AMU_ID | 1);
 	 }
 	 
+	 // the adding commented to test a counting system in the inverters if statement
 	 CANheartbeatCountInverters++;
 	 CANheartbeatCountWheel++;
 	 CANheartbeatCountPDM++;
@@ -251,6 +260,7 @@ ISR(INT1_vect) {
 	uint32_t ID;
 	uint8_t numBytes;
 	led_toggle();
+	RecievedMsgInv = 1;
 	// Get the data from the CAN bus and process it
 	CAN_pull_packet(TRACTIVE_CAN, &numBytes, data, &ID);
 
@@ -286,7 +296,7 @@ ISR(PCINT0_vect) {
 	uint8_t data[8];
 	uint32_t ID;
 	uint8_t numBytes;
-
+	//led_toggle();
 	// Get the data from the CAN bus and process it
 	CAN_pull_packet(DATA_CAN, &numBytes, data, &ID);
 

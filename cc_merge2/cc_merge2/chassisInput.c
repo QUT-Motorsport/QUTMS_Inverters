@@ -161,7 +161,7 @@ uint8_t INPUT_get_brakePressureBack(uint16_t *val) {
  */
 uint8_t INPUT_scaleInput(uint16_t * value, uint16_t max, uint16_t min) {
     uint8_t tmp = (((*value - (min - INPUT_ADC_THRESH)) * 100) / ((max + INPUT_ADC_THRESH) - (min - INPUT_ADC_THRESH)));
-    return tmp > 100 ? 100 : tmp < 0 ? 0 : tmp;
+    return tmp > 76 ? 0 : tmp < 0 ? 0 : tmp;
 }
 
 /**
