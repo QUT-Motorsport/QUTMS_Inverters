@@ -49,38 +49,15 @@ uint8_t getMotorPosition(void);
 void kickMotor(void);
 void toggle_led(void);
 
-/*
-void mil_timer(uint8_t millis){
-	TCCR0A |= (1<<WGM01);
-	TCCR1B |= (1<<CS02)|(1<<CS00);
-
-	OCR0A = millis*7;
-
-	TIMSK0 |= (1<<OCIE0A);
-}
-
-
-int main(void)
-{
-	DDRB |= (1<<DDB5);
-	DDRB &= ~(1<<DDB7);
-
-	sei();
-
-	while(1){
-
-	}
-
-}
-*/
-
 
 uint8_t testChar = 0;
 uint8_t startPhase = -1;
 uint8_t revolutions = 0;
+uint8_t CAN_SEND_BACK_COUNTER = 0;
+uint8_t CAN_SEND_BACK_MAX = 5;
 volatile uint16_t rotationCounter = 0;
 volatile uint8_t motorCommand = 0;
-uint8_t tData [2] = {111,111};
+//uint8_t tData [1] = {111};
 
 ISR(CAN_INT_vect)
 {
@@ -93,13 +70,19 @@ ISR(CAN_INT_vect)
 		testChar = CANMSG;
 		
 		uint8_t tempChar1 = CANMSG;
+		uint8_t tData2 [1] = {tempChar1};
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
-
+		toggle_led();
+		if(CAN_SEND_BACK_COUNTER >= CAN_SEND_BACK_MAX){
+			//CAN_TXMOB(1, 1, tData2, 0x5555555, 1);
+			CAN_SEND_BACK_COUNTER = 0;
+		}
+		CAN_SEND_BACK_COUNTER++;
 		CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
 		
 	}
@@ -174,16 +157,20 @@ int main(void)
 		if(rotationCounter > 99)
 		{
 			motorState = 0;
-			toggle_led();
-			CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
-			PORTB &= ~8; // turn all port B off
+			//toggle_led();
+			//CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
+			//PORTB &= ~8; // turn all port B off
+			// 1000 LED
+			PORTB &= 0b00000000;
 		}
 		else 
 		{
 			motorState = 1;
-			toggle_led();
-			CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
-			PORTB |= 8; // turn all port B on
+			//toggle_led();
+			//CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
+			//PORTB |= 8; // turn all port B on
+			// 0000 LED
+			PORTB |= 0b11110111;
 		}
 
 		
@@ -335,6 +322,31 @@ OCR0A  = 0x1388;       // 1000 ms period
 
 
 //Intial_Timer();
+//////////////////////////////////////
+void mil_timer(uint8_t millis){
+	TCCR0A |= (1<<WGM01);
+	TCCR1B |= (1<<CS02)|(1<<CS00);
+
+	OCR0A = millis*7;
+
+	TIMSK0 |= (1<<OCIE0A);
+}
+
+
+int main(void)
+{
+	DDRB |= (1<<DDB5);
+	DDRB &= ~(1<<DDB7);
+
+	sei();
+
+	while(1){
+
+	}
+
+}
+
+//////////////////////////////////////
 
 
 // TIMER
