@@ -130,7 +130,7 @@ int main(void)
 	PHASE_V_LOW_OFF;
 	PHASE_W_LOW_OFF;
 
-	uint8_t mob = 1;	
+	uint8_t mob = 1;
 	uint8_t motorState = 0;
 	
 	
