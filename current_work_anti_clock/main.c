@@ -46,6 +46,7 @@ void kickMotor(void);
 void toggle_led(void);
 
 uint8_t testChar = 0;
+uint8_t tempStorage = 0;
 uint8_t startPhase = -1;
 uint8_t revolutions = 0;
 uint8_t CAN_SEND_BACK_COUNTER = 0;
@@ -131,10 +132,34 @@ int main(void)
 	
 	while(1)
 	{
+		/*
+		This will ensure the motors will
+			not jump more than 10% in torque power
+		
+		range: 250 to 190. 10% of the range is 6. thus, the 6.
+			Change as and if needed
+		*/
+		if (testChar - tempStorage > 6){
+			testChar = tempStorage + 6;
+		}
+		
+		// Make sure the range is correct
+		if (testChar < 0){
+			testChar = 0;
+		}
+		
+		tempStorage = testChar;
+		
 		motorCommand = 250 - testChar;
+		
+		// Check motor command range
 		if(motorCommand < 190){
 			motorCommand = 190;
 		}
+		if(motorCommand > 250){
+			motorCommand = 250;
+		}
+		
 		if(motorState == 1)
 		{
 			// PWM code.
