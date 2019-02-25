@@ -6,7 +6,7 @@
  */ 
 
 /*******************************************
-THIS CODE TO TURN THE MOTOR CLOCK WISE
+THIS CODE TO TURN THE MOTOR ANTI-CLOCK WISE
 *******************************************/
 
 #define F_CPU 16000000
@@ -132,9 +132,6 @@ int main(void)
 	while(1)
 	{
 		motorCommand = 250 - testChar;
-		
-		
-		
 		if(motorCommand < 190){
 			motorCommand = 190;
 		}
@@ -153,9 +150,7 @@ int main(void)
 			PHASE_V_LOW_OFF;
 			PHASE_W_LOW_OFF;
 		}
-		if(rotationCounter < 100){
-			rotationCounter ++;
-		}
+		if(rotationCounter < 100) rotationCounter ++;
 		if(rotationCounter > 99)
 		{
 			motorState = 0;
@@ -199,17 +194,17 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 		
 	if ((PIND & 64) == 64) {
 		// 3
-		//clock wise
-		PHASE_U_LOW_ON;
-		PHASE_W_HIGH_ON;
+		//anti-clock wise
+		PHASE_U_HIGH_ON;
+		PHASE_W_LOW_ON;
 		if(startPhase == 3){
 			revolutions++;
 		}
 	} else {
 		// 4
-		//clock wise
-		PHASE_W_LOW_ON;
-		PHASE_U_HIGH_ON;
+		//anti-clock wise
+		PHASE_U_LOW_ON;
+		PHASE_W_HIGH_ON;
 		if(startPhase == 4){
 			revolutions++;
 		}
@@ -226,17 +221,17 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 		
 	if ((PINB & 4) == 4) {
 		// 6
-		//clock wise
-		PHASE_V_LOW_ON;
-		PHASE_U_HIGH_ON;
+		//anti-clock wise
+		PHASE_U_LOW_ON;
+		PHASE_V_HIGH_ON;
 		if(startPhase == 6){
 			revolutions++;
 		}
 	} else {
 		// 1
-		//clock wise
-		PHASE_U_LOW_ON;
-		PHASE_V_HIGH_ON;
+		//anti-clock wise
+		PHASE_U_HIGH_ON;
+		PHASE_V_LOW_ON;
 		if(startPhase == 1){
 			revolutions++;
 		}
@@ -253,17 +248,17 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 		
 	if ((PINB & 32) == 32) {
 		// 5
-		//clock wise
-		PHASE_W_LOW_ON;
-		PHASE_V_HIGH_ON;
+		//anti-clock wise
+		PHASE_W_HIGH_ON;
+		PHASE_V_LOW_ON;
 		if(startPhase == 5){
 			revolutions++;
 		}
 		} else {
 		// 2
-		//clock wise
-		PHASE_V_LOW_ON;
-		PHASE_W_HIGH_ON;
+		//anti-clock wise
+		PHASE_V_HIGH_ON;
+		PHASE_W_LOW_ON;
 		if(startPhase == 2){
 			revolutions++;
 		}
@@ -275,32 +270,38 @@ void kickMotor(void)
 	switch (getMotorPosition())
 	{
 		case 1:
-		PHASE_U_LOW_ON;
-		PHASE_V_HIGH_ON;
+		//anti-clock wise
+		PHASE_U_HIGH_ON;
+		PHASE_V_LOW_ON;
 		startPhase = 1;
 		break;
 		case 2:
-		PHASE_V_LOW_ON;
-		PHASE_W_HIGH_ON;
+		//anti-clock wise
+		PHASE_V_HIGH_ON;
+		PHASE_W_LOW_ON;
 		startPhase = 2;
 		case 3:
-		PHASE_U_LOW_ON;
-		PHASE_W_HIGH_ON;
+		//anti-clock wise
+		PHASE_U_HIGH_ON;
+		PHASE_W_LOW_ON;
 		startPhase = 3;
 		break;
 		case 4:
-		PHASE_W_LOW_ON;
-		PHASE_U_HIGH_ON;
+		//anti-clock wise
+		PHASE_U_LOW_ON;
+		PHASE_W_HIGH_ON;
 		startPhase = 4;
 		break;
 		case 5:
-		PHASE_W_LOW_ON;
-		PHASE_V_HIGH_ON;
+		//anti-clock wise
+		PHASE_W_HIGH_ON;
+		PHASE_V_LOW_ON;
 		startPhase = 5;
 		break;
 		case 6:
-		PHASE_V_LOW_ON;
-		PHASE_U_HIGH_ON;
+		//anti-clock wise
+		PHASE_U_LOW_ON;
+		PHASE_V_HIGH_ON;
 		startPhase = 6;
 		break;
 		default:

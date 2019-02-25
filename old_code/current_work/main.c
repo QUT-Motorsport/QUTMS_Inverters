@@ -5,10 +5,6 @@
  * Author : Ant
  */ 
 
-/*******************************************
-THIS CODE TO TURN THE MOTOR CLOCK WISE
-*******************************************/
-
 #define F_CPU 16000000
 
 /* Built-in libraries */
@@ -23,9 +19,17 @@ THIS CODE TO TURN THE MOTOR CLOCK WISE
 
 /* Custom libraries */
 #include "AtmelCAN.h"
+//#include "compiler.h"
+//#include "tc_timeout.h"
 
 #define LED0_MASK (1 << 0)
 #define LED1_MASK (1 << 1)
+
+// Use an enum to differentiate between the different timeouts
+enum {
+	EXAMPLE_TIMEOUT_SLOW,
+	EXAMPLE_TIMEOUT_FAST,
+};
  
 /* Phases control */
 #define PHASE_U_LOW_ON PORTD |= 1 // 0b??????1?
@@ -44,6 +48,7 @@ THIS CODE TO TURN THE MOTOR CLOCK WISE
 uint8_t getMotorPosition(void);
 void kickMotor(void);
 void toggle_led(void);
+
 
 uint8_t testChar = 0;
 uint8_t startPhase = -1;
@@ -132,12 +137,7 @@ int main(void)
 	while(1)
 	{
 		motorCommand = 250 - testChar;
-		
-		
-		
-		if(motorCommand < 190){
-			motorCommand = 190;
-		}
+		if(motorCommand < 190) motorCommand = 190;
 		if(motorState == 1)
 		{
 			// PWM code.
@@ -153,9 +153,7 @@ int main(void)
 			PHASE_V_LOW_OFF;
 			PHASE_W_LOW_OFF;
 		}
-		if(rotationCounter < 100){
-			rotationCounter ++;
-		}
+		if(rotationCounter < 100) rotationCounter ++;
 		if(rotationCounter > 99)
 		{
 			motorState = 0;
@@ -163,8 +161,7 @@ int main(void)
 			//CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
 			//PORTB &= ~8; // turn all port B off
 			// 1000 LED
-			//PORTB &= 0b00000000;
-			PORTB &= ~8;
+			PORTB &= 0b00000000;
 		}
 		else 
 		{
@@ -173,8 +170,7 @@ int main(void)
 			//CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
 			//PORTB |= 8; // turn all port B on
 			// 0000 LED
-			//PORTB |= 0b11110111;
-			PORTB |= 8;
+			PORTB |= 0b11110111;
 		}
 
 		
@@ -199,7 +195,6 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 		
 	if ((PIND & 64) == 64) {
 		// 3
-		//clock wise
 		PHASE_U_LOW_ON;
 		PHASE_W_HIGH_ON;
 		if(startPhase == 3){
@@ -207,7 +202,6 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 		}
 	} else {
 		// 4
-		//clock wise
 		PHASE_W_LOW_ON;
 		PHASE_U_HIGH_ON;
 		if(startPhase == 4){
@@ -226,15 +220,13 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 		
 	if ((PINB & 4) == 4) {
 		// 6
-		//clock wise
 		PHASE_V_LOW_ON;
 		PHASE_U_HIGH_ON;
 		if(startPhase == 6){
 			revolutions++;
 		}
-	} else {
+		} else {
 		// 1
-		//clock wise
 		PHASE_U_LOW_ON;
 		PHASE_V_HIGH_ON;
 		if(startPhase == 1){
@@ -253,7 +245,6 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 		
 	if ((PINB & 32) == 32) {
 		// 5
-		//clock wise
 		PHASE_W_LOW_ON;
 		PHASE_V_HIGH_ON;
 		if(startPhase == 5){
@@ -261,7 +252,6 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 		}
 		} else {
 		// 2
-		//clock wise
 		PHASE_V_LOW_ON;
 		PHASE_W_HIGH_ON;
 		if(startPhase == 2){
