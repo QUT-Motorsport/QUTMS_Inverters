@@ -5,10 +5,6 @@
  * Author : Ant
  */ 
 
-/*******************************************
-THIS CODE TO TURN THE MOTOR ANTI-CLOCK WISE
-*******************************************/
-
 #define F_CPU 16000000
 
 /* Built-in libraries */
@@ -44,27 +40,35 @@ THIS CODE TO TURN THE MOTOR ANTI-CLOCK WISE
 uint8_t getMotorPosition(void);
 void kickMotor(void);
 void toggle_led(void);
+void setupInverter(void);
+
+uint8_t WHICH_DIRECTION = 0;
+uint8_t CLOCK_WISE = 0;
+uint8_t ANTI_CLOCK_WISE = 1;
 
 uint8_t testChar = 0;
 uint8_t tempStorage = 0;
+uint8_t cleanMotorCommand = 0;
 uint8_t startPhase = -1;
 uint8_t revolutions = 0;
+
 uint8_t CAN_SEND_BACK_COUNTER = 0;
 uint8_t CAN_SEND_BACK_MAX = 5;
+
 volatile uint16_t rotationCounter = 0;
 volatile uint8_t motorCommand = 0;
 //uint8_t tData [1] = {111};
 
 ISR(CAN_INT_vect)
 {
-	//uint8_t authority;
-	//int8_t mob;
+
 	if((CANSIT2 & (1 << 5)))	//we received a CAN message on the reverse switch mob
 	{
 		
 		CANPAGE = (5 << 4);			//set the canpage to the receiver MOB
 		testChar = CANMSG;
 		
+		/*
 		uint8_t tempChar1 = CANMSG;
 		uint8_t tData2 [1] = {tempChar1};
 		tempChar1 = CANMSG;
@@ -73,6 +77,7 @@ ISR(CAN_INT_vect)
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
+		*/
 		toggle_led();
 		if(CAN_SEND_BACK_COUNTER >= CAN_SEND_BACK_MAX){
 			//CAN_TXMOB(1, 1, tData2, 0x5555555, 1);
@@ -84,9 +89,99 @@ ISR(CAN_INT_vect)
 	}
 }
 
-
 int main(void)
-{	
+{
+	// Choose which direction the motor will spin on
+	// CLOCK_WISE
+	// ANTI_CLOCK_WISE
+	WHICH_DIRECTION = CLOCK_WISE;
+	
+	setupInverter();
+	
+	uint8_t motorState = 0;
+	uint8_t motorMaxAccelration = 6;
+	
+	while(1)
+	{
+		cleanMotorCommand = testChar;
+		/*
+		This will ensure the motors will
+			not jump more than 10% in torque power
+		
+		range: 250 to 190. 10% of the range is 6. thus, the 6.
+			Change as and if needed
+		*/
+		if (cleanMotorCommand - tempStorage > motorMaxAccelration){
+			cleanMotorCommand = tempStorage + motorMaxAccelration;
+		}
+		
+		// Make sure the range is correct
+		if (cleanMotorCommand < 0){
+			cleanMotorCommand = 0;
+		}
+		
+		tempStorage = cleanMotorCommand;
+		
+		motorCommand = 250 - cleanMotorCommand;
+		
+		// Check motor command range
+		if(motorCommand < 190){
+			motorCommand = 190;
+		}
+		if(motorCommand > 250){
+			motorCommand = 250;
+		}
+		
+		if(motorState == 1)
+		{
+			// PWM code.
+			POCR0SA = POCR1SA = POCR2SA = motorCommand;
+			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
+		}
+		else
+		{
+			POC = 0b00000000;
+			PHASE_U_HIGH_ON;
+			PHASE_V_LOW_OFF;
+			PHASE_W_LOW_OFF;
+		}
+		
+		// Add one to the while-loop-counter signifying no motor movements
+		if(rotationCounter < 100)
+		{
+			rotationCounter ++;
+		}
+		
+		// Check if this while loop went 100 times with no motor movements
+		if(rotationCounter > 99)
+		{
+			motorState = 0;
+			//toggle_led();
+			//CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
+			//PORTB &= ~8; // turn all port B off
+			PORTB &= ~8;
+		}
+		else 
+		{
+			motorState = 1;
+			//toggle_led();
+			//CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
+			//PORTB |= 8; // turn all port B on
+			PORTB |= 8;
+		}
+
+		
+		if((motorState == 0) && (motorCommand < 225))
+		{
+			kickMotor();
+			motorState = 1;	
+			rotationCounter = 0;
+		}
+	}
+}
+
+void setupInverter(void)
+{
 	DDRB |= 0b11001011;				// make the status LED an output
 	DDRC |= 0b00000101;
 	DDRD |= 0b10000001;				// PD7 is CAN STB
@@ -97,6 +192,7 @@ int main(void)
 	
 	PORTB |= 0b00100100;	//turn hall pullups on
 	PORTD |= 0b01000000;
+	
 	
 	PLLCSR = 0x02;			//start PLL at INTERRUPTS
 	
@@ -109,7 +205,7 @@ int main(void)
 	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);  // Receive a message
 
 	// start the interrupts
-	sei();	
+	sei();
 
 	//PSC
 	// PWM setup code.
@@ -125,86 +221,6 @@ int main(void)
 	PHASE_U_LOW_OFF;
 	PHASE_V_LOW_OFF;
 	PHASE_W_LOW_OFF;
-
-	uint8_t mob = 1;
-	uint8_t motorState = 0;
-	
-	
-	while(1)
-	{
-		/*
-		This will ensure the motors will
-			not jump more than 10% in torque power
-		
-		range: 250 to 190. 10% of the range is 6. thus, the 6.
-			Change as and if needed
-		*/
-		if (testChar - tempStorage > 6){
-			testChar = tempStorage + 6;
-		}
-		
-		// Make sure the range is correct
-		if (testChar < 0){
-			testChar = 0;
-		}
-		
-		tempStorage = testChar;
-		
-		motorCommand = 250 - testChar;
-		
-		// Check motor command range
-		if(motorCommand < 190){
-			motorCommand = 190;
-		}
-		if(motorCommand > 250){
-			motorCommand = 250;
-		}
-		
-		if(motorState == 1)
-		{
-			// PWM code.
-			// 
-			POCR0SA = POCR1SA = POCR2SA = motorCommand;
-			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
-		}
-		
-		else
-		{
-			POC = 0b00000000;
-			PHASE_U_HIGH_ON;
-			PHASE_V_LOW_OFF;
-			PHASE_W_LOW_OFF;
-		}
-		if(rotationCounter < 100) rotationCounter ++;
-		if(rotationCounter > 99)
-		{
-			motorState = 0;
-			//toggle_led();
-			//CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
-			//PORTB &= ~8; // turn all port B off
-			// 1000 LED
-			//PORTB &= 0b00000000;
-			PORTB &= ~8;
-		}
-		else 
-		{
-			motorState = 1;
-			//toggle_led();
-			//CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
-			//PORTB |= 8; // turn all port B on
-			// 0000 LED
-			//PORTB |= 0b11110111;
-			PORTB |= 8;
-		}
-
-		
-		if((motorState == 0) && (motorCommand < 225))
-		{
-			kickMotor();
-			motorState = 1;	
-			rotationCounter = 0;
-		}
-	}
 }
 
 // skateboard ISRs below  vvv
@@ -219,17 +235,31 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 		
 	if ((PIND & 64) == 64) {
 		// 3
-		//anti-clock wise
-		PHASE_U_HIGH_ON;
-		PHASE_W_LOW_ON;
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+		{
+			//anti-clock wise
+			PHASE_U_HIGH_ON;
+			PHASE_W_LOW_ON;
+		}else{
+			//clock wise
+			PHASE_U_LOW_ON;
+			PHASE_W_HIGH_ON;
+		}
 		if(startPhase == 3){
 			revolutions++;
 		}
 	} else {
 		// 4
-		//anti-clock wise
-		PHASE_U_LOW_ON;
-		PHASE_W_HIGH_ON;
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+		{
+			//anti-clock wise
+			PHASE_U_LOW_ON;
+			PHASE_W_HIGH_ON;
+		}else{
+			//clock wise
+			PHASE_W_LOW_ON;
+			PHASE_U_HIGH_ON;
+		}
 		if(startPhase == 4){
 			revolutions++;
 		}
@@ -246,17 +276,31 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 		
 	if ((PINB & 4) == 4) {
 		// 6
-		//anti-clock wise
-		PHASE_U_LOW_ON;
-		PHASE_V_HIGH_ON;
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+		{
+			//anti-clock wise
+			PHASE_U_LOW_ON;
+			PHASE_V_HIGH_ON;
+		}else{
+			//clock wise
+			PHASE_V_LOW_ON;
+			PHASE_U_HIGH_ON;
+		}
 		if(startPhase == 6){
 			revolutions++;
 		}
 	} else {
 		// 1
-		//anti-clock wise
-		PHASE_U_HIGH_ON;
-		PHASE_V_LOW_ON;
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+		{
+			//anti-clock wise
+			PHASE_U_HIGH_ON;
+			PHASE_V_LOW_ON;
+		}else{
+			//clock wise
+			PHASE_U_LOW_ON;
+			PHASE_V_HIGH_ON;
+		}
 		if(startPhase == 1){
 			revolutions++;
 		}
@@ -273,17 +317,31 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 		
 	if ((PINB & 32) == 32) {
 		// 5
-		//anti-clock wise
-		PHASE_W_HIGH_ON;
-		PHASE_V_LOW_ON;
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+		{
+			//anti-clock wise
+			PHASE_W_HIGH_ON;
+			PHASE_V_LOW_ON;
+		}else{
+			//clock wise
+			PHASE_W_LOW_ON;
+			PHASE_V_HIGH_ON;
+		}
 		if(startPhase == 5){
 			revolutions++;
 		}
-		} else {
+	} else {
 		// 2
-		//anti-clock wise
-		PHASE_V_HIGH_ON;
-		PHASE_W_LOW_ON;
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+		{
+			//anti-clock wise
+			PHASE_V_HIGH_ON;
+			PHASE_W_LOW_ON;
+		}else{
+			//clock wise
+			PHASE_V_LOW_ON;
+			PHASE_W_HIGH_ON;
+		}
 		if(startPhase == 2){
 			revolutions++;
 		}
@@ -295,44 +353,93 @@ void kickMotor(void)
 	switch (getMotorPosition())
 	{
 		case 1:
-		//anti-clock wise
-		PHASE_U_HIGH_ON;
-		PHASE_V_LOW_ON;
-		startPhase = 1;
-		break;
+			// 1
+			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+			{
+				//anti-clock wise
+				PHASE_U_HIGH_ON;
+				PHASE_V_LOW_ON;
+			}else{
+				//clock wise
+				PHASE_U_LOW_ON;
+				PHASE_V_HIGH_ON;
+			}
+			startPhase = 1;
+			break;
 		case 2:
-		//anti-clock wise
-		PHASE_V_HIGH_ON;
-		PHASE_W_LOW_ON;
-		startPhase = 2;
+			// 2
+			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+			{
+				//anti-clock wise
+				PHASE_V_HIGH_ON;
+				PHASE_W_LOW_ON;
+			}else{
+				//clock wise
+				PHASE_V_LOW_ON;
+				PHASE_W_HIGH_ON;
+			}
+			startPhase = 2;
 		case 3:
-		//anti-clock wise
-		PHASE_U_HIGH_ON;
-		PHASE_W_LOW_ON;
-		startPhase = 3;
+			// 3
+			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+			{
+				//anti-clock wise
+				PHASE_U_HIGH_ON;
+				PHASE_W_LOW_ON;
+			}else{
+				//clock wise
+				PHASE_U_LOW_ON;
+				PHASE_W_HIGH_ON;
+			}
+			startPhase = 3;
 		break;
 		case 4:
-		//anti-clock wise
-		PHASE_U_LOW_ON;
-		PHASE_W_HIGH_ON;
-		startPhase = 4;
+			// 4
+			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+			{
+				//anti-clock wise
+				PHASE_U_LOW_ON;
+				PHASE_W_HIGH_ON;
+			}else{
+				//clock wise
+				PHASE_W_LOW_ON;
+				PHASE_U_HIGH_ON;
+			}
+			startPhase = 4;
 		break;
 		case 5:
-		//anti-clock wise
-		PHASE_W_HIGH_ON;
-		PHASE_V_LOW_ON;
-		startPhase = 5;
+			// 5
+			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+			{
+				//anti-clock wise
+				PHASE_W_HIGH_ON;
+				PHASE_V_LOW_ON;
+			}else{
+				//clock wise
+				PHASE_W_LOW_ON;
+				PHASE_V_HIGH_ON;
+			}
+			startPhase = 5;
 		break;
 		case 6:
-		//anti-clock wise
-		PHASE_U_LOW_ON;
-		PHASE_V_HIGH_ON;
-		startPhase = 6;
+			// 6
+			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+			{
+				//anti-clock wise
+				PHASE_U_LOW_ON;
+				PHASE_V_HIGH_ON;
+			}else{
+				//clock wise
+				PHASE_V_LOW_ON;
+				PHASE_U_HIGH_ON;
+			}
+			startPhase = 6;
 		break;
 		default:
 		break;
 	}
 }
+
 // gets an encoded version of motor position based on hall states
 // adds 4 if HALL3 is high, 2 if HALL2 is HIGH and 1 if HALL 1 is high giving positions 1..6 in total
 uint8_t getMotorPosition(void)
@@ -344,6 +451,7 @@ uint8_t getMotorPosition(void)
 void toggle_led(void){
 	PORTB ^= 0b00001000;
 }
+
 /************************************************************************/
 /*					CODE CEMETERY                                       */
 /************************************************************************/
@@ -455,5 +563,9 @@ ISR(TIMER1_OVF_vect)
 	//toggle_led();
 }
 
+void set_bits_func (volatile uint8_t *port, uint8_t mask)
+{
+	*port |= mask;
+}
 
 */
