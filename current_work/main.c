@@ -77,13 +77,16 @@ ISR(CAN_INT_vect)
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
-		*/
+		
 		toggle_led();
+		
 		if(CAN_SEND_BACK_COUNTER >= CAN_SEND_BACK_MAX){
-			//CAN_TXMOB(1, 1, tData2, 0x5555555, 1);
+			CAN_TXMOB(1, 1, tData2, 0x5555555, 1);
 			CAN_SEND_BACK_COUNTER = 0;
 		}
+		
 		CAN_SEND_BACK_COUNTER++;
+		*/
 		CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
 		
 	}
@@ -234,6 +237,7 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 	PHASE_W_LOW_OFF;
 		
 	if ((PIND & 64) == 64) {
+		_delay_ms(0.25);
 		// 3
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
@@ -249,6 +253,7 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 			revolutions++;
 		}
 	} else {
+		_delay_ms(0.25);
 		// 4
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
@@ -276,6 +281,7 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 		
 	if ((PINB & 4) == 4) {
 		// 6
+		_delay_ms(0.25);
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
@@ -291,6 +297,7 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 		}
 	} else {
 		// 1
+		_delay_ms(0.25);
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
@@ -317,6 +324,7 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 		
 	if ((PINB & 32) == 32) {
 		// 5
+		_delay_ms(0.25);
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
@@ -332,6 +340,7 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 		}
 	} else {
 		// 2
+		_delay_ms(0.25);
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
@@ -354,6 +363,7 @@ void kickMotor(void)
 	{
 		case 1:
 			// 1
+			_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
@@ -368,6 +378,7 @@ void kickMotor(void)
 			break;
 		case 2:
 			// 2
+			_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
@@ -381,6 +392,7 @@ void kickMotor(void)
 			startPhase = 2;
 		case 3:
 			// 3
+			_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
@@ -395,6 +407,7 @@ void kickMotor(void)
 		break;
 		case 4:
 			// 4
+			_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
@@ -409,6 +422,7 @@ void kickMotor(void)
 		break;
 		case 5:
 			// 5
+			_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
@@ -423,6 +437,7 @@ void kickMotor(void)
 		break;
 		case 6:
 			// 6
+			_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
