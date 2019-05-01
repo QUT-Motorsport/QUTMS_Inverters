@@ -57,40 +57,44 @@ uint8_t CAN_SEND_BACK_MAX = 5;
 
 volatile uint16_t rotationCounter = 0;
 volatile uint8_t motorCommand = 0;
+uint8_t tData2[8] = {65,66,67,68,69,70,71,72};
+int8_t response_CAN = 0;
 //uint8_t tData [1] = {111};
 
 ISR(CAN_INT_vect)
 {
+	int8_t savecanpage;
 
-	if((CANSIT2 & (1 << 5)))	//we received a CAN message on the reverse switch mob
-	{
+	savecanpage = CANPAGE;
+	
+	if(CANSTMOB & ( 1 << RXOK)){
+		if((CANSIT2 & (1 << 5)))	//we received a CAN message on the reverse switch mob
+		{
 		
-		CANPAGE = (5 << 4);			//set the canpage to the receiver MOB
-		testChar = CANMSG;
-		
-		/*
-		uint8_t tempChar1 = CANMSG;
-		uint8_t tData2 [1] = {tempChar1};
-		tempChar1 = CANMSG;
-		tempChar1 = CANMSG;
-		tempChar1 = CANMSG;
-		tempChar1 = CANMSG;
-		tempChar1 = CANMSG;
-		tempChar1 = CANMSG;
-		
-		toggle_led();
-		
-		if(CAN_SEND_BACK_COUNTER >= CAN_SEND_BACK_MAX){
-			CAN_TXMOB(1, 1, tData2, 0x5555555, 1);
-			CAN_SEND_BACK_COUNTER = 0;
+			CANPAGE = (5 << 4);			//set the canpage to the receiver MOB
+			testChar = CANMSG;
+			response_CAN = 1;
+
+			//CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
 		}
-		
-		CAN_SEND_BACK_COUNTER++;
-		*/
-		CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
-		
 	}
+
+	CANSTMOB = 0x00;
+	CANPAGE = savecanpage;
+	
 }
+
+/*
+ISR(TIMER1_COMPA_vect)
+{
+	
+	//oneKHzTimer();
+	//uart_puts("HelloWorld!");
+	//char msg[12];
+	//sprintf(msg, "r: %d", out);
+	//uart_puts(msg);
+}
+*/
 
 int main(void)
 {
@@ -106,6 +110,13 @@ int main(void)
 	
 	while(1)
 	{
+		if(response_CAN == 1){
+			CAN_TXMOB(1, 8, tData2, 0x5555555, 0x0100);
+			CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
+			response_CAN = 0;
+			toggle_led();
+		}
+
 		cleanMotorCommand = testChar;
 		/*
 		This will ensure the motors will
@@ -122,8 +133,8 @@ int main(void)
 		if (cleanMotorCommand < 0){
 			cleanMotorCommand = 0;
 		}
-		
-		tempStorage = cleanMotorCommand;
+
+		tempStorage = cleanMotorCommand; // 250
 		
 		motorCommand = 250 - cleanMotorCommand;
 		
@@ -177,7 +188,7 @@ int main(void)
 		if((motorState == 0) && (motorCommand < 225))
 		{
 			kickMotor();
-			motorState = 1;	
+			motorState = 1;
 			rotationCounter = 0;
 		}
 	}
@@ -224,6 +235,21 @@ void setupInverter(void)
 	PHASE_U_LOW_OFF;
 	PHASE_V_LOW_OFF;
 	PHASE_W_LOW_OFF;
+
+	/*
+	//set timer1 interrupt at 1Hz
+	TCCR1A = 0;// set entire TCCR1A register to 0
+	TCCR1B = 0;// same for TCCR1B
+	TCNT1  = 0;//initialize counter value to 0
+	// set compare match register for 1hz increments
+	OCR1A = 15624;// = (16*10^6) / (1*1024) - 1 (must be <65536)
+	// turn on CTC mode
+	TCCR1B |= (1 << WGM12);
+	// Set CS12 and CS10 bits for 1024 prescaler
+	TCCR1B |= (1 << CS12) | (1 << CS10);
+	// enable timer compare interrupt
+	TIMSK1 |= (1 << OCIE1A);
+	*/
 }
 
 // skateboard ISRs below  vvv
@@ -237,7 +263,7 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 	PHASE_W_LOW_OFF;
 		
 	if ((PIND & 64) == 64) {
-		_delay_ms(0.25);
+		//_delay_ms(0.25);
 		// 3
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
@@ -253,7 +279,7 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 			revolutions++;
 		}
 	} else {
-		_delay_ms(0.25);
+		//_delay_ms(0.25);
 		// 4
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
@@ -281,7 +307,7 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 		
 	if ((PINB & 4) == 4) {
 		// 6
-		_delay_ms(0.25);
+		//_delay_ms(0.25);
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
@@ -297,7 +323,7 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 		}
 	} else {
 		// 1
-		_delay_ms(0.25);
+		//_delay_ms(0.25);
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
@@ -324,7 +350,7 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 		
 	if ((PINB & 32) == 32) {
 		// 5
-		_delay_ms(0.25);
+		//_delay_ms(0.25);
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
@@ -340,7 +366,7 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 		}
 	} else {
 		// 2
-		_delay_ms(0.25);
+		//_delay_ms(0.25);
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
@@ -363,7 +389,7 @@ void kickMotor(void)
 	{
 		case 1:
 			// 1
-			_delay_ms(0.25);
+			//_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
@@ -378,7 +404,7 @@ void kickMotor(void)
 			break;
 		case 2:
 			// 2
-			_delay_ms(0.25);
+			//_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
@@ -392,7 +418,7 @@ void kickMotor(void)
 			startPhase = 2;
 		case 3:
 			// 3
-			_delay_ms(0.25);
+			//_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
@@ -407,7 +433,7 @@ void kickMotor(void)
 		break;
 		case 4:
 			// 4
-			_delay_ms(0.25);
+			//_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
@@ -422,7 +448,7 @@ void kickMotor(void)
 		break;
 		case 5:
 			// 5
-			_delay_ms(0.25);
+			//_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
@@ -437,7 +463,7 @@ void kickMotor(void)
 		break;
 		case 6:
 			// 6
-			_delay_ms(0.25);
+			//_delay_ms(0.25);
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
