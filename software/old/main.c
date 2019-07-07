@@ -60,6 +60,10 @@ volatile uint8_t motorCommand = 0;
 uint8_t tData2[8] = {65,66,67,68,69,70,71,72};
 int8_t response_CAN = 0;
 //uint8_t tData [1] = {111};
+	
+#define LED_STATUS_ON		PORTB |= 0b00001000		// Status LED ON (Port B3)
+#define LED_STATUS_OFF		PORTB &= ~(0b00001000)	// Status LED OFF (Port B3)
+#define LED_STATUS_TOGGLE	PORTB ^= 0b00001000		// Status LED Toggle (Port B3)
 
 ISR(CAN_INT_vect)
 {
@@ -74,6 +78,7 @@ ISR(CAN_INT_vect)
 			CANPAGE = (5 << 4);			//set the canpage to the receiver MOB
 			testChar = CANMSG;
 			response_CAN = 1;
+			// LED_STATUS_TOGGLE;
 
 			//CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
 		}
@@ -114,7 +119,7 @@ int main(void)
 			CAN_TXMOB(1, 8, tData2, 0x5555555, 0x0100);
 			CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
 			response_CAN = 0;
-			toggle_led();
+			//toggle_led();
 		}
 
 		cleanMotorCommand = testChar;
@@ -149,8 +154,8 @@ int main(void)
 		if(motorState == 1)
 		{
 			// PWM code.
-			POCR0SA = POCR1SA = POCR2SA = motorCommand;
-			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
+			//POCR0SA = POCR1SA = POCR2SA = motorCommand;
+			//POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
 		}
 		else
 		{
@@ -187,10 +192,11 @@ int main(void)
 		
 		if((motorState == 0) && (motorCommand < 225))
 		{
-			kickMotor();
-			motorState = 1;
+			//kickMotor();
+			//motorState = 1;
 			rotationCounter = 0;
 		}
+		
 	}
 }
 
@@ -256,6 +262,12 @@ void setupInverter(void)
 
 ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 {
+	//testing only
+	//LED_STATUS_TOGGLE;
+	//_delay_ms(500);
+	//LED_STATUS_TOGGLE;
+
+
 	rotationCounter = 0;
 	PHASES_ALL_HIGH_OFF;
 	PHASE_U_LOW_OFF;
@@ -268,12 +280,16 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
+			//PHASE_U_HIGH_ON;
+			//PHASE_W_LOW_ON;
+			PHASE_V_LOW_ON;
 			PHASE_U_HIGH_ON;
-			PHASE_W_LOW_ON;
 		}else{
 			//clock wise
+			//PHASE_U_LOW_ON;
+			//PHASE_W_HIGH_ON;
 			PHASE_U_LOW_ON;
-			PHASE_W_HIGH_ON;
+			PHASE_V_HIGH_ON;
 		}
 		if(startPhase == 3){
 			revolutions++;
@@ -284,12 +300,16 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
-			PHASE_U_LOW_ON;
+			//PHASE_U_LOW_ON;
+			//PHASE_W_HIGH_ON;
+			PHASE_V_LOW_ON;
 			PHASE_W_HIGH_ON;
 		}else{
 			//clock wise
+			//PHASE_W_LOW_ON;
+			//PHASE_U_HIGH_ON;
 			PHASE_W_LOW_ON;
-			PHASE_U_HIGH_ON;
+			PHASE_V_HIGH_ON;
 		}
 		if(startPhase == 4){
 			revolutions++;
@@ -311,10 +331,14 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
+			//PHASE_U_LOW_ON;
+			//PHASE_V_HIGH_ON;
 			PHASE_U_LOW_ON;
 			PHASE_V_HIGH_ON;
 		}else{
 			//clock wise
+			//PHASE_V_LOW_ON;
+			//PHASE_U_HIGH_ON;
 			PHASE_V_LOW_ON;
 			PHASE_U_HIGH_ON;
 		}
@@ -327,12 +351,16 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
-			PHASE_U_HIGH_ON;
-			PHASE_V_LOW_ON;
+			//PHASE_U_HIGH_ON;
+			//PHASE_V_LOW_ON;
+			PHASE_W_LOW_ON;
+			PHASE_V_HIGH_ON;
 		}else{
 			//clock wise
-			PHASE_U_LOW_ON;
-			PHASE_V_HIGH_ON;
+			//PHASE_U_LOW_ON;
+			//PHASE_V_HIGH_ON;
+			PHASE_V_LOW_ON;
+			PHASE_W_HIGH_ON;
 		}
 		if(startPhase == 1){
 			revolutions++;
@@ -354,12 +382,16 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
+			//PHASE_W_HIGH_ON;
+			//PHASE_V_LOW_ON;
+			PHASE_U_LOW_ON;
 			PHASE_W_HIGH_ON;
-			PHASE_V_LOW_ON;
 		}else{
 			//clock wise
+			//PHASE_W_LOW_ON;
+			//PHASE_V_HIGH_ON;
 			PHASE_W_LOW_ON;
-			PHASE_V_HIGH_ON;
+			PHASE_U_HIGH_ON;
 		}
 		if(startPhase == 5){
 			revolutions++;
@@ -370,11 +402,15 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 		{
 			//anti-clock wise
-			PHASE_V_HIGH_ON;
+			//PHASE_V_HIGH_ON;
+			//PHASE_W_LOW_ON;
 			PHASE_W_LOW_ON;
+			PHASE_U_HIGH_ON;
 		}else{
 			//clock wise
-			PHASE_V_LOW_ON;
+			//PHASE_V_LOW_ON;
+			//PHASE_W_HIGH_ON;
+			PHASE_U_LOW_ON;
 			PHASE_W_HIGH_ON;
 		}
 		if(startPhase == 2){
@@ -393,13 +429,18 @@ void kickMotor(void)
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
-				PHASE_U_HIGH_ON;
-				PHASE_V_LOW_ON;
+				//PHASE_U_HIGH_ON;
+				//PHASE_V_LOW_ON;
+				PHASE_W_LOW_ON;
+				PHASE_V_HIGH_ON;
 			}else{
 				//clock wise
-				PHASE_U_LOW_ON;
-				PHASE_V_HIGH_ON;
+				//PHASE_U_LOW_ON;
+				//PHASE_V_HIGH_ON;
+				PHASE_V_LOW_ON;
+				PHASE_W_HIGH_ON;
 			}
+			LED_STATUS_TOGGLE;
 			startPhase = 1;
 			break;
 		case 2:
@@ -408,13 +449,18 @@ void kickMotor(void)
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
-				PHASE_V_HIGH_ON;
+				//PHASE_V_HIGH_ON;
+				//PHASE_W_LOW_ON;
 				PHASE_W_LOW_ON;
+				PHASE_U_HIGH_ON;
 			}else{
 				//clock wise
-				PHASE_V_LOW_ON;
+				//PHASE_V_LOW_ON;
+				//PHASE_W_HIGH_ON;
+				PHASE_U_LOW_ON;
 				PHASE_W_HIGH_ON;
 			}
+			LED_STATUS_TOGGLE;
 			startPhase = 2;
 		case 3:
 			// 3
@@ -422,13 +468,18 @@ void kickMotor(void)
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
+				//PHASE_U_HIGH_ON;
+				//PHASE_W_LOW_ON;
+				PHASE_V_LOW_ON;
 				PHASE_U_HIGH_ON;
-				PHASE_W_LOW_ON;
 			}else{
 				//clock wise
+				//PHASE_U_LOW_ON;
+				//PHASE_W_HIGH_ON;
 				PHASE_U_LOW_ON;
-				PHASE_W_HIGH_ON;
-			}
+				PHASE_V_HIGH_ON;
+		}
+		LED_STATUS_TOGGLE;
 			startPhase = 3;
 		break;
 		case 4:
@@ -437,13 +488,18 @@ void kickMotor(void)
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
-				PHASE_U_LOW_ON;
+				//PHASE_U_LOW_ON;
+				//PHASE_W_HIGH_ON;
+				PHASE_V_LOW_ON;
 				PHASE_W_HIGH_ON;
 			}else{
 				//clock wise
+				//PHASE_W_LOW_ON;
+				//PHASE_U_HIGH_ON;
 				PHASE_W_LOW_ON;
-				PHASE_U_HIGH_ON;
+				PHASE_V_HIGH_ON;
 			}
+			LED_STATUS_TOGGLE;
 			startPhase = 4;
 		break;
 		case 5:
@@ -452,13 +508,18 @@ void kickMotor(void)
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
+				//PHASE_W_HIGH_ON;
+				//PHASE_V_LOW_ON;
+				PHASE_U_LOW_ON;
 				PHASE_W_HIGH_ON;
-				PHASE_V_LOW_ON;
 			}else{
 				//clock wise
+				//PHASE_W_LOW_ON;
+				//PHASE_V_HIGH_ON;
 				PHASE_W_LOW_ON;
-				PHASE_V_HIGH_ON;
+				PHASE_U_HIGH_ON;
 			}
+			LED_STATUS_TOGGLE;
 			startPhase = 5;
 		break;
 		case 6:
@@ -467,14 +528,19 @@ void kickMotor(void)
 			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
 			{
 				//anti-clock wise
+				//PHASE_U_LOW_ON;
+				//PHASE_V_HIGH_ON;
 				PHASE_U_LOW_ON;
 				PHASE_V_HIGH_ON;
 			}else{
 				//clock wise
+				//PHASE_V_LOW_ON;
+				//PHASE_U_HIGH_ON;
 				PHASE_V_LOW_ON;
 				PHASE_U_HIGH_ON;
 			}
 			startPhase = 6;
+			LED_STATUS_TOGGLE;
 		break;
 		default:
 		break;

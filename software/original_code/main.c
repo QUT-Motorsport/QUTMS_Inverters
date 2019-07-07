@@ -144,6 +144,7 @@ int main(void)
 
 ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 {	
+	PORTB ^= 8;
 	rotationCounter = 0;
 	PHASES_ALL_HIGH_OFF;
 	PHASE_U_LOW_OFF;

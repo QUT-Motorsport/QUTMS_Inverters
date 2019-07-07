@@ -3,31 +3,31 @@ MotorControl_2018.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000000a  00800100  000008c0  00000954  2**0
+  0 .data         0000000a  00800100  00000692  00000726  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000008c0  00000000  00000000  00000094  2**1
+  1 .text         00000692  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000000a  0080010a  0080010a  0000095e  2**0
+  2 .bss          0000000a  0080010a  0080010a  00000730  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  0000095e  2**0
+  3 .comment      00000030  00000000  00000000  00000730  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000990  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000760  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000000a8  00000000  00000000  000009d0  2**0
+  5 .debug_aranges 000000a0  00000000  00000000  000007a0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00001143  00000000  00000000  00000a78  2**0
+  6 .debug_info   00001116  00000000  00000000  00000840  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000cba  00000000  00000000  00001bbb  2**0
+  7 .debug_abbrev 00000ca2  00000000  00000000  00001956  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000a20  00000000  00000000  00002875  2**0
+  8 .debug_line   000009d9  00000000  00000000  000025f8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  0000025c  00000000  00000000  00003298  2**2
+  9 .debug_frame  000001f0  00000000  00000000  00002fd4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000793  00000000  00000000  000034f4  2**0
+ 10 .debug_str    00000780  00000000  00000000  000031c4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000730  00000000  00000000  00003c87  2**0
+ 11 .debug_loc    0000061a  00000000  00000000  00003944  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000088  00000000  00000000  000043b7  2**0
+ 12 .debug_ranges 00000080  00000000  00000000  00003f5e  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -40,12 +40,12 @@ Disassembly of section .text:
   10:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
   14:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
   18:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
-  1c:	0c 94 37 02 	jmp	0x46e	; 0x46e <__vector_7>
-  20:	0c 94 81 02 	jmp	0x502	; 0x502 <__vector_8>
-  24:	0c 94 cb 02 	jmp	0x596	; 0x596 <__vector_9>
+  1c:	0c 94 69 02 	jmp	0x4d2	; 0x4d2 <__vector_7>
+  20:	0c 94 b3 02 	jmp	0x566	; 0x566 <__vector_8>
+  24:	0c 94 fd 02 	jmp	0x5fa	; 0x5fa <__vector_9>
   28:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
   2c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
-  30:	0c 94 b1 01 	jmp	0x362	; 0x362 <__vector_12>
+  30:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
   34:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
   38:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
   3c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
@@ -77,8 +77,8 @@ Disassembly of section .text:
   88:	11 e0       	ldi	r17, 0x01	; 1
   8a:	a0 e0       	ldi	r26, 0x00	; 0
   8c:	b1 e0       	ldi	r27, 0x01	; 1
-  8e:	e0 ec       	ldi	r30, 0xC0	; 192
-  90:	f8 e0       	ldi	r31, 0x08	; 8
+  8e:	e2 e9       	ldi	r30, 0x92	; 146
+  90:	f6 e0       	ldi	r31, 0x06	; 6
   92:	02 c0       	rjmp	.+4      	; 0x98 <__do_copy_data+0x10>
   94:	05 90       	lpm	r0, Z+
   96:	0d 92       	st	X+, r0
@@ -99,8 +99,8 @@ Disassembly of section .text:
   a8:	a4 31       	cpi	r26, 0x14	; 20
   aa:	b2 07       	cpc	r27, r18
   ac:	e1 f7       	brne	.-8      	; 0xa6 <.do_clear_bss_loop>
-  ae:	0e 94 b4 03 	call	0x768	; 0x768 <main>
-  b2:	0c 94 5e 04 	jmp	0x8bc	; 0x8bc <_exit>
+  ae:	0e 94 e5 01 	call	0x3ca	; 0x3ca <main>
+  b2:	0c 94 47 03 	jmp	0x68e	; 0x68e <_exit>
 
 000000b6 <__bad_interrupt>:
   b6:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -348,9 +348,9 @@ Disassembly of section .text:
  2b8:	08 95       	ret
 
 000002ba <__vector_18>:
-uint8_t tData2[8] = {65,66,67,68,69,70,71,72};
-int8_t response_CAN = 0;
-//uint8_t tData [1] = {111};
+#define LED_STATUS_ON		PORTB |= 0b00001000		// Status LED ON (Port B3)
+#define LED_STATUS_OFF		PORTB &= ~(0b00001000)	// Status LED OFF (Port B3)
+#define LED_STATUS_TOGGLE	PORTB ^= 0b00001000		// Status LED Toggle (Port B3)
 
 ISR(CAN_INT_vect)
 {
@@ -359,1105 +359,741 @@ ISR(CAN_INT_vect)
  2be:	0f b6       	in	r0, 0x3f	; 63
  2c0:	0f 92       	push	r0
  2c2:	11 24       	eor	r1, r1
- 2c4:	cf 92       	push	r12
- 2c6:	ef 92       	push	r14
- 2c8:	ff 92       	push	r15
- 2ca:	0f 93       	push	r16
- 2cc:	1f 93       	push	r17
- 2ce:	2f 93       	push	r18
- 2d0:	3f 93       	push	r19
- 2d2:	4f 93       	push	r20
- 2d4:	5f 93       	push	r21
- 2d6:	6f 93       	push	r22
- 2d8:	7f 93       	push	r23
- 2da:	8f 93       	push	r24
- 2dc:	9f 93       	push	r25
- 2de:	af 93       	push	r26
- 2e0:	bf 93       	push	r27
- 2e2:	cf 93       	push	r28
- 2e4:	ef 93       	push	r30
- 2e6:	ff 93       	push	r31
+ 2c4:	8f 93       	push	r24
+ 2c6:	9f 93       	push	r25
 	int8_t savecanpage;
 
 	savecanpage = CANPAGE;
- 2e8:	c0 91 ed 00 	lds	r28, 0x00ED	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
+ 2c8:	80 91 ed 00 	lds	r24, 0x00ED	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
 	
 	if(CANSTMOB & ( 1 << RXOK)){
- 2ec:	80 91 ee 00 	lds	r24, 0x00EE	; 0x8000ee <__TEXT_REGION_LENGTH__+0x7e00ee>
- 2f0:	85 ff       	sbrs	r24, 5
- 2f2:	1c c0       	rjmp	.+56     	; 0x32c <__vector_18+0x72>
+ 2cc:	90 91 ee 00 	lds	r25, 0x00EE	; 0x8000ee <__TEXT_REGION_LENGTH__+0x7e00ee>
+ 2d0:	95 ff       	sbrs	r25, 5
+ 2d2:	0e c0       	rjmp	.+28     	; 0x2f0 <__vector_18+0x36>
 		if((CANSIT2 & (1 << 5)))	//we received a CAN message on the reverse switch mob
- 2f4:	80 91 e0 00 	lds	r24, 0x00E0	; 0x8000e0 <__TEXT_REGION_LENGTH__+0x7e00e0>
- 2f8:	85 ff       	sbrs	r24, 5
- 2fa:	18 c0       	rjmp	.+48     	; 0x32c <__vector_18+0x72>
+ 2d4:	90 91 e0 00 	lds	r25, 0x00E0	; 0x8000e0 <__TEXT_REGION_LENGTH__+0x7e00e0>
+ 2d8:	95 ff       	sbrs	r25, 5
+ 2da:	0a c0       	rjmp	.+20     	; 0x2f0 <__vector_18+0x36>
 		{
 		
 			CANPAGE = (5 << 4);			//set the canpage to the receiver MOB
- 2fc:	80 e5       	ldi	r24, 0x50	; 80
- 2fe:	80 93 ed 00 	sts	0x00ED, r24	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
+ 2dc:	90 e5       	ldi	r25, 0x50	; 80
+ 2de:	90 93 ed 00 	sts	0x00ED, r25	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
 			testChar = CANMSG;
- 302:	80 91 fa 00 	lds	r24, 0x00FA	; 0x8000fa <__TEXT_REGION_LENGTH__+0x7e00fa>
- 306:	80 93 11 01 	sts	0x0111, r24	; 0x800111 <testChar>
+ 2e2:	90 91 fa 00 	lds	r25, 0x00FA	; 0x8000fa <__TEXT_REGION_LENGTH__+0x7e00fa>
+ 2e6:	90 93 11 01 	sts	0x0111, r25	; 0x800111 <testChar>
 			response_CAN = 1;
- 30a:	81 e0       	ldi	r24, 0x01	; 1
- 30c:	80 93 0a 01 	sts	0x010A, r24	; 0x80010a <__data_end>
+ 2ea:	91 e0       	ldi	r25, 0x01	; 1
+ 2ec:	90 93 0a 01 	sts	0x010A, r25	; 0x80010a <__data_end>
 
-			CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
- 310:	cc 24       	eor	r12, r12
- 312:	c3 94       	inc	r12
- 314:	e1 2c       	mov	r14, r1
- 316:	f1 2c       	mov	r15, r1
- 318:	00 e0       	ldi	r16, 0x00	; 0
- 31a:	14 e0       	ldi	r17, 0x04	; 4
- 31c:	20 e0       	ldi	r18, 0x00	; 0
- 31e:	30 e0       	ldi	r19, 0x00	; 0
- 320:	40 e0       	ldi	r20, 0x00	; 0
- 322:	54 e0       	ldi	r21, 0x04	; 4
- 324:	68 e0       	ldi	r22, 0x08	; 8
- 326:	85 e0       	ldi	r24, 0x05	; 5
- 328:	0e 94 b3 00 	call	0x166	; 0x166 <CAN_RXInit>
+			//CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
 		}
 	}
 
 	CANSTMOB = 0x00;
- 32c:	10 92 ee 00 	sts	0x00EE, r1	; 0x8000ee <__TEXT_REGION_LENGTH__+0x7e00ee>
+ 2f0:	10 92 ee 00 	sts	0x00EE, r1	; 0x8000ee <__TEXT_REGION_LENGTH__+0x7e00ee>
 	CANPAGE = savecanpage;
- 330:	c0 93 ed 00 	sts	0x00ED, r28	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
+ 2f4:	80 93 ed 00 	sts	0x00ED, r24	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
 	
 }
- 334:	ff 91       	pop	r31
- 336:	ef 91       	pop	r30
- 338:	cf 91       	pop	r28
- 33a:	bf 91       	pop	r27
- 33c:	af 91       	pop	r26
- 33e:	9f 91       	pop	r25
- 340:	8f 91       	pop	r24
- 342:	7f 91       	pop	r23
- 344:	6f 91       	pop	r22
- 346:	5f 91       	pop	r21
- 348:	4f 91       	pop	r20
- 34a:	3f 91       	pop	r19
- 34c:	2f 91       	pop	r18
- 34e:	1f 91       	pop	r17
- 350:	0f 91       	pop	r16
- 352:	ff 90       	pop	r15
- 354:	ef 90       	pop	r14
- 356:	cf 90       	pop	r12
- 358:	0f 90       	pop	r0
- 35a:	0f be       	out	0x3f, r0	; 63
- 35c:	0f 90       	pop	r0
- 35e:	1f 90       	pop	r1
- 360:	18 95       	reti
+ 2f8:	9f 91       	pop	r25
+ 2fa:	8f 91       	pop	r24
+ 2fc:	0f 90       	pop	r0
+ 2fe:	0f be       	out	0x3f, r0	; 63
+ 300:	0f 90       	pop	r0
+ 302:	1f 90       	pop	r1
+ 304:	18 95       	reti
 
-00000362 <__vector_12>:
-
-ISR(TIMER1_COMPA_vect)
-{
- 362:	1f 92       	push	r1
- 364:	0f 92       	push	r0
- 366:	0f b6       	in	r0, 0x3f	; 63
- 368:	0f 92       	push	r0
- 36a:	11 24       	eor	r1, r1
-	//oneKHzTimer();
-	//uart_puts("HelloWorld!");
-	//char msg[12];
-	//sprintf(msg, "r: %d", out);
-	//uart_puts(msg);
-}
- 36c:	0f 90       	pop	r0
- 36e:	0f be       	out	0x3f, r0	; 63
- 370:	0f 90       	pop	r0
- 372:	1f 90       	pop	r1
- 374:	18 95       	reti
-
-00000376 <setupInverter>:
-		}
+00000306 <setupInverter>:
+		
 	}
 }
 
 void setupInverter(void)
 {
- 376:	cf 92       	push	r12
- 378:	ef 92       	push	r14
- 37a:	ff 92       	push	r15
- 37c:	0f 93       	push	r16
- 37e:	1f 93       	push	r17
+ 306:	cf 92       	push	r12
+ 308:	ef 92       	push	r14
+ 30a:	ff 92       	push	r15
+ 30c:	0f 93       	push	r16
+ 30e:	1f 93       	push	r17
 	DDRB |= 0b11001011;				// make the status LED an output
- 380:	84 b1       	in	r24, 0x04	; 4
- 382:	8b 6c       	ori	r24, 0xCB	; 203
- 384:	84 b9       	out	0x04, r24	; 4
+ 310:	84 b1       	in	r24, 0x04	; 4
+ 312:	8b 6c       	ori	r24, 0xCB	; 203
+ 314:	84 b9       	out	0x04, r24	; 4
 	DDRC |= 0b00000101;
- 386:	87 b1       	in	r24, 0x07	; 7
- 388:	85 60       	ori	r24, 0x05	; 5
- 38a:	87 b9       	out	0x07, r24	; 7
+ 316:	87 b1       	in	r24, 0x07	; 7
+ 318:	85 60       	ori	r24, 0x05	; 5
+ 31a:	87 b9       	out	0x07, r24	; 7
 	DDRD |= 0b10000001;				// PD7 is CAN STB
- 38c:	8a b1       	in	r24, 0x0a	; 10
- 38e:	81 68       	ori	r24, 0x81	; 129
- 390:	8a b9       	out	0x0a, r24	; 10
+ 31c:	8a b1       	in	r24, 0x0a	; 10
+ 31e:	81 68       	ori	r24, 0x81	; 129
+ 320:	8a b9       	out	0x0a, r24	; 10
 	
 	PORTB &= ~0b11001011;
- 392:	85 b1       	in	r24, 0x05	; 5
- 394:	84 73       	andi	r24, 0x34	; 52
- 396:	85 b9       	out	0x05, r24	; 5
+ 322:	85 b1       	in	r24, 0x05	; 5
+ 324:	84 73       	andi	r24, 0x34	; 52
+ 326:	85 b9       	out	0x05, r24	; 5
 	PORTC &= ~0b00000001;
- 398:	40 98       	cbi	0x08, 0	; 8
+ 328:	40 98       	cbi	0x08, 0	; 8
 	PORTD &= ~0b00000001;
- 39a:	58 98       	cbi	0x0b, 0	; 11
+ 32a:	58 98       	cbi	0x0b, 0	; 11
 	
 	PORTB |= 0b00100100;	//turn hall pullups on
- 39c:	85 b1       	in	r24, 0x05	; 5
- 39e:	84 62       	ori	r24, 0x24	; 36
- 3a0:	85 b9       	out	0x05, r24	; 5
+ 32c:	85 b1       	in	r24, 0x05	; 5
+ 32e:	84 62       	ori	r24, 0x24	; 36
+ 330:	85 b9       	out	0x05, r24	; 5
 	PORTD |= 0b01000000;
- 3a2:	5e 9a       	sbi	0x0b, 6	; 11
+ 332:	5e 9a       	sbi	0x0b, 6	; 11
 	
 	
 	PLLCSR = 0x02;			//start PLL at INTERRUPTS
- 3a4:	82 e0       	ldi	r24, 0x02	; 2
- 3a6:	89 bd       	out	0x29, r24	; 41
+ 334:	82 e0       	ldi	r24, 0x02	; 2
+ 336:	89 bd       	out	0x29, r24	; 41
 	
 	//32MHz
 	EICRA = 0b00010101;		//turn INT0, INT1 and INT2 either edge sensing on
- 3a8:	85 e1       	ldi	r24, 0x15	; 21
- 3aa:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <__TEXT_REGION_LENGTH__+0x7e0069>
+ 338:	85 e1       	ldi	r24, 0x15	; 21
+ 33a:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <__TEXT_REGION_LENGTH__+0x7e0069>
 	EIMSK = 0b00000111;		//enable INTs 2, 1, 0 TIMER0_OVF_vect
- 3ae:	87 e0       	ldi	r24, 0x07	; 7
- 3b0:	8d bb       	out	0x1d, r24	; 29
+ 33e:	87 e0       	ldi	r24, 0x07	; 7
+ 340:	8d bb       	out	0x1d, r24	; 29
 
 	// start the CAN interface
 	CAN_init();		// Initialise CAN
- 3b2:	0e 94 5d 00 	call	0xba	; 0xba <CAN_init>
+ 342:	0e 94 5d 00 	call	0xba	; 0xba <CAN_init>
 	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);  // Receive a message
- 3b6:	cc 24       	eor	r12, r12
- 3b8:	c3 94       	inc	r12
- 3ba:	e1 2c       	mov	r14, r1
- 3bc:	f1 2c       	mov	r15, r1
- 3be:	00 e0       	ldi	r16, 0x00	; 0
- 3c0:	14 e0       	ldi	r17, 0x04	; 4
- 3c2:	20 e0       	ldi	r18, 0x00	; 0
- 3c4:	30 e0       	ldi	r19, 0x00	; 0
- 3c6:	40 e0       	ldi	r20, 0x00	; 0
- 3c8:	54 e0       	ldi	r21, 0x04	; 4
- 3ca:	68 e0       	ldi	r22, 0x08	; 8
- 3cc:	85 e0       	ldi	r24, 0x05	; 5
- 3ce:	0e 94 b3 00 	call	0x166	; 0x166 <CAN_RXInit>
+ 346:	cc 24       	eor	r12, r12
+ 348:	c3 94       	inc	r12
+ 34a:	e1 2c       	mov	r14, r1
+ 34c:	f1 2c       	mov	r15, r1
+ 34e:	00 e0       	ldi	r16, 0x00	; 0
+ 350:	14 e0       	ldi	r17, 0x04	; 4
+ 352:	20 e0       	ldi	r18, 0x00	; 0
+ 354:	30 e0       	ldi	r19, 0x00	; 0
+ 356:	40 e0       	ldi	r20, 0x00	; 0
+ 358:	54 e0       	ldi	r21, 0x04	; 4
+ 35a:	68 e0       	ldi	r22, 0x08	; 8
+ 35c:	85 e0       	ldi	r24, 0x05	; 5
+ 35e:	0e 94 b3 00 	call	0x166	; 0x166 <CAN_RXInit>
 
 	// start the interrupts
 	sei();
- 3d2:	78 94       	sei
+ 362:	78 94       	sei
 
 	//PSC
 	// PWM setup code.
 	
 	POCR_RB = 256;
- 3d4:	80 e0       	ldi	r24, 0x00	; 0
- 3d6:	91 e0       	ldi	r25, 0x01	; 1
- 3d8:	90 93 b3 00 	sts	0x00B3, r25	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
- 3dc:	80 93 b2 00 	sts	0x00B2, r24	; 0x8000b2 <__TEXT_REGION_LENGTH__+0x7e00b2>
+ 364:	80 e0       	ldi	r24, 0x00	; 0
+ 366:	91 e0       	ldi	r25, 0x01	; 1
+ 368:	90 93 b3 00 	sts	0x00B3, r25	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
+ 36c:	80 93 b2 00 	sts	0x00B2, r24	; 0x8000b2 <__TEXT_REGION_LENGTH__+0x7e00b2>
 	POCR0SA = POCR1SA = POCR2SA = 220;
- 3e0:	8c ed       	ldi	r24, 0xDC	; 220
- 3e2:	90 e0       	ldi	r25, 0x00	; 0
- 3e4:	90 93 ad 00 	sts	0x00AD, r25	; 0x8000ad <__TEXT_REGION_LENGTH__+0x7e00ad>
- 3e8:	80 93 ac 00 	sts	0x00AC, r24	; 0x8000ac <__TEXT_REGION_LENGTH__+0x7e00ac>
- 3ec:	90 93 a7 00 	sts	0x00A7, r25	; 0x8000a7 <__TEXT_REGION_LENGTH__+0x7e00a7>
- 3f0:	80 93 a6 00 	sts	0x00A6, r24	; 0x8000a6 <__TEXT_REGION_LENGTH__+0x7e00a6>
- 3f4:	90 93 a1 00 	sts	0x00A1, r25	; 0x8000a1 <__TEXT_REGION_LENGTH__+0x7e00a1>
- 3f8:	80 93 a0 00 	sts	0x00A0, r24	; 0x8000a0 <__TEXT_REGION_LENGTH__+0x7e00a0>
+ 370:	8c ed       	ldi	r24, 0xDC	; 220
+ 372:	90 e0       	ldi	r25, 0x00	; 0
+ 374:	90 93 ad 00 	sts	0x00AD, r25	; 0x8000ad <__TEXT_REGION_LENGTH__+0x7e00ad>
+ 378:	80 93 ac 00 	sts	0x00AC, r24	; 0x8000ac <__TEXT_REGION_LENGTH__+0x7e00ac>
+ 37c:	90 93 a7 00 	sts	0x00A7, r25	; 0x8000a7 <__TEXT_REGION_LENGTH__+0x7e00a7>
+ 380:	80 93 a6 00 	sts	0x00A6, r24	; 0x8000a6 <__TEXT_REGION_LENGTH__+0x7e00a6>
+ 384:	90 93 a1 00 	sts	0x00A1, r25	; 0x8000a1 <__TEXT_REGION_LENGTH__+0x7e00a1>
+ 388:	80 93 a0 00 	sts	0x00A0, r24	; 0x8000a0 <__TEXT_REGION_LENGTH__+0x7e00a0>
 	POCR0SB = POCR1SB = POCR2SB = 210;
- 3fc:	82 ed       	ldi	r24, 0xD2	; 210
- 3fe:	90 e0       	ldi	r25, 0x00	; 0
- 400:	90 93 b1 00 	sts	0x00B1, r25	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
- 404:	80 93 b0 00 	sts	0x00B0, r24	; 0x8000b0 <__TEXT_REGION_LENGTH__+0x7e00b0>
- 408:	90 93 ab 00 	sts	0x00AB, r25	; 0x8000ab <__TEXT_REGION_LENGTH__+0x7e00ab>
- 40c:	80 93 aa 00 	sts	0x00AA, r24	; 0x8000aa <__TEXT_REGION_LENGTH__+0x7e00aa>
- 410:	90 93 a5 00 	sts	0x00A5, r25	; 0x8000a5 <__TEXT_REGION_LENGTH__+0x7e00a5>
- 414:	80 93 a4 00 	sts	0x00A4, r24	; 0x8000a4 <__TEXT_REGION_LENGTH__+0x7e00a4>
+ 38c:	82 ed       	ldi	r24, 0xD2	; 210
+ 38e:	90 e0       	ldi	r25, 0x00	; 0
+ 390:	90 93 b1 00 	sts	0x00B1, r25	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 394:	80 93 b0 00 	sts	0x00B0, r24	; 0x8000b0 <__TEXT_REGION_LENGTH__+0x7e00b0>
+ 398:	90 93 ab 00 	sts	0x00AB, r25	; 0x8000ab <__TEXT_REGION_LENGTH__+0x7e00ab>
+ 39c:	80 93 aa 00 	sts	0x00AA, r24	; 0x8000aa <__TEXT_REGION_LENGTH__+0x7e00aa>
+ 3a0:	90 93 a5 00 	sts	0x00A5, r25	; 0x8000a5 <__TEXT_REGION_LENGTH__+0x7e00a5>
+ 3a4:	80 93 a4 00 	sts	0x00A4, r24	; 0x8000a4 <__TEXT_REGION_LENGTH__+0x7e00a4>
 	PCNF = 0b00011100;						//centre-aligned mode
- 418:	8c e1       	ldi	r24, 0x1C	; 28
- 41a:	80 93 b5 00 	sts	0x00B5, r24	; 0x8000b5 <__TEXT_REGION_LENGTH__+0x7e00b5>
+ 3a8:	8c e1       	ldi	r24, 0x1C	; 28
+ 3aa:	80 93 b5 00 	sts	0x00B5, r24	; 0x8000b5 <__TEXT_REGION_LENGTH__+0x7e00b5>
 	PCTL = 0b00100001;						//select PLL clock with no prescale, turn the PSC on
- 41e:	81 e2       	ldi	r24, 0x21	; 33
- 420:	80 93 b7 00 	sts	0x00B7, r24	; 0x8000b7 <__TEXT_REGION_LENGTH__+0x7e00b7>
+ 3ae:	81 e2       	ldi	r24, 0x21	; 33
+ 3b0:	80 93 b7 00 	sts	0x00B7, r24	; 0x8000b7 <__TEXT_REGION_LENGTH__+0x7e00b7>
 
 	//turn the outputs off
 	PHASES_ALL_HIGH_OFF;
- 424:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 3b4:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 	PHASE_U_LOW_OFF;
- 428:	58 98       	cbi	0x0b, 0	; 11
+ 3b8:	58 98       	cbi	0x0b, 0	; 11
 	PHASE_V_LOW_OFF;
- 42a:	40 98       	cbi	0x08, 0	; 8
+ 3ba:	40 98       	cbi	0x08, 0	; 8
 	PHASE_W_LOW_OFF;
- 42c:	28 98       	cbi	0x05, 0	; 5
-
-	//set timer1 interrupt at 1Hz
-	TCCR1A = 0;// set entire TCCR1A register to 0
- 42e:	10 92 80 00 	sts	0x0080, r1	; 0x800080 <__TEXT_REGION_LENGTH__+0x7e0080>
-	TCCR1B = 0;// same for TCCR1B
- 432:	e1 e8       	ldi	r30, 0x81	; 129
- 434:	f0 e0       	ldi	r31, 0x00	; 0
- 436:	10 82       	st	Z, r1
-	TCNT1  = 0;//initialize counter value to 0
- 438:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
- 43c:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
-	// set compare match register for 1hz increments
-	OCR1A = 15624;// = (16*10^6) / (1*1024) - 1 (must be <65536)
- 440:	88 e0       	ldi	r24, 0x08	; 8
- 442:	9d e3       	ldi	r25, 0x3D	; 61
- 444:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
- 448:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
-	// turn on CTC mode
-	TCCR1B |= (1 << WGM12);
- 44c:	80 81       	ld	r24, Z
- 44e:	88 60       	ori	r24, 0x08	; 8
- 450:	80 83       	st	Z, r24
+ 3bc:	28 98       	cbi	0x05, 0	; 5
 	// Set CS12 and CS10 bits for 1024 prescaler
 	TCCR1B |= (1 << CS12) | (1 << CS10);
- 452:	80 81       	ld	r24, Z
- 454:	85 60       	ori	r24, 0x05	; 5
- 456:	80 83       	st	Z, r24
 	// enable timer compare interrupt
 	TIMSK1 |= (1 << OCIE1A);
- 458:	ef e6       	ldi	r30, 0x6F	; 111
- 45a:	f0 e0       	ldi	r31, 0x00	; 0
- 45c:	80 81       	ld	r24, Z
- 45e:	82 60       	ori	r24, 0x02	; 2
- 460:	80 83       	st	Z, r24
+	*/
 }
- 462:	1f 91       	pop	r17
- 464:	0f 91       	pop	r16
- 466:	ff 90       	pop	r15
- 468:	ef 90       	pop	r14
- 46a:	cf 90       	pop	r12
- 46c:	08 95       	ret
+ 3be:	1f 91       	pop	r17
+ 3c0:	0f 91       	pop	r16
+ 3c2:	ff 90       	pop	r15
+ 3c4:	ef 90       	pop	r14
+ 3c6:	cf 90       	pop	r12
+ 3c8:	08 95       	ret
 
-0000046e <__vector_7>:
-
-// skateboard ISRs below  vvv
-
-ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
-{
- 46e:	1f 92       	push	r1
- 470:	0f 92       	push	r0
- 472:	0f b6       	in	r0, 0x3f	; 63
- 474:	0f 92       	push	r0
- 476:	11 24       	eor	r1, r1
- 478:	8f 93       	push	r24
- 47a:	9f 93       	push	r25
-	rotationCounter = 0;
- 47c:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <rotationCounter+0x1>
- 480:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter>
-	PHASES_ALL_HIGH_OFF;
- 484:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-	PHASE_U_LOW_OFF;
- 488:	58 98       	cbi	0x0b, 0	; 11
-	PHASE_V_LOW_OFF;
- 48a:	40 98       	cbi	0x08, 0	; 8
-	PHASE_W_LOW_OFF;
- 48c:	28 98       	cbi	0x05, 0	; 5
-		
-	if ((PIND & 64) == 64) {
- 48e:	4e 9b       	sbis	0x09, 6	; 9
- 490:	19 c0       	rjmp	.+50     	; 0x4c4 <__vector_7+0x56>
-		//_delay_ms(0.25);
-		// 3
-		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 492:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 496:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 49a:	98 13       	cpse	r25, r24
- 49c:	05 c0       	rjmp	.+10     	; 0x4a8 <__vector_7+0x3a>
-		{
-			//anti-clock wise
-			PHASE_U_HIGH_ON;
- 49e:	83 e0       	ldi	r24, 0x03	; 3
- 4a0:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-			PHASE_W_LOW_ON;
- 4a4:	28 9a       	sbi	0x05, 0	; 5
- 4a6:	04 c0       	rjmp	.+8      	; 0x4b0 <__vector_7+0x42>
-		}else{
-			//clock wise
-			PHASE_U_LOW_ON;
- 4a8:	58 9a       	sbi	0x0b, 0	; 11
-			PHASE_W_HIGH_ON;
- 4aa:	80 e3       	ldi	r24, 0x30	; 48
- 4ac:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-		}
-		if(startPhase == 3){
- 4b0:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
- 4b4:	83 30       	cpi	r24, 0x03	; 3
- 4b6:	f1 f4       	brne	.+60     	; 0x4f4 <__vector_7+0x86>
-			revolutions++;
- 4b8:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
- 4bc:	8f 5f       	subi	r24, 0xFF	; 255
- 4be:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
- 4c2:	18 c0       	rjmp	.+48     	; 0x4f4 <__vector_7+0x86>
-		}
-	} else {
-		//_delay_ms(0.25);
-		// 4
-		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 4c4:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 4c8:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 4cc:	98 13       	cpse	r25, r24
- 4ce:	05 c0       	rjmp	.+10     	; 0x4da <__vector_7+0x6c>
-		{
-			//anti-clock wise
-			PHASE_U_LOW_ON;
- 4d0:	58 9a       	sbi	0x0b, 0	; 11
-			PHASE_W_HIGH_ON;
- 4d2:	80 e3       	ldi	r24, 0x30	; 48
- 4d4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
- 4d8:	04 c0       	rjmp	.+8      	; 0x4e2 <__vector_7+0x74>
-		}else{
-			//clock wise
-			PHASE_W_LOW_ON;
- 4da:	28 9a       	sbi	0x05, 0	; 5
-			PHASE_U_HIGH_ON;
- 4dc:	83 e0       	ldi	r24, 0x03	; 3
- 4de:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-		}
-		if(startPhase == 4){
- 4e2:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
- 4e6:	84 30       	cpi	r24, 0x04	; 4
- 4e8:	29 f4       	brne	.+10     	; 0x4f4 <__vector_7+0x86>
-			revolutions++;
- 4ea:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
- 4ee:	8f 5f       	subi	r24, 0xFF	; 255
- 4f0:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
-		}
-	}
-}
- 4f4:	9f 91       	pop	r25
- 4f6:	8f 91       	pop	r24
- 4f8:	0f 90       	pop	r0
- 4fa:	0f be       	out	0x3f, r0	; 63
- 4fc:	0f 90       	pop	r0
- 4fe:	1f 90       	pop	r1
- 500:	18 95       	reti
-
-00000502 <__vector_8>:
-
-ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
-{
- 502:	1f 92       	push	r1
- 504:	0f 92       	push	r0
- 506:	0f b6       	in	r0, 0x3f	; 63
- 508:	0f 92       	push	r0
- 50a:	11 24       	eor	r1, r1
- 50c:	8f 93       	push	r24
- 50e:	9f 93       	push	r25
-	rotationCounter = 0;
- 510:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <rotationCounter+0x1>
- 514:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter>
-	PHASES_ALL_HIGH_OFF;
- 518:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-	PHASE_U_LOW_OFF;
- 51c:	58 98       	cbi	0x0b, 0	; 11
-	PHASE_V_LOW_OFF;
- 51e:	40 98       	cbi	0x08, 0	; 8
-	PHASE_W_LOW_OFF;
- 520:	28 98       	cbi	0x05, 0	; 5
-		
-	if ((PINB & 4) == 4) {
- 522:	1a 9b       	sbis	0x03, 2	; 3
- 524:	19 c0       	rjmp	.+50     	; 0x558 <__vector_8+0x56>
-		// 6
-		//_delay_ms(0.25);
-		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 526:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 52a:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 52e:	98 13       	cpse	r25, r24
- 530:	05 c0       	rjmp	.+10     	; 0x53c <__vector_8+0x3a>
-		{
-			//anti-clock wise
-			PHASE_U_LOW_ON;
- 532:	58 9a       	sbi	0x0b, 0	; 11
-			PHASE_V_HIGH_ON;
- 534:	8c e0       	ldi	r24, 0x0C	; 12
- 536:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
- 53a:	04 c0       	rjmp	.+8      	; 0x544 <__vector_8+0x42>
-		}else{
-			//clock wise
-			PHASE_V_LOW_ON;
- 53c:	40 9a       	sbi	0x08, 0	; 8
-			PHASE_U_HIGH_ON;
- 53e:	83 e0       	ldi	r24, 0x03	; 3
- 540:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-		}
-		if(startPhase == 6){
- 544:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
- 548:	86 30       	cpi	r24, 0x06	; 6
- 54a:	f1 f4       	brne	.+60     	; 0x588 <__vector_8+0x86>
-			revolutions++;
- 54c:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
- 550:	8f 5f       	subi	r24, 0xFF	; 255
- 552:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
- 556:	18 c0       	rjmp	.+48     	; 0x588 <__vector_8+0x86>
-		}
-	} else {
-		// 1
-		//_delay_ms(0.25);
-		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 558:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 55c:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 560:	98 13       	cpse	r25, r24
- 562:	05 c0       	rjmp	.+10     	; 0x56e <__vector_8+0x6c>
-		{
-			//anti-clock wise
-			PHASE_U_HIGH_ON;
- 564:	83 e0       	ldi	r24, 0x03	; 3
- 566:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-			PHASE_V_LOW_ON;
- 56a:	40 9a       	sbi	0x08, 0	; 8
- 56c:	04 c0       	rjmp	.+8      	; 0x576 <__vector_8+0x74>
-		}else{
-			//clock wise
-			PHASE_U_LOW_ON;
- 56e:	58 9a       	sbi	0x0b, 0	; 11
-			PHASE_V_HIGH_ON;
- 570:	8c e0       	ldi	r24, 0x0C	; 12
- 572:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-		}
-		if(startPhase == 1){
- 576:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
- 57a:	81 30       	cpi	r24, 0x01	; 1
- 57c:	29 f4       	brne	.+10     	; 0x588 <__vector_8+0x86>
-			revolutions++;
- 57e:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
- 582:	8f 5f       	subi	r24, 0xFF	; 255
- 584:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
-		}
-	}
-}
- 588:	9f 91       	pop	r25
- 58a:	8f 91       	pop	r24
- 58c:	0f 90       	pop	r0
- 58e:	0f be       	out	0x3f, r0	; 63
- 590:	0f 90       	pop	r0
- 592:	1f 90       	pop	r1
- 594:	18 95       	reti
-
-00000596 <__vector_9>:
-
-ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
-{
- 596:	1f 92       	push	r1
- 598:	0f 92       	push	r0
- 59a:	0f b6       	in	r0, 0x3f	; 63
- 59c:	0f 92       	push	r0
- 59e:	11 24       	eor	r1, r1
- 5a0:	8f 93       	push	r24
- 5a2:	9f 93       	push	r25
-	rotationCounter = 0;
- 5a4:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <rotationCounter+0x1>
- 5a8:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter>
-	PHASES_ALL_HIGH_OFF;
- 5ac:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-	PHASE_U_LOW_OFF;
- 5b0:	58 98       	cbi	0x0b, 0	; 11
-	PHASE_V_LOW_OFF;
- 5b2:	40 98       	cbi	0x08, 0	; 8
-	PHASE_W_LOW_OFF;
- 5b4:	28 98       	cbi	0x05, 0	; 5
-		
-	if ((PINB & 32) == 32) {
- 5b6:	1d 9b       	sbis	0x03, 5	; 3
- 5b8:	19 c0       	rjmp	.+50     	; 0x5ec <__vector_9+0x56>
-		// 5
-		//_delay_ms(0.25);
-		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 5ba:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 5be:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 5c2:	98 13       	cpse	r25, r24
- 5c4:	05 c0       	rjmp	.+10     	; 0x5d0 <__vector_9+0x3a>
-		{
-			//anti-clock wise
-			PHASE_W_HIGH_ON;
- 5c6:	80 e3       	ldi	r24, 0x30	; 48
- 5c8:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-			PHASE_V_LOW_ON;
- 5cc:	40 9a       	sbi	0x08, 0	; 8
- 5ce:	04 c0       	rjmp	.+8      	; 0x5d8 <__vector_9+0x42>
-		}else{
-			//clock wise
-			PHASE_W_LOW_ON;
- 5d0:	28 9a       	sbi	0x05, 0	; 5
-			PHASE_V_HIGH_ON;
- 5d2:	8c e0       	ldi	r24, 0x0C	; 12
- 5d4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-		}
-		if(startPhase == 5){
- 5d8:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
- 5dc:	85 30       	cpi	r24, 0x05	; 5
- 5de:	f1 f4       	brne	.+60     	; 0x61c <__vector_9+0x86>
-			revolutions++;
- 5e0:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
- 5e4:	8f 5f       	subi	r24, 0xFF	; 255
- 5e6:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
- 5ea:	18 c0       	rjmp	.+48     	; 0x61c <__vector_9+0x86>
-		}
-	} else {
-		// 2
-		//_delay_ms(0.25);
-		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 5ec:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 5f0:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 5f4:	98 13       	cpse	r25, r24
- 5f6:	05 c0       	rjmp	.+10     	; 0x602 <__vector_9+0x6c>
-		{
-			//anti-clock wise
-			PHASE_V_HIGH_ON;
- 5f8:	8c e0       	ldi	r24, 0x0C	; 12
- 5fa:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-			PHASE_W_LOW_ON;
- 5fe:	28 9a       	sbi	0x05, 0	; 5
- 600:	04 c0       	rjmp	.+8      	; 0x60a <__vector_9+0x74>
-		}else{
-			//clock wise
-			PHASE_V_LOW_ON;
- 602:	40 9a       	sbi	0x08, 0	; 8
-			PHASE_W_HIGH_ON;
- 604:	80 e3       	ldi	r24, 0x30	; 48
- 606:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-		}
-		if(startPhase == 2){
- 60a:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
- 60e:	82 30       	cpi	r24, 0x02	; 2
- 610:	29 f4       	brne	.+10     	; 0x61c <__vector_9+0x86>
-			revolutions++;
- 612:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
- 616:	8f 5f       	subi	r24, 0xFF	; 255
- 618:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
-		}
-	}
-}
- 61c:	9f 91       	pop	r25
- 61e:	8f 91       	pop	r24
- 620:	0f 90       	pop	r0
- 622:	0f be       	out	0x3f, r0	; 63
- 624:	0f 90       	pop	r0
- 626:	1f 90       	pop	r1
- 628:	18 95       	reti
-
-0000062a <getMotorPosition>:
-
-// gets an encoded version of motor position based on hall states
-// adds 4 if HALL3 is high, 2 if HALL2 is HIGH and 1 if HALL 1 is high giving positions 1..6 in total
-uint8_t getMotorPosition(void)
-{		// ((? & 100000) / 8) +  ((? & 100) / 2)   + ((? & 1000000) / 64)
-	return (((PINB & 32) / 8) + ((PINB & 4) / 2) + ((PIND & 64) / 64));
- 62a:	23 b1       	in	r18, 0x03	; 3
- 62c:	93 b1       	in	r25, 0x03	; 3
- 62e:	89 b1       	in	r24, 0x09	; 9
- 630:	20 72       	andi	r18, 0x20	; 32
- 632:	30 e0       	ldi	r19, 0x00	; 0
- 634:	a9 01       	movw	r20, r18
- 636:	55 95       	asr	r21
- 638:	47 95       	ror	r20
- 63a:	55 95       	asr	r21
- 63c:	47 95       	ror	r20
- 63e:	55 95       	asr	r21
- 640:	47 95       	ror	r20
- 642:	94 70       	andi	r25, 0x04	; 4
- 644:	29 2f       	mov	r18, r25
- 646:	30 e0       	ldi	r19, 0x00	; 0
- 648:	35 95       	asr	r19
- 64a:	27 95       	ror	r18
- 64c:	24 0f       	add	r18, r20
- 64e:	86 fb       	bst	r24, 6
- 650:	88 27       	eor	r24, r24
- 652:	80 f9       	bld	r24, 0
-}
- 654:	82 0f       	add	r24, r18
- 656:	08 95       	ret
-
-00000658 <kickMotor>:
-	}
-}
-
-void kickMotor(void)
-{
-	switch (getMotorPosition())
- 658:	0e 94 15 03 	call	0x62a	; 0x62a <getMotorPosition>
- 65c:	83 30       	cpi	r24, 0x03	; 3
- 65e:	99 f1       	breq	.+102    	; 0x6c6 <kickMotor+0x6e>
- 660:	28 f4       	brcc	.+10     	; 0x66c <kickMotor+0x14>
- 662:	81 30       	cpi	r24, 0x01	; 1
- 664:	59 f0       	breq	.+22     	; 0x67c <kickMotor+0x24>
- 666:	82 30       	cpi	r24, 0x02	; 2
- 668:	e1 f0       	breq	.+56     	; 0x6a2 <kickMotor+0x4a>
- 66a:	08 95       	ret
- 66c:	85 30       	cpi	r24, 0x05	; 5
- 66e:	09 f4       	brne	.+2      	; 0x672 <kickMotor+0x1a>
- 670:	50 c0       	rjmp	.+160    	; 0x712 <kickMotor+0xba>
- 672:	e0 f1       	brcs	.+120    	; 0x6ec <kickMotor+0x94>
- 674:	86 30       	cpi	r24, 0x06	; 6
- 676:	09 f4       	brne	.+2      	; 0x67a <kickMotor+0x22>
- 678:	5f c0       	rjmp	.+190    	; 0x738 <kickMotor+0xe0>
- 67a:	08 95       	ret
-	{
-		case 1:
-			// 1
-			//_delay_ms(0.25);
-			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 67c:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 680:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 684:	98 13       	cpse	r25, r24
- 686:	05 c0       	rjmp	.+10     	; 0x692 <kickMotor+0x3a>
-			{
-				//anti-clock wise
-				PHASE_U_HIGH_ON;
- 688:	83 e0       	ldi	r24, 0x03	; 3
- 68a:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-				PHASE_V_LOW_ON;
- 68e:	40 9a       	sbi	0x08, 0	; 8
- 690:	04 c0       	rjmp	.+8      	; 0x69a <kickMotor+0x42>
-			}else{
-				//clock wise
-				PHASE_U_LOW_ON;
- 692:	58 9a       	sbi	0x0b, 0	; 11
-				PHASE_V_HIGH_ON;
- 694:	8c e0       	ldi	r24, 0x0C	; 12
- 696:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-			}
-			startPhase = 1;
- 69a:	81 e0       	ldi	r24, 0x01	; 1
- 69c:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <startPhase>
-			break;
- 6a0:	08 95       	ret
-		case 2:
-			// 2
-			//_delay_ms(0.25);
-			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 6a2:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 6a6:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 6aa:	98 13       	cpse	r25, r24
- 6ac:	05 c0       	rjmp	.+10     	; 0x6b8 <kickMotor+0x60>
-			{
-				//anti-clock wise
-				PHASE_V_HIGH_ON;
- 6ae:	8c e0       	ldi	r24, 0x0C	; 12
- 6b0:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-				PHASE_W_LOW_ON;
- 6b4:	28 9a       	sbi	0x05, 0	; 5
- 6b6:	04 c0       	rjmp	.+8      	; 0x6c0 <kickMotor+0x68>
-			}else{
-				//clock wise
-				PHASE_V_LOW_ON;
- 6b8:	40 9a       	sbi	0x08, 0	; 8
-				PHASE_W_HIGH_ON;
- 6ba:	80 e3       	ldi	r24, 0x30	; 48
- 6bc:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-			}
-			startPhase = 2;
- 6c0:	82 e0       	ldi	r24, 0x02	; 2
- 6c2:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <startPhase>
-		case 3:
-			// 3
-			//_delay_ms(0.25);
-			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 6c6:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 6ca:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 6ce:	98 13       	cpse	r25, r24
- 6d0:	05 c0       	rjmp	.+10     	; 0x6dc <kickMotor+0x84>
-			{
-				//anti-clock wise
-				PHASE_U_HIGH_ON;
- 6d2:	83 e0       	ldi	r24, 0x03	; 3
- 6d4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-				PHASE_W_LOW_ON;
- 6d8:	28 9a       	sbi	0x05, 0	; 5
- 6da:	04 c0       	rjmp	.+8      	; 0x6e4 <kickMotor+0x8c>
-			}else{
-				//clock wise
-				PHASE_U_LOW_ON;
- 6dc:	58 9a       	sbi	0x0b, 0	; 11
-				PHASE_W_HIGH_ON;
- 6de:	80 e3       	ldi	r24, 0x30	; 48
- 6e0:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-			}
-			startPhase = 3;
- 6e4:	83 e0       	ldi	r24, 0x03	; 3
- 6e6:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <startPhase>
-		break;
- 6ea:	08 95       	ret
-		case 4:
-			// 4
-			//_delay_ms(0.25);
-			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 6ec:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 6f0:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 6f4:	98 13       	cpse	r25, r24
- 6f6:	05 c0       	rjmp	.+10     	; 0x702 <kickMotor+0xaa>
-			{
-				//anti-clock wise
-				PHASE_U_LOW_ON;
- 6f8:	58 9a       	sbi	0x0b, 0	; 11
-				PHASE_W_HIGH_ON;
- 6fa:	80 e3       	ldi	r24, 0x30	; 48
- 6fc:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
- 700:	04 c0       	rjmp	.+8      	; 0x70a <kickMotor+0xb2>
-			}else{
-				//clock wise
-				PHASE_W_LOW_ON;
- 702:	28 9a       	sbi	0x05, 0	; 5
-				PHASE_U_HIGH_ON;
- 704:	83 e0       	ldi	r24, 0x03	; 3
- 706:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-			}
-			startPhase = 4;
- 70a:	84 e0       	ldi	r24, 0x04	; 4
- 70c:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <startPhase>
-		break;
- 710:	08 95       	ret
-		case 5:
-			// 5
-			//_delay_ms(0.25);
-			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 712:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 716:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 71a:	98 13       	cpse	r25, r24
- 71c:	05 c0       	rjmp	.+10     	; 0x728 <kickMotor+0xd0>
-			{
-				//anti-clock wise
-				PHASE_W_HIGH_ON;
- 71e:	80 e3       	ldi	r24, 0x30	; 48
- 720:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-				PHASE_V_LOW_ON;
- 724:	40 9a       	sbi	0x08, 0	; 8
- 726:	04 c0       	rjmp	.+8      	; 0x730 <kickMotor+0xd8>
-			}else{
-				//clock wise
-				PHASE_W_LOW_ON;
- 728:	28 9a       	sbi	0x05, 0	; 5
-				PHASE_V_HIGH_ON;
- 72a:	8c e0       	ldi	r24, 0x0C	; 12
- 72c:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-			}
-			startPhase = 5;
- 730:	85 e0       	ldi	r24, 0x05	; 5
- 732:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <startPhase>
-		break;
- 736:	08 95       	ret
-		case 6:
-			// 6
-			//_delay_ms(0.25);
-			if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
- 738:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
- 73c:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
- 740:	98 13       	cpse	r25, r24
- 742:	05 c0       	rjmp	.+10     	; 0x74e <kickMotor+0xf6>
-			{
-				//anti-clock wise
-				PHASE_U_LOW_ON;
- 744:	58 9a       	sbi	0x0b, 0	; 11
-				PHASE_V_HIGH_ON;
- 746:	8c e0       	ldi	r24, 0x0C	; 12
- 748:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
- 74c:	04 c0       	rjmp	.+8      	; 0x756 <kickMotor+0xfe>
-			}else{
-				//clock wise
-				PHASE_V_LOW_ON;
- 74e:	40 9a       	sbi	0x08, 0	; 8
-				PHASE_U_HIGH_ON;
- 750:	83 e0       	ldi	r24, 0x03	; 3
- 752:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-			}
-			startPhase = 6;
- 756:	86 e0       	ldi	r24, 0x06	; 6
- 758:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <startPhase>
- 75c:	08 95       	ret
-
-0000075e <toggle_led>:
-	return (((PINB & 32) / 8) + ((PINB & 4) / 2) + ((PIND & 64) / 64));
-}
-
-
-void toggle_led(void){
-	PORTB ^= 0b00001000;
- 75e:	95 b1       	in	r25, 0x05	; 5
- 760:	88 e0       	ldi	r24, 0x08	; 8
- 762:	89 27       	eor	r24, r25
- 764:	85 b9       	out	0x05, r24	; 5
- 766:	08 95       	ret
-
-00000768 <main>:
+000003ca <main>:
 int main(void)
 {
 	// Choose which direction the motor will spin on
 	// CLOCK_WISE
 	// ANTI_CLOCK_WISE
 	WHICH_DIRECTION = CLOCK_WISE;
- 768:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <CLOCK_WISE>
- 76c:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <WHICH_DIRECTION>
+ 3ca:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <CLOCK_WISE>
+ 3ce:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <WHICH_DIRECTION>
 	
 	setupInverter();
- 770:	0e 94 bb 01 	call	0x376	; 0x376 <setupInverter>
+ 3d2:	0e 94 83 01 	call	0x306	; 0x306 <setupInverter>
 	
 	uint8_t motorState = 0;
- 774:	f1 2c       	mov	r15, r1
+ 3d6:	d1 2c       	mov	r13, r1
 			cleanMotorCommand = 0;
 		}
-		
-		tempStorage = cleanMotorCommand;
+
+		tempStorage = cleanMotorCommand; // 250
 		
 		motorCommand = 250 - cleanMotorCommand;
- 776:	0f 2e       	mov	r0, r31
- 778:	fa ef       	ldi	r31, 0xFA	; 250
- 77a:	5f 2e       	mov	r5, r31
- 77c:	f0 2d       	mov	r31, r0
+ 3d8:	0f 2e       	mov	r0, r31
+ 3da:	fa ef       	ldi	r31, 0xFA	; 250
+ 3dc:	bf 2e       	mov	r11, r31
+ 3de:	f0 2d       	mov	r31, r0
 		
 		// Check motor command range
 		if(motorCommand < 190){
 			motorCommand = 190;
- 77e:	0f 2e       	mov	r0, r31
- 780:	fe eb       	ldi	r31, 0xBE	; 190
- 782:	2f 2e       	mov	r2, r31
- 784:	f0 2d       	mov	r31, r0
-			POCR0SA = POCR1SA = POCR2SA = motorCommand;
-			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
+ 3e0:	0f 2e       	mov	r0, r31
+ 3e2:	fe eb       	ldi	r31, 0xBE	; 190
+ 3e4:	9f 2e       	mov	r9, r31
+ 3e6:	f0 2d       	mov	r31, r0
+			//POCR0SA = POCR1SA = POCR2SA = motorCommand;
+			//POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
 		}
 		else
 		{
 			POC = 0b00000000;
- 786:	c6 eb       	ldi	r28, 0xB6	; 182
- 788:	d0 e0       	ldi	r29, 0x00	; 0
+ 3e8:	c6 eb       	ldi	r28, 0xB6	; 182
+ 3ea:	d0 e0       	ldi	r29, 0x00	; 0
 			PHASE_U_HIGH_ON;
- 78a:	0f 2e       	mov	r0, r31
- 78c:	f3 e0       	ldi	r31, 0x03	; 3
- 78e:	3f 2e       	mov	r3, r31
- 790:	f0 2d       	mov	r31, r0
-		}
-		
-		if(motorState == 1)
-		{
-			// PWM code.
-			POCR0SA = POCR1SA = POCR2SA = motorCommand;
- 792:	0f 2e       	mov	r0, r31
- 794:	fc ea       	ldi	r31, 0xAC	; 172
- 796:	6f 2e       	mov	r6, r31
- 798:	71 2c       	mov	r7, r1
- 79a:	f0 2d       	mov	r31, r0
- 79c:	0f 2e       	mov	r0, r31
- 79e:	f6 ea       	ldi	r31, 0xA6	; 166
- 7a0:	8f 2e       	mov	r8, r31
- 7a2:	91 2c       	mov	r9, r1
- 7a4:	f0 2d       	mov	r31, r0
- 7a6:	0f 2e       	mov	r0, r31
- 7a8:	f0 ea       	ldi	r31, 0xA0	; 160
- 7aa:	af 2e       	mov	r10, r31
- 7ac:	b1 2c       	mov	r11, r1
- 7ae:	f0 2d       	mov	r31, r0
-			//PORTB &= ~8; // turn all port B off
-			PORTB &= ~8;
-		}
-		else 
-		{
-			motorState = 1;
- 7b0:	dd 24       	eor	r13, r13
- 7b2:	d3 94       	inc	r13
- 7b4:	41 2c       	mov	r4, r1
+ 3ec:	0f 2e       	mov	r0, r31
+ 3ee:	f3 e0       	ldi	r31, 0x03	; 3
+ 3f0:	af 2e       	mov	r10, r31
+ 3f2:	f0 2d       	mov	r31, r0
 	uint8_t motorState = 0;
 	uint8_t motorMaxAccelration = 6;
 	
 	while(1)
 	{
+		if(response_CAN == 1){
+ 3f4:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <__data_end>
+ 3f8:	81 30       	cpi	r24, 0x01	; 1
+ 3fa:	d1 f4       	brne	.+52     	; 0x430 <__LOCK_REGION_LENGTH__+0x30>
+			CAN_TXMOB(1, 8, tData2, 0x5555555, 0x0100);
+ 3fc:	e1 2c       	mov	r14, r1
+ 3fe:	05 e5       	ldi	r16, 0x55	; 85
+ 400:	15 e5       	ldi	r17, 0x55	; 85
+ 402:	25 e5       	ldi	r18, 0x55	; 85
+ 404:	35 e0       	ldi	r19, 0x05	; 5
+ 406:	40 e0       	ldi	r20, 0x00	; 0
+ 408:	51 e0       	ldi	r21, 0x01	; 1
+ 40a:	68 e0       	ldi	r22, 0x08	; 8
+ 40c:	0e 94 f8 00 	call	0x1f0	; 0x1f0 <CAN_TXMOB>
+			CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
+ 410:	cc 24       	eor	r12, r12
+ 412:	c3 94       	inc	r12
+ 414:	e1 2c       	mov	r14, r1
+ 416:	f1 2c       	mov	r15, r1
+ 418:	00 e0       	ldi	r16, 0x00	; 0
+ 41a:	14 e0       	ldi	r17, 0x04	; 4
+ 41c:	20 e0       	ldi	r18, 0x00	; 0
+ 41e:	30 e0       	ldi	r19, 0x00	; 0
+ 420:	40 e0       	ldi	r20, 0x00	; 0
+ 422:	54 e0       	ldi	r21, 0x04	; 4
+ 424:	68 e0       	ldi	r22, 0x08	; 8
+ 426:	85 e0       	ldi	r24, 0x05	; 5
+ 428:	0e 94 b3 00 	call	0x166	; 0x166 <CAN_RXInit>
+			response_CAN = 0;
+ 42c:	10 92 0a 01 	sts	0x010A, r1	; 0x80010a <__data_end>
+			//toggle_led();
+		}
+
 		cleanMotorCommand = testChar;
- 7b6:	80 91 11 01 	lds	r24, 0x0111	; 0x800111 <testChar>
- 7ba:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <cleanMotorCommand>
+ 430:	80 91 11 01 	lds	r24, 0x0111	; 0x800111 <testChar>
+ 434:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <cleanMotorCommand>
 			not jump more than 10% in torque power
 		
 		range: 250 to 190. 10% of the range is 6. thus, the 6.
 			Change as and if needed
 		*/
 		if (cleanMotorCommand - tempStorage > motorMaxAccelration){
- 7be:	20 91 10 01 	lds	r18, 0x0110	; 0x800110 <tempStorage>
- 7c2:	90 e0       	ldi	r25, 0x00	; 0
- 7c4:	82 1b       	sub	r24, r18
- 7c6:	91 09       	sbc	r25, r1
- 7c8:	07 97       	sbiw	r24, 0x07	; 7
- 7ca:	1c f0       	brlt	.+6      	; 0x7d2 <main+0x6a>
+ 438:	20 91 10 01 	lds	r18, 0x0110	; 0x800110 <tempStorage>
+ 43c:	90 e0       	ldi	r25, 0x00	; 0
+ 43e:	82 1b       	sub	r24, r18
+ 440:	91 09       	sbc	r25, r1
+ 442:	07 97       	sbiw	r24, 0x07	; 7
+ 444:	1c f0       	brlt	.+6      	; 0x44c <__LOCK_REGION_LENGTH__+0x4c>
 			cleanMotorCommand = tempStorage + motorMaxAccelration;
- 7cc:	2a 5f       	subi	r18, 0xFA	; 250
- 7ce:	20 93 0f 01 	sts	0x010F, r18	; 0x80010f <cleanMotorCommand>
+ 446:	2a 5f       	subi	r18, 0xFA	; 250
+ 448:	20 93 0f 01 	sts	0x010F, r18	; 0x80010f <cleanMotorCommand>
 		// Make sure the range is correct
 		if (cleanMotorCommand < 0){
 			cleanMotorCommand = 0;
 		}
-		
-		tempStorage = cleanMotorCommand;
- 7d2:	80 91 0f 01 	lds	r24, 0x010F	; 0x80010f <cleanMotorCommand>
- 7d6:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <tempStorage>
+
+		tempStorage = cleanMotorCommand; // 250
+ 44c:	80 91 0f 01 	lds	r24, 0x010F	; 0x80010f <cleanMotorCommand>
+ 450:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <tempStorage>
 		
 		motorCommand = 250 - cleanMotorCommand;
- 7da:	95 2d       	mov	r25, r5
- 7dc:	98 1b       	sub	r25, r24
- 7de:	90 93 0b 01 	sts	0x010B, r25	; 0x80010b <motorCommand>
+ 454:	9b 2d       	mov	r25, r11
+ 456:	98 1b       	sub	r25, r24
+ 458:	90 93 0b 01 	sts	0x010B, r25	; 0x80010b <motorCommand>
 		
 		// Check motor command range
 		if(motorCommand < 190){
- 7e2:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <motorCommand>
- 7e6:	8e 3b       	cpi	r24, 0xBE	; 190
- 7e8:	10 f4       	brcc	.+4      	; 0x7ee <main+0x86>
+ 45c:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <motorCommand>
+ 460:	8e 3b       	cpi	r24, 0xBE	; 190
+ 462:	10 f4       	brcc	.+4      	; 0x468 <__LOCK_REGION_LENGTH__+0x68>
 			motorCommand = 190;
- 7ea:	20 92 0b 01 	sts	0x010B, r2	; 0x80010b <motorCommand>
+ 464:	90 92 0b 01 	sts	0x010B, r9	; 0x80010b <motorCommand>
 		}
 		if(motorCommand > 250){
- 7ee:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <motorCommand>
- 7f2:	8b 3f       	cpi	r24, 0xFB	; 251
- 7f4:	10 f0       	brcs	.+4      	; 0x7fa <main+0x92>
+ 468:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <motorCommand>
+ 46c:	8b 3f       	cpi	r24, 0xFB	; 251
+ 46e:	10 f0       	brcs	.+4      	; 0x474 <__LOCK_REGION_LENGTH__+0x74>
 			motorCommand = 250;
- 7f6:	50 92 0b 01 	sts	0x010B, r5	; 0x80010b <motorCommand>
+ 470:	b0 92 0b 01 	sts	0x010B, r11	; 0x80010b <motorCommand>
 		}
 		
 		if(motorState == 1)
- 7fa:	e1 e0       	ldi	r30, 0x01	; 1
- 7fc:	fe 12       	cpse	r15, r30
- 7fe:	1d c0       	rjmp	.+58     	; 0x83a <main+0xd2>
-		{
-			// PWM code.
-			POCR0SA = POCR1SA = POCR2SA = motorCommand;
- 800:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <motorCommand>
- 804:	90 e0       	ldi	r25, 0x00	; 0
- 806:	f3 01       	movw	r30, r6
- 808:	91 83       	std	Z+1, r25	; 0x01
- 80a:	80 83       	st	Z, r24
- 80c:	f4 01       	movw	r30, r8
- 80e:	91 83       	std	Z+1, r25	; 0x01
- 810:	80 83       	st	Z, r24
- 812:	f5 01       	movw	r30, r10
- 814:	91 83       	std	Z+1, r25	; 0x01
- 816:	80 83       	st	Z, r24
-			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
- 818:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <motorCommand>
- 81c:	90 e0       	ldi	r25, 0x00	; 0
- 81e:	0a 97       	sbiw	r24, 0x0a	; 10
- 820:	e0 eb       	ldi	r30, 0xB0	; 176
- 822:	f0 e0       	ldi	r31, 0x00	; 0
- 824:	91 83       	std	Z+1, r25	; 0x01
- 826:	80 83       	st	Z, r24
- 828:	ea ea       	ldi	r30, 0xAA	; 170
- 82a:	f0 e0       	ldi	r31, 0x00	; 0
- 82c:	91 83       	std	Z+1, r25	; 0x01
- 82e:	80 83       	st	Z, r24
- 830:	e4 ea       	ldi	r30, 0xA4	; 164
- 832:	f0 e0       	ldi	r31, 0x00	; 0
- 834:	91 83       	std	Z+1, r25	; 0x01
- 836:	80 83       	st	Z, r24
- 838:	04 c0       	rjmp	.+8      	; 0x842 <main+0xda>
+ 474:	81 e0       	ldi	r24, 0x01	; 1
+ 476:	d8 16       	cp	r13, r24
+ 478:	21 f0       	breq	.+8      	; 0x482 <__LOCK_REGION_LENGTH__+0x82>
+			//POCR0SA = POCR1SA = POCR2SA = motorCommand;
+			//POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
 		}
 		else
 		{
 			POC = 0b00000000;
- 83a:	18 82       	st	Y, r1
+ 47a:	18 82       	st	Y, r1
 			PHASE_U_HIGH_ON;
- 83c:	38 82       	st	Y, r3
+ 47c:	a8 82       	st	Y, r10
 			PHASE_V_LOW_OFF;
- 83e:	40 98       	cbi	0x08, 0	; 8
+ 47e:	40 98       	cbi	0x08, 0	; 8
 			PHASE_W_LOW_OFF;
- 840:	28 98       	cbi	0x05, 0	; 5
+ 480:	28 98       	cbi	0x05, 0	; 5
 		}
 		
 		// Add one to the while-loop-counter signifying no motor movements
 		if(rotationCounter < 100)
- 842:	80 91 0c 01 	lds	r24, 0x010C	; 0x80010c <rotationCounter>
- 846:	90 91 0d 01 	lds	r25, 0x010D	; 0x80010d <rotationCounter+0x1>
- 84a:	84 36       	cpi	r24, 0x64	; 100
- 84c:	91 05       	cpc	r25, r1
- 84e:	48 f4       	brcc	.+18     	; 0x862 <main+0xfa>
+ 482:	80 91 0c 01 	lds	r24, 0x010C	; 0x80010c <rotationCounter>
+ 486:	90 91 0d 01 	lds	r25, 0x010D	; 0x80010d <rotationCounter+0x1>
+ 48a:	84 36       	cpi	r24, 0x64	; 100
+ 48c:	91 05       	cpc	r25, r1
+ 48e:	48 f4       	brcc	.+18     	; 0x4a2 <__LOCK_REGION_LENGTH__+0xa2>
 		{
 			rotationCounter ++;
- 850:	80 91 0c 01 	lds	r24, 0x010C	; 0x80010c <rotationCounter>
- 854:	90 91 0d 01 	lds	r25, 0x010D	; 0x80010d <rotationCounter+0x1>
- 858:	01 96       	adiw	r24, 0x01	; 1
- 85a:	90 93 0d 01 	sts	0x010D, r25	; 0x80010d <rotationCounter+0x1>
- 85e:	80 93 0c 01 	sts	0x010C, r24	; 0x80010c <rotationCounter>
+ 490:	80 91 0c 01 	lds	r24, 0x010C	; 0x80010c <rotationCounter>
+ 494:	90 91 0d 01 	lds	r25, 0x010D	; 0x80010d <rotationCounter+0x1>
+ 498:	01 96       	adiw	r24, 0x01	; 1
+ 49a:	90 93 0d 01 	sts	0x010D, r25	; 0x80010d <rotationCounter+0x1>
+ 49e:	80 93 0c 01 	sts	0x010C, r24	; 0x80010c <rotationCounter>
 		}
 		
 		// Check if this while loop went 100 times with no motor movements
 		if(rotationCounter > 99)
- 862:	80 91 0c 01 	lds	r24, 0x010C	; 0x80010c <rotationCounter>
- 866:	90 91 0d 01 	lds	r25, 0x010D	; 0x80010d <rotationCounter+0x1>
- 86a:	84 36       	cpi	r24, 0x64	; 100
- 86c:	91 05       	cpc	r25, r1
- 86e:	38 f0       	brcs	.+14     	; 0x87e <main+0x116>
+ 4a2:	80 91 0c 01 	lds	r24, 0x010C	; 0x80010c <rotationCounter>
+ 4a6:	90 91 0d 01 	lds	r25, 0x010D	; 0x80010d <rotationCounter+0x1>
+ 4aa:	84 36       	cpi	r24, 0x64	; 100
+ 4ac:	91 05       	cpc	r25, r1
+ 4ae:	38 f0       	brcs	.+14     	; 0x4be <__LOCK_REGION_LENGTH__+0xbe>
 		{
 			motorState = 0;
 			//toggle_led();
 			//CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
 			//PORTB &= ~8; // turn all port B off
 			PORTB &= ~8;
- 870:	2b 98       	cbi	0x05, 3	; 5
+ 4b0:	2b 98       	cbi	0x05, 3	; 5
 			//PORTB |= 8; // turn all port B on
 			PORTB |= 8;
 		}
 
 		
 		if((motorState == 0) && (motorCommand < 225))
- 872:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <motorCommand>
- 876:	81 3e       	cpi	r24, 0xE1	; 225
- 878:	28 f0       	brcs	.+10     	; 0x884 <main+0x11c>
- 87a:	f4 2c       	mov	r15, r4
- 87c:	0a c0       	rjmp	.+20     	; 0x892 <main+0x12a>
+ 4b2:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <motorCommand>
+ 4b6:	81 3e       	cpi	r24, 0xE1	; 225
+ 4b8:	30 f0       	brcs	.+12     	; 0x4c6 <__LOCK_REGION_LENGTH__+0xc6>
+ 4ba:	d1 2c       	mov	r13, r1
+ 4bc:	9b cf       	rjmp	.-202    	; 0x3f4 <main+0x2a>
 		{
 			motorState = 1;
 			//toggle_led();
 			//CAN_TXMOB(mob, 1, &POCR0SA, 0, 2); //transmit registration and do not wait for finish
 			//PORTB |= 8; // turn all port B on
 			PORTB |= 8;
- 87e:	2b 9a       	sbi	0x05, 3	; 5
+ 4be:	2b 9a       	sbi	0x05, 3	; 5
 			//PORTB &= ~8; // turn all port B off
 			PORTB &= ~8;
 		}
 		else 
 		{
 			motorState = 1;
- 880:	fd 2c       	mov	r15, r13
- 882:	07 c0       	rjmp	.+14     	; 0x892 <main+0x12a>
-		}
-
+ 4c0:	dd 24       	eor	r13, r13
+ 4c2:	d3 94       	inc	r13
+ 4c4:	97 cf       	rjmp	.-210    	; 0x3f4 <main+0x2a>
 		
 		if((motorState == 0) && (motorCommand < 225))
 		{
-			kickMotor();
- 884:	0e 94 2c 03 	call	0x658	; 0x658 <kickMotor>
-			motorState = 1;	
+			//kickMotor();
+			//motorState = 1;
 			rotationCounter = 0;
- 888:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <rotationCounter+0x1>
- 88c:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter>
+ 4c6:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <rotationCounter+0x1>
+ 4ca:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter>
+ 4ce:	d1 2c       	mov	r13, r1
+ 4d0:	91 cf       	rjmp	.-222    	; 0x3f4 <main+0x2a>
 
+000004d2 <__vector_7>:
+}
+
+// skateboard ISRs below  vvv
+
+ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
+{
+ 4d2:	1f 92       	push	r1
+ 4d4:	0f 92       	push	r0
+ 4d6:	0f b6       	in	r0, 0x3f	; 63
+ 4d8:	0f 92       	push	r0
+ 4da:	11 24       	eor	r1, r1
+ 4dc:	8f 93       	push	r24
+ 4de:	9f 93       	push	r25
+	//LED_STATUS_TOGGLE;
+	//_delay_ms(500);
+	//LED_STATUS_TOGGLE;
+
+
+	rotationCounter = 0;
+ 4e0:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <rotationCounter+0x1>
+ 4e4:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter>
+	PHASES_ALL_HIGH_OFF;
+ 4e8:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+	PHASE_U_LOW_OFF;
+ 4ec:	58 98       	cbi	0x0b, 0	; 11
+	PHASE_V_LOW_OFF;
+ 4ee:	40 98       	cbi	0x08, 0	; 8
+	PHASE_W_LOW_OFF;
+ 4f0:	28 98       	cbi	0x05, 0	; 5
 		
-		if((motorState == 0) && (motorCommand < 225))
+	if ((PIND & 64) == 64) {
+ 4f2:	4e 9b       	sbis	0x09, 6	; 9
+ 4f4:	19 c0       	rjmp	.+50     	; 0x528 <__vector_7+0x56>
+		//_delay_ms(0.25);
+		// 3
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+ 4f6:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
+ 4fa:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
+ 4fe:	98 13       	cpse	r25, r24
+ 500:	05 c0       	rjmp	.+10     	; 0x50c <__vector_7+0x3a>
 		{
-			kickMotor();
-			motorState = 1;	
- 890:	fd 2c       	mov	r15, r13
-			rotationCounter = 0;
+			//anti-clock wise
+			//PHASE_U_HIGH_ON;
+			//PHASE_W_LOW_ON;
+			PHASE_V_LOW_ON;
+ 502:	40 9a       	sbi	0x08, 0	; 8
+			PHASE_U_HIGH_ON;
+ 504:	83 e0       	ldi	r24, 0x03	; 3
+ 506:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 50a:	04 c0       	rjmp	.+8      	; 0x514 <__vector_7+0x42>
+		}else{
+			//clock wise
+			//PHASE_U_LOW_ON;
+			//PHASE_W_HIGH_ON;
+			PHASE_U_LOW_ON;
+ 50c:	58 9a       	sbi	0x0b, 0	; 11
+			PHASE_V_HIGH_ON;
+ 50e:	8c e0       	ldi	r24, 0x0C	; 12
+ 510:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 		}
+		if(startPhase == 3){
+ 514:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
+ 518:	83 30       	cpi	r24, 0x03	; 3
+ 51a:	f1 f4       	brne	.+60     	; 0x558 <__vector_7+0x86>
+			revolutions++;
+ 51c:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
+ 520:	8f 5f       	subi	r24, 0xFF	; 255
+ 522:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
+ 526:	18 c0       	rjmp	.+48     	; 0x558 <__vector_7+0x86>
+		}
+	} else {
+		//_delay_ms(0.25);
+		// 4
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+ 528:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
+ 52c:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
+ 530:	98 13       	cpse	r25, r24
+ 532:	05 c0       	rjmp	.+10     	; 0x53e <__vector_7+0x6c>
+		{
+			//anti-clock wise
+			//PHASE_U_LOW_ON;
+			//PHASE_W_HIGH_ON;
+			PHASE_V_LOW_ON;
+ 534:	40 9a       	sbi	0x08, 0	; 8
+			PHASE_W_HIGH_ON;
+ 536:	80 e3       	ldi	r24, 0x30	; 48
+ 538:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 53c:	04 c0       	rjmp	.+8      	; 0x546 <__vector_7+0x74>
+		}else{
+			//clock wise
+			//PHASE_W_LOW_ON;
+			//PHASE_U_HIGH_ON;
+			PHASE_W_LOW_ON;
+ 53e:	28 9a       	sbi	0x05, 0	; 5
+			PHASE_V_HIGH_ON;
+ 540:	8c e0       	ldi	r24, 0x0C	; 12
+ 542:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+		}
+		if(startPhase == 4){
+ 546:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
+ 54a:	84 30       	cpi	r24, 0x04	; 4
+ 54c:	29 f4       	brne	.+10     	; 0x558 <__vector_7+0x86>
+			revolutions++;
+ 54e:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
+ 552:	8f 5f       	subi	r24, 0xFF	; 255
+ 554:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
+		}
+	}
+}
+ 558:	9f 91       	pop	r25
+ 55a:	8f 91       	pop	r24
+ 55c:	0f 90       	pop	r0
+ 55e:	0f be       	out	0x3f, r0	; 63
+ 560:	0f 90       	pop	r0
+ 562:	1f 90       	pop	r1
+ 564:	18 95       	reti
 
-		if(response_CAN == 1){
- 892:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <__data_end>
- 896:	81 30       	cpi	r24, 0x01	; 1
- 898:	09 f0       	breq	.+2      	; 0x89c <main+0x134>
- 89a:	8d cf       	rjmp	.-230    	; 0x7b6 <main+0x4e>
-			CAN_TXMOB(1, 8, tData2, 0x5555555, 0x0100);
- 89c:	e4 2c       	mov	r14, r4
- 89e:	05 e5       	ldi	r16, 0x55	; 85
- 8a0:	15 e5       	ldi	r17, 0x55	; 85
- 8a2:	25 e5       	ldi	r18, 0x55	; 85
- 8a4:	35 e0       	ldi	r19, 0x05	; 5
- 8a6:	40 e0       	ldi	r20, 0x00	; 0
- 8a8:	51 e0       	ldi	r21, 0x01	; 1
- 8aa:	68 e0       	ldi	r22, 0x08	; 8
- 8ac:	8d 2d       	mov	r24, r13
- 8ae:	0e 94 f8 00 	call	0x1f0	; 0x1f0 <CAN_TXMOB>
-			response_CAN = 0;
- 8b2:	40 92 0a 01 	sts	0x010A, r4	; 0x80010a <__data_end>
-			toggle_led();
- 8b6:	0e 94 af 03 	call	0x75e	; 0x75e <toggle_led>
- 8ba:	7d cf       	rjmp	.-262    	; 0x7b6 <main+0x4e>
+00000566 <__vector_8>:
 
-000008bc <_exit>:
- 8bc:	f8 94       	cli
+ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
+{
+ 566:	1f 92       	push	r1
+ 568:	0f 92       	push	r0
+ 56a:	0f b6       	in	r0, 0x3f	; 63
+ 56c:	0f 92       	push	r0
+ 56e:	11 24       	eor	r1, r1
+ 570:	8f 93       	push	r24
+ 572:	9f 93       	push	r25
+	rotationCounter = 0;
+ 574:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <rotationCounter+0x1>
+ 578:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter>
+	PHASES_ALL_HIGH_OFF;
+ 57c:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+	PHASE_U_LOW_OFF;
+ 580:	58 98       	cbi	0x0b, 0	; 11
+	PHASE_V_LOW_OFF;
+ 582:	40 98       	cbi	0x08, 0	; 8
+	PHASE_W_LOW_OFF;
+ 584:	28 98       	cbi	0x05, 0	; 5
+		
+	if ((PINB & 4) == 4) {
+ 586:	1a 9b       	sbis	0x03, 2	; 3
+ 588:	19 c0       	rjmp	.+50     	; 0x5bc <__vector_8+0x56>
+		// 6
+		//_delay_ms(0.25);
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+ 58a:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
+ 58e:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
+ 592:	98 13       	cpse	r25, r24
+ 594:	05 c0       	rjmp	.+10     	; 0x5a0 <__vector_8+0x3a>
+		{
+			//anti-clock wise
+			//PHASE_U_LOW_ON;
+			//PHASE_V_HIGH_ON;
+			PHASE_U_LOW_ON;
+ 596:	58 9a       	sbi	0x0b, 0	; 11
+			PHASE_V_HIGH_ON;
+ 598:	8c e0       	ldi	r24, 0x0C	; 12
+ 59a:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 59e:	04 c0       	rjmp	.+8      	; 0x5a8 <__vector_8+0x42>
+		}else{
+			//clock wise
+			//PHASE_V_LOW_ON;
+			//PHASE_U_HIGH_ON;
+			PHASE_V_LOW_ON;
+ 5a0:	40 9a       	sbi	0x08, 0	; 8
+			PHASE_U_HIGH_ON;
+ 5a2:	83 e0       	ldi	r24, 0x03	; 3
+ 5a4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+		}
+		if(startPhase == 6){
+ 5a8:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
+ 5ac:	86 30       	cpi	r24, 0x06	; 6
+ 5ae:	f1 f4       	brne	.+60     	; 0x5ec <__vector_8+0x86>
+			revolutions++;
+ 5b0:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
+ 5b4:	8f 5f       	subi	r24, 0xFF	; 255
+ 5b6:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
+ 5ba:	18 c0       	rjmp	.+48     	; 0x5ec <__vector_8+0x86>
+		}
+	} else {
+		// 1
+		//_delay_ms(0.25);
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+ 5bc:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
+ 5c0:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
+ 5c4:	98 13       	cpse	r25, r24
+ 5c6:	05 c0       	rjmp	.+10     	; 0x5d2 <__vector_8+0x6c>
+		{
+			//anti-clock wise
+			//PHASE_U_HIGH_ON;
+			//PHASE_V_LOW_ON;
+			PHASE_W_LOW_ON;
+ 5c8:	28 9a       	sbi	0x05, 0	; 5
+			PHASE_V_HIGH_ON;
+ 5ca:	8c e0       	ldi	r24, 0x0C	; 12
+ 5cc:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 5d0:	04 c0       	rjmp	.+8      	; 0x5da <__vector_8+0x74>
+		}else{
+			//clock wise
+			//PHASE_U_LOW_ON;
+			//PHASE_V_HIGH_ON;
+			PHASE_V_LOW_ON;
+ 5d2:	40 9a       	sbi	0x08, 0	; 8
+			PHASE_W_HIGH_ON;
+ 5d4:	80 e3       	ldi	r24, 0x30	; 48
+ 5d6:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+		}
+		if(startPhase == 1){
+ 5da:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
+ 5de:	81 30       	cpi	r24, 0x01	; 1
+ 5e0:	29 f4       	brne	.+10     	; 0x5ec <__vector_8+0x86>
+			revolutions++;
+ 5e2:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
+ 5e6:	8f 5f       	subi	r24, 0xFF	; 255
+ 5e8:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
+		}
+	}
+}
+ 5ec:	9f 91       	pop	r25
+ 5ee:	8f 91       	pop	r24
+ 5f0:	0f 90       	pop	r0
+ 5f2:	0f be       	out	0x3f, r0	; 63
+ 5f4:	0f 90       	pop	r0
+ 5f6:	1f 90       	pop	r1
+ 5f8:	18 95       	reti
 
-000008be <__stop_program>:
- 8be:	ff cf       	rjmp	.-2      	; 0x8be <__stop_program>
+000005fa <__vector_9>:
+
+ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
+{
+ 5fa:	1f 92       	push	r1
+ 5fc:	0f 92       	push	r0
+ 5fe:	0f b6       	in	r0, 0x3f	; 63
+ 600:	0f 92       	push	r0
+ 602:	11 24       	eor	r1, r1
+ 604:	8f 93       	push	r24
+ 606:	9f 93       	push	r25
+	rotationCounter = 0;
+ 608:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <rotationCounter+0x1>
+ 60c:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter>
+	PHASES_ALL_HIGH_OFF;
+ 610:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+	PHASE_U_LOW_OFF;
+ 614:	58 98       	cbi	0x0b, 0	; 11
+	PHASE_V_LOW_OFF;
+ 616:	40 98       	cbi	0x08, 0	; 8
+	PHASE_W_LOW_OFF;
+ 618:	28 98       	cbi	0x05, 0	; 5
+		
+	if ((PINB & 32) == 32) {
+ 61a:	1d 9b       	sbis	0x03, 5	; 3
+ 61c:	19 c0       	rjmp	.+50     	; 0x650 <__vector_9+0x56>
+		// 5
+		//_delay_ms(0.25);
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+ 61e:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
+ 622:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
+ 626:	98 13       	cpse	r25, r24
+ 628:	05 c0       	rjmp	.+10     	; 0x634 <__vector_9+0x3a>
+		{
+			//anti-clock wise
+			//PHASE_W_HIGH_ON;
+			//PHASE_V_LOW_ON;
+			PHASE_U_LOW_ON;
+ 62a:	58 9a       	sbi	0x0b, 0	; 11
+			PHASE_W_HIGH_ON;
+ 62c:	80 e3       	ldi	r24, 0x30	; 48
+ 62e:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 632:	04 c0       	rjmp	.+8      	; 0x63c <__vector_9+0x42>
+		}else{
+			//clock wise
+			//PHASE_W_LOW_ON;
+			//PHASE_V_HIGH_ON;
+			PHASE_W_LOW_ON;
+ 634:	28 9a       	sbi	0x05, 0	; 5
+			PHASE_U_HIGH_ON;
+ 636:	83 e0       	ldi	r24, 0x03	; 3
+ 638:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+		}
+		if(startPhase == 5){
+ 63c:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
+ 640:	85 30       	cpi	r24, 0x05	; 5
+ 642:	f1 f4       	brne	.+60     	; 0x680 <__vector_9+0x86>
+			revolutions++;
+ 644:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
+ 648:	8f 5f       	subi	r24, 0xFF	; 255
+ 64a:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
+ 64e:	18 c0       	rjmp	.+48     	; 0x680 <__vector_9+0x86>
+		}
+	} else {
+		// 2
+		//_delay_ms(0.25);
+		if (WHICH_DIRECTION == ANTI_CLOCK_WISE)
+ 650:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <WHICH_DIRECTION>
+ 654:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <ANTI_CLOCK_WISE>
+ 658:	98 13       	cpse	r25, r24
+ 65a:	05 c0       	rjmp	.+10     	; 0x666 <__vector_9+0x6c>
+		{
+			//anti-clock wise
+			//PHASE_V_HIGH_ON;
+			//PHASE_W_LOW_ON;
+			PHASE_W_LOW_ON;
+ 65c:	28 9a       	sbi	0x05, 0	; 5
+			PHASE_U_HIGH_ON;
+ 65e:	83 e0       	ldi	r24, 0x03	; 3
+ 660:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 664:	04 c0       	rjmp	.+8      	; 0x66e <__vector_9+0x74>
+		}else{
+			//clock wise
+			//PHASE_V_LOW_ON;
+			//PHASE_W_HIGH_ON;
+			PHASE_U_LOW_ON;
+ 666:	58 9a       	sbi	0x0b, 0	; 11
+			PHASE_W_HIGH_ON;
+ 668:	80 e3       	ldi	r24, 0x30	; 48
+ 66a:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+		}
+		if(startPhase == 2){
+ 66e:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <startPhase>
+ 672:	82 30       	cpi	r24, 0x02	; 2
+ 674:	29 f4       	brne	.+10     	; 0x680 <__vector_9+0x86>
+			revolutions++;
+ 676:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <revolutions>
+ 67a:	8f 5f       	subi	r24, 0xFF	; 255
+ 67c:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <revolutions>
+		}
+	}
+}
+ 680:	9f 91       	pop	r25
+ 682:	8f 91       	pop	r24
+ 684:	0f 90       	pop	r0
+ 686:	0f be       	out	0x3f, r0	; 63
+ 688:	0f 90       	pop	r0
+ 68a:	1f 90       	pop	r1
+ 68c:	18 95       	reti
+
+0000068e <_exit>:
+ 68e:	f8 94       	cli
+
+00000690 <__stop_program>:
+ 690:	ff cf       	rjmp	.-2      	; 0x690 <__stop_program>

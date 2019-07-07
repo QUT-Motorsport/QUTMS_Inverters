@@ -3,8 +3,10 @@
  *
  * Created: 9/18/2018 12:12:01 AM
  * Author : Ant
+ * Modified: 3/07/2019 6:00 PM
+ * Author : Jonn Dillon
  */ 
-#define F_CPU 16000000
+#define F_CPU 16000000UL
 
 #include <avr/pgmspace.h>
 #include <avr/io.h>
@@ -17,18 +19,21 @@
 
 #include "AtmelCAN.h"
 
+#define LED_STATUS_ON		PORTB |= 0b00001000		// Status LED ON (Port B3)
+#define LED_STATUS_OFF		PORTB &= ~(0b00001000)	// Status LED OFF (Port B3)
+#define LED_STATUS_TOGGLE	PORTB ^= 0b00001000		// Status LED Toggle (Port B3)
 
-#define PHASE_U_LOW_ON PORTD |= 1
-#define PHASE_V_LOW_ON PORTC |= 1
-#define PHASE_W_LOW_ON PORTB |= 1
-#define PHASE_U_LOW_OFF PORTD &= ~1
-#define PHASE_V_LOW_OFF PORTC &= ~1
-#define PHASE_W_LOW_OFF PORTB &= ~1
+#define PHASE_U_LOW_ON		PORTD |= 1
+#define PHASE_V_LOW_ON		PORTC |= 1
+#define PHASE_W_LOW_ON		PORTB |= 1
+#define PHASE_U_LOW_OFF		PORTD &= ~1
+#define PHASE_V_LOW_OFF		PORTC &= ~1
+#define PHASE_W_LOW_OFF		PORTB &= ~1
 
 #define PHASES_ALL_HIGH_OFF POC = 0b00000000
-#define PHASE_U_HIGH_ON POC = 0b00000011
-#define PHASE_V_HIGH_ON POC = 0b00001100
-#define PHASE_W_HIGH_ON POC = 0b00110000
+#define PHASE_U_HIGH_ON		POC = 0b00000011
+#define PHASE_V_HIGH_ON		POC = 0b00001100
+#define PHASE_W_HIGH_ON		POC = 0b00110000
 
 uint8_t getMotorPosition(void);
 void kickMotor(void);
@@ -38,10 +43,12 @@ volatile uint16_t rotationCounter = 0;
 volatile uint8_t motorCommand = 0;
 ISR(CAN_INT_vect)
 {
+	//CAN_RXInit(5,8,0x0000000, 0x4000000, 1);
 	//uint8_t authority;
 	int8_t mob;
 	if((CANSIT2 & (1 << 5)))	//we received a CAN message on the reverse switch mob
 	{
+		//LED_STATUS_TOGGLE;
 		
 		CANPAGE = (5 << 4);			//set the canpage to the receiver MOB
 		testChar = CANMSG;
@@ -53,7 +60,7 @@ ISR(CAN_INT_vect)
 		tempChar1 = CANMSG;
 		tempChar1 = CANMSG;
 
-		CAN_RXInit(5,8,0xC000000, 0xC000000, 1);
+		CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
 	}
 }
 
@@ -85,8 +92,8 @@ int main(void)
 	PCTL = 0b00100001;						//select PLL clock with no prescale, turn the PSC on
 	
 	// start the CAN interface
-	CAN_init();		// Initialise CAN
-	CAN_RXInit(5,8,0xC000000, 0xC000000, 1);
+	CAN_init(); // Initialise CAN
+	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
 	
 	// start the interrupts
 	sei();	
@@ -103,44 +110,45 @@ int main(void)
 	
 	while(1)
 	{
+		_delay_ms(500);
+		LED_STATUS_TOGGLE;
+		/*
 		motorCommand = 250 - testChar;
-		if(motorCommand < 190) motorCommand = 190;
-		if(motorState == 1)
-		{
+		if(motorCommand < 190) {
+			motorCommand = 190;
+		}
+		if(motorState == 1) {
 			POCR0SA = POCR1SA = POCR2SA = motorCommand;
 			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
-		}
-		
-		else
-		{
+		} else {
 			POC = 0b00000000;
 			PHASE_U_HIGH_ON;
 			PHASE_V_LOW_OFF;
 			PHASE_W_LOW_OFF;
 		}
-		if(rotationCounter < 100) rotationCounter ++;
-		if(rotationCounter > 99)
-		{
+		
+		if(rotationCounter < 100) {
+			rotationCounter ++;
+		}
+		
+		if(rotationCounter > 99) {
 			motorState = 0;
 			PORTB &= ~8;
-		}
-		else 
-		{
+		} else {
 			motorState = 1;
 			PORTB |= 8;
 		}
 
-		
-		if((motorState == 0) && (motorCommand < 225))
-		{
+		if((motorState == 0) && (motorCommand < 225)) {
 			kickMotor();
 			motorState = 1;	
 			rotationCounter = 0;		
 		}
+		*/
 	}
 }
 
-// skateboard ISRs below  vvv
+// skateboard ISRs below \/\/\/
 
 ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 {	
