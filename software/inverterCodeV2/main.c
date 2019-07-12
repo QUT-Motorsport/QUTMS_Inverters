@@ -38,6 +38,37 @@ uint8_t testChar = 0;
 
 volatile uint16_t rotationCounter = 0;
 volatile uint8_t motorCommand = 0;
+
+/*
+ * Test Motor Commutation Order
+ *
+ *		Counter-Clockwise
+ *		Motor					Sensor (CCW)
+ *		Y(U)	G(V)	B(W)	Y	G	B
+ * -----------------------------------------
+ * 1	+		-		X		+	+	-
+ * 2	+		X		-		-	+	-
+ * 3	X		+		-		-	+	+
+ * 4	-		+		X		-	-	+
+ * 5	-		X		+		+	-	+
+ * 6	X		-		+		+	-	-
+ * 
+ * 
+ *		Clockwise
+ *		Motor					Sensor (CW)
+ *		Y(U)	G(V)	B(W)	Y	G	B
+ * -----------------------------------------
+ * 1	X		-		+		+	-	+
+ * 2	-		X		+		-	-	+
+ * 3	-		+		X		-	+	+
+ * 4	X		+		-		-	+	-
+ * 5	+		X		-		+	+	-
+ * 6	+		-		X		+	-	-
+ */
+
+
+
+
 ISR(CAN_INT_vect)
 {
 	//uint8_t authority;
@@ -120,18 +151,18 @@ int main(void)
 			PHASE_V_LOW_OFF;
 			PHASE_W_LOW_OFF;
 		}
-		if(rotationCounter < 100) rotationCounter ++;
-		if(rotationCounter > 99)
-		{
-			motorState = 0;
-			PORTB &= ~8;
-		}
-		else 
-		{
-			motorState = 1;
-			PORTB |= 8;
-		}
-
+		// if(rotationCounter < 1000) rotationCounter ++;
+		// if(rotationCounter > 999)
+		// {
+		// 	motorState = 0;
+		// 	PORTB &= ~8;
+		// }
+		// else 
+		// {
+		// 	motorState = 1;
+		// 	PORTB |= 8;
+		// }
+		motorState = 1;
 		
 		if((motorState == 0) && (motorCommand < 225))
 		{
@@ -152,12 +183,12 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 	PHASE_W_LOW_OFF;
 		
 	if ((PIND & 64) == 64) {
-		#ifdef TESTMOTOR // The Skateboard Motor
-			#ifdef CLOCKWISE // Running Clockwise
+		#ifdef TESTMOTOR // The Skateboard Motor	
+			#ifdef CLOCKWISE // Running Clockwise				> 3
 				PHASE_U_LOW_ON;
 				PHASE_V_HIGH_ON;
 			#endif
-			#ifndef CLOCKWISE // Running Anti-Clockwise
+			#ifndef CLOCKWISE // Running Anti-Clockwise			> 1
 				PHASE_V_LOW_ON;
 				PHASE_U_HIGH_ON;
 			#endif
@@ -174,11 +205,11 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 		
 	} else {
 		#ifdef TESTMOTOR // THe Skateboard Motor
-			#ifdef CLOCKWISE // Running Clockwise
+			#ifdef CLOCKWISE // Running Clockwise				> 4
 				PHASE_W_LOW_ON;
 				PHASE_V_HIGH_ON;
 			#endif
-			#ifndef CLOCKWISE // Running Anti-Clockwise
+			#ifndef CLOCKWISE // Running Anti-Clockwise			> 6
 				PHASE_V_LOW_ON;
 				PHASE_W_HIGH_ON;
 			#endif
@@ -207,11 +238,11 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 	if ((PINB & 4) == 4) {
 		
 		#ifdef TESTMOTOR // THe Skateboard Motor
-			#ifdef CLOCKWISE // Running Clockwise
+			#ifdef CLOCKWISE // Running Clockwise				> 6
 				PHASE_V_LOW_ON;
 				PHASE_U_HIGH_ON;
 			#endif
-			#ifndef CLOCKWISE // Running Anti-Clockwise
+			#ifndef CLOCKWISE // Running Anti-Clockwise			> 4
 				PHASE_U_LOW_ON;
 				PHASE_V_HIGH_ON;
 			#endif
@@ -228,11 +259,11 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 	} else {
 		
 		#ifdef TESTMOTOR // THe Skateboard Motor
-			#ifdef CLOCKWISE // Running Clockwise
+			#ifdef CLOCKWISE // Running Clockwise				> 1
 				PHASE_V_LOW_ON;
 				PHASE_W_HIGH_ON;
 			#endif
-			#ifndef CLOCKWISE // Running Anti-Clockwise
+			#ifndef CLOCKWISE // Running Anti-Clockwise			> 3
 				PHASE_W_LOW_ON;
 				PHASE_V_HIGH_ON;
 			#endif
@@ -260,11 +291,11 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 	if ((PINB & 32) == 32) {
 		
 		#ifdef TESTMOTOR // THe Skateboard Motor
-			#ifdef CLOCKWISE // Running Clockwise
+			#ifdef CLOCKWISE // Running Clockwise				> 5
 				PHASE_W_LOW_ON;
 				PHASE_U_HIGH_ON;
 			#endif
-			#ifndef CLOCKWISE // Running Anti-Clockwise
+			#ifndef CLOCKWISE // Running Anti-Clockwise			> 5
 				PHASE_U_LOW_ON;
 				PHASE_W_HIGH_ON;
 			#endif
@@ -281,11 +312,11 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 	} else {
 		
 		#ifdef TESTMOTOR // THe Skateboard Motor
-			#ifdef CLOCKWISE // Running Clockwise
+			#ifdef CLOCKWISE // Running Clockwise				> 2
 				PHASE_U_LOW_ON;
 				PHASE_W_HIGH_ON;
 			#endif
-			#ifndef CLOCKWISE // Running Anti-Clockwise
+			#ifndef CLOCKWISE // Running Anti-Clockwise			> 2
 				PHASE_W_LOW_ON;
 				PHASE_U_HIGH_ON;
 			#endif
