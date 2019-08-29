@@ -27,3 +27,6 @@ Clockwise
 4	X	+	-	-	+	-
 5	+	X	-	+	+	-
 6	+	-	X	+	-	-
+
+			INT 	2 	0	1 < Occuring In
+

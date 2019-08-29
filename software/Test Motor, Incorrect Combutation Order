@@ -1,0 +1,68 @@
+Test Motor, Incorrect Combutation Order
+Test Motor Directions Currently
+
+ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
+if
+	clockwise 		> 6	> U+ V-
+else
+	clockwise 		> 4	> U- V+
+
+ISR(INT1_vect) 	//if INT1 is going high - Z +   else if INT1  going low + Z -
+if
+	clockwise 		> 3	> V+ W-
+else
+	clockwise 		> 1	> V- W+
+
+ISR(INT2_vect) 	//if INT2 is going high Z + -   else if INT2 going low  Z - +
+if
+	clockwise 		> 2	> W+ U-
+else
+	clockwise 		> 5	> W- U+
+
+
+kickMotor()
+	case 1:
+		clockwise 	> 1	> V- W+
+	case 2:
+		clockwise 	> 5	> U+ W-
+	case 3:
+		clockwise 	> 6	> U+ V-
+	case 4:
+		clockwise 	> 3	> U- V+
+	case 5:
+		clockwise 	> 2	> U- W+
+	case 6:
+		clockwise 	> 4	> V+ W-
+
+
+Clockwise Hall Effect Pattern
+Step 1: 
+	Y: On, 	G: Off, B: On
+Step 2:
+	Y: Off, G: Off, B: On
+Step 3:
+	Y: Off, G: On, 	B: On
+Step 4:
+	Y: Off, G: On, 	B: Off
+Step 5:
+	Y: On, 	G: On, 	B: Off
+Step 6:
+	Y: On, 	G: Off, B: Off
+
+Counter Clockwise
+	motor					Sensor (CCW) 	Sensor MCU Sees (CCW)
+	Y(U)	G(V)	B(W)	Y	G	B
+	-------------------------------------------------------------
+1	X		-		+		+	-	+		-	+	-
+2	-		X		+		-	-	+		+	+	-
+3	-		+		X		-	+	+		+	-	-
+4	X		+		-		-	+	-		+	-	+
+5	+		X		-		+	+	-		-	-	+
+6	+		-		X		+	-	-		-	+	+
+
+				Interupt	1	2	0		1	2	0
+
+Motor	  Microfit    PCB      	  Micro
+Green 	> Green 	> Hall 1 	> INT 2
+Yellow 	> White 	> Hall 2 	> INT 1
+Blue 	> Red   	> Hall 3 	> INT 0
