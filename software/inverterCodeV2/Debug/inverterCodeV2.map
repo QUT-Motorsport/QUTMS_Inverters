@@ -200,7 +200,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x6f2
+.text           0x00000000      0x6ea
  *(.vectors)
  .vectors       0x00000000       0x7c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5/crtatmega64m1.o
                 0x00000000                __vector_default
@@ -316,13 +316,13 @@ END GROUP
  .text.kickMotor
                 0x0000048a       0x5c main.o
                 0x0000048a                kickMotor
- .text.main     0x000004e6      0x208 main.o
+ .text.main     0x000004e6      0x200 main.o
                 0x000004e6                main
-                0x000006ee                . = ALIGN (0x2)
+                0x000006e6                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000006ee        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x000006ee                _exit
-                0x000006ee                exit
+ .fini9         0x000006e6        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x000006e6                _exit
+                0x000006e6                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -341,11 +341,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000006ee        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x000006e6        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000006f2                _etext = .
+                0x000006ea                _etext = .
 
-.data           0x00800100        0x0 load address 0x000006f2
+.data           0x00800100        0x0 load address 0x000006ea
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -378,8 +378,8 @@ END GROUP
                 0x0080010d                testChar
  *(COMMON)
                 0x0080010e                PROVIDE (__bss_end, .)
-                0x000006f2                __data_load_start = LOADADDR (.data)
-                0x000006f2                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000006ea                __data_load_start = LOADADDR (.data)
+                0x000006ea                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080010e        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -473,24 +473,24 @@ END GROUP
  .debug_abbrev  0x000009b2      0x191 AtmelCAN.o
  .debug_abbrev  0x00000b43      0x13f main.o
 
-.debug_line     0x00000000      0x75a
+.debug_line     0x00000000      0x754
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000       0x1a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5/crtatmega64m1.o
  .debug_line    0x0000001a      0x324 AtmelCAN.o
- .debug_line    0x0000033e      0x41c main.o
+ .debug_line    0x0000033e      0x416 main.o
 
 .debug_frame    0x00000000      0x1f8
  *(.debug_frame)
  .debug_frame   0x00000000       0xe0 AtmelCAN.o
  .debug_frame   0x000000e0      0x118 main.o
 
-.debug_str      0x00000000      0x75c
+.debug_str      0x00000000      0x7ac
  *(.debug_str)
  .debug_str     0x00000000      0x3d0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5/crtatmega64m1.o
  .debug_str     0x000003d0      0x216 AtmelCAN.o
                                 0x251 (size before relaxing)
- .debug_str     0x000005e6      0x176 main.o
-                                0x31f (size before relaxing)
+ .debug_str     0x000005e6      0x1c6 main.o
+                                0x31e (size before relaxing)
 
 .debug_loc      0x00000000      0x60b
  *(.debug_loc)

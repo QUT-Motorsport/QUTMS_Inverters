@@ -330,7 +330,7 @@ int main(void)
 		else
 		{
 			POC = 0b00000000;
-			PHASE_U_HIGH_ON;
+			PHASE_U_LOW_ON;
 			PHASE_V_LOW_OFF;
 			PHASE_W_LOW_OFF;
 		}
@@ -449,7 +449,7 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 			#endif
 			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 6
 				PHASE_V_LOW_ON;
-				PHASE_W_LOW_ON;
+				PHASE_W_HIGH_ON;
 			#endif
 		#endif
 	} else {
