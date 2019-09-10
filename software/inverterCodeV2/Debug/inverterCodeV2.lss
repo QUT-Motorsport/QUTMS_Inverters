@@ -503,29 +503,27 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 	if ((PIND & 64) == 64) { // GOING HIGH
  3b8:	4e 9b       	sbis	0x09, 6	; 9
  3ba:	05 c0       	rjmp	.+10     	; 0x3c6 <__vector_7+0x36>
-				// PHASE_U_HIGH_ON;
-			#endif
-		#endif
-		#ifdef PLETTENMOTOR // The Pletenburg Motor
 			#ifdef CLOCKWISE // Running Clockwise				> STEP 4
 				PHASE_U_LOW_ON;
- 3bc:	58 9a       	sbi	0x0b, 0	; 11
 				PHASE_W_HIGH_ON;
- 3be:	80 e3       	ldi	r24, 0x30	; 48
+			#endif
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 2
+				PHASE_U_LOW_ON;
+ 3bc:	58 9a       	sbi	0x0b, 0	; 11
+				PHASE_V_HIGH_ON;
+ 3be:	8c e0       	ldi	r24, 0x0C	; 12
  3c0:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
  3c4:	04 c0       	rjmp	.+8      	; 0x3ce <__vector_7+0x3e>
-				// PHASE_W_HIGH_ON;
-			#endif
-		#endif
-		#ifdef PLETTENMOTOR // The Pletenburg Motor
 			#ifdef CLOCKWISE // Running Clockwise				> STEP 1
 				PHASE_W_LOW_ON;
- 3c6:	28 9a       	sbi	0x05, 0	; 5
 				PHASE_U_HIGH_ON;
- 3c8:	83 e0       	ldi	r24, 0x03	; 3
- 3ca:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+			#endif
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 5
 				PHASE_U_HIGH_ON;
+ 3c6:	83 e0       	ldi	r24, 0x03	; 3
+ 3c8:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 				PHASE_V_LOW_ON;
+ 3cc:	40 9a       	sbi	0x08, 0	; 8
 			#endif
 		#endif
 	}
@@ -563,29 +561,27 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 	if ((PINB & 4) == 4) {
  3fa:	1a 9b       	sbis	0x03, 2	; 3
  3fc:	05 c0       	rjmp	.+10     	; 0x408 <__LOCK_REGION_LENGTH__+0x8>
-				// PHASE_V_HIGH_ON;
-			#endif
-		#endif
-		#ifdef PLETTENMOTOR // The Pletenburg Motor
 			#ifdef CLOCKWISE // Running Clockwise				> STEP 6
 				PHASE_V_LOW_ON;
- 3fe:	40 9a       	sbi	0x08, 0	; 8
 				PHASE_U_HIGH_ON;
- 400:	83 e0       	ldi	r24, 0x03	; 3
+			#endif
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 6
+				PHASE_V_LOW_ON;
+ 3fe:	40 9a       	sbi	0x08, 0	; 8
+				PHASE_W_HIGH_ON;
+ 400:	80 e3       	ldi	r24, 0x30	; 48
  402:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
  406:	04 c0       	rjmp	.+8      	; 0x410 <__LOCK_REGION_LENGTH__+0x10>
-				// PHASE_V_HIGH_ON;
-			#endif
-		#endif
-		#ifdef PLETTENMOTOR // The Pletenburg Motor
 			#ifdef CLOCKWISE // Running Clockwise				> STEP 3
 				PHASE_U_LOW_ON;
- 408:	58 9a       	sbi	0x0b, 0	; 11
 				PHASE_V_HIGH_ON;
- 40a:	8c e0       	ldi	r24, 0x0C	; 12
- 40c:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+			#endif
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 3
 				PHASE_V_HIGH_ON;
+ 408:	8c e0       	ldi	r24, 0x0C	; 12
+ 40a:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 				PHASE_W_LOW_ON;
+ 40e:	28 9a       	sbi	0x05, 0	; 5
 			#endif
 		#endif
 	}
@@ -622,29 +618,27 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 	if ((PINB & 32) == 32) {
  43a:	1d 9b       	sbis	0x03, 5	; 3
  43c:	05 c0       	rjmp	.+10     	; 0x448 <__vector_9+0x2c>
-				// PHASE_W_HIGH_ON;
-			#endif
-		#endif
-		#ifdef PLETTENMOTOR // The Pletenburg Motor				> STEP 2
 			#ifdef CLOCKWISE // Running Clockwise
 				PHASE_W_LOW_ON;
- 43e:	28 9a       	sbi	0x05, 0	; 5
 				PHASE_V_HIGH_ON;
- 440:	8c e0       	ldi	r24, 0x0C	; 12
- 442:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
- 446:	04 c0       	rjmp	.+8      	; 0x450 <__vector_9+0x34>
-				// PHASE_U_HIGH_ON;
 			#endif
-		#endif
-		#ifdef PLETTENMOTOR // The Pletenburg Motor
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 4
+				PHASE_U_HIGH_ON;
+ 43e:	83 e0       	ldi	r24, 0x03	; 3
+ 440:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+				PHASE_W_LOW_ON;
+ 444:	28 9a       	sbi	0x05, 0	; 5
+ 446:	04 c0       	rjmp	.+8      	; 0x450 <__vector_9+0x34>
 			#ifdef CLOCKWISE // Running Clockwise				> STEP 5
 				PHASE_V_LOW_ON;
- 448:	40 9a       	sbi	0x08, 0	; 8
+				PHASE_W_HIGH_ON;
+			#endif
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 1
+				PHASE_U_LOW_ON;
+ 448:	58 9a       	sbi	0x0b, 0	; 11
 				PHASE_W_HIGH_ON;
  44a:	80 e3       	ldi	r24, 0x30	; 48
  44c:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-				PHASE_U_LOW_ON;
-				PHASE_W_HIGH_ON;
 			#endif
 		#endif
 	}
@@ -709,100 +703,85 @@ void kickMotor(void)
  4a4:	86 30       	cpi	r24, 0x06	; 6
  4a6:	d1 f0       	breq	.+52     	; 0x4dc <kickMotor+0x52>
  4a8:	08 95       	ret
-					// PHASE_V_HIGH_ON;
-				#endif
-			#endif
-			#ifdef PLETTENMOTOR // The Pletenburg Motor
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 3
 					PHASE_U_LOW_ON;
- 4aa:	58 9a       	sbi	0x0b, 0	; 11
 					PHASE_V_HIGH_ON;
- 4ac:	8c e0       	ldi	r24, 0x0C	; 12
- 4ae:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 3
 					PHASE_V_HIGH_ON;
+ 4aa:	8c e0       	ldi	r24, 0x0C	; 12
+ 4ac:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 					PHASE_W_LOW_ON;
+ 4b0:	28 9a       	sbi	0x05, 0	; 5
 				#endif
 			#endif
 			break;
  4b2:	08 95       	ret
-					// PHASE_U_HIGH_ON;
-				#endif
-			#endif
-			#ifdef PLETTENMOTOR // The Pletenburg Motor
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 5
 					PHASE_V_LOW_ON;
- 4b4:	40 9a       	sbi	0x08, 0	; 8
+					PHASE_W_HIGH_ON;
+				#endif
+				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 1
+					PHASE_U_LOW_ON;
+ 4b4:	58 9a       	sbi	0x0b, 0	; 11
 					PHASE_W_HIGH_ON;
  4b6:	80 e3       	ldi	r24, 0x30	; 48
  4b8:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 1
-					PHASE_U_LOW_ON;
-					PHASE_W_HIGH_ON;
 				#endif
 			#endif
 			break;
  4bc:	08 95       	ret
-					// PHASE_U_HIGH_ON;
-				#endif
-			#endif
-			#ifdef PLETTENMOTOR // The Pletenburg Motor
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 4
 					PHASE_U_LOW_ON;
- 4be:	58 9a       	sbi	0x0b, 0	; 11
 					PHASE_W_HIGH_ON;
- 4c0:	80 e3       	ldi	r24, 0x30	; 48
- 4c2:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 2
 					PHASE_U_LOW_ON;
+ 4be:	58 9a       	sbi	0x0b, 0	; 11
 					PHASE_V_HIGH_ON;
+ 4c0:	8c e0       	ldi	r24, 0x0C	; 12
+ 4c2:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 				#endif
 			#endif
 			break;
  4c6:	08 95       	ret
-					// PHASE_W_HIGH_ON;
-				#endif
-			#endif
-			#ifdef PLETTENMOTOR // The Pletenburg Motor
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 1
 					PHASE_W_LOW_ON;
- 4c8:	28 9a       	sbi	0x05, 0	; 5
 					PHASE_U_HIGH_ON;
- 4ca:	83 e0       	ldi	r24, 0x03	; 3
- 4cc:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 5
 					PHASE_U_HIGH_ON;
+ 4c8:	83 e0       	ldi	r24, 0x03	; 3
+ 4ca:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 					PHASE_V_LOW_ON;
+ 4ce:	40 9a       	sbi	0x08, 0	; 8
 				#endif
 			#endif
 			break;
  4d0:	08 95       	ret
-					// PHASE_W_HIGH_ON;
-				#endif
-			#endif
-			#ifdef PLETTENMOTOR // The Pletenburg Motor
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 2
 					PHASE_W_LOW_ON;
- 4d2:	28 9a       	sbi	0x05, 0	; 5
 					PHASE_V_HIGH_ON;
- 4d4:	8c e0       	ldi	r24, 0x0C	; 12
- 4d6:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 4
 					PHASE_U_HIGH_ON;
+ 4d2:	83 e0       	ldi	r24, 0x03	; 3
+ 4d4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 					PHASE_W_LOW_ON;
+ 4d8:	28 9a       	sbi	0x05, 0	; 5
 				#endif
 			#endif
 			break;
  4da:	08 95       	ret
-					// PHASE_V_HIGH_ON;
-				#endif
-			#endif
-			#ifdef PLETTENMOTOR // The Pletenburg Motor
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 6
 					PHASE_V_LOW_ON;
- 4dc:	40 9a       	sbi	0x08, 0	; 8
 					PHASE_U_HIGH_ON;
- 4de:	83 e0       	ldi	r24, 0x03	; 3
+				#endif
+				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 6
+					PHASE_V_LOW_ON;
+ 4dc:	40 9a       	sbi	0x08, 0	; 8
+					PHASE_W_HIGH_ON;
+ 4de:	80 e3       	ldi	r24, 0x30	; 48
  4e0:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
  4e4:	08 95       	ret
 
@@ -919,11 +898,11 @@ int main(void)
  590:	40 98       	cbi	0x08, 0	; 8
 	PHASE_W_LOW_OFF;
  592:	28 98       	cbi	0x05, 0	; 5
-			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
 		}
 		
 		else
 		{
+			// Turn everything off
 			POC = 0b00000000;
  594:	c6 eb       	ldi	r28, 0xB6	; 182
  596:	d0 e0       	ldi	r29, 0x00	; 0
@@ -1046,10 +1025,11 @@ int main(void)
 		
 		else
 		{
+			// Turn everything off
 			POC = 0b00000000;
  63a:	18 82       	st	Y, r1
-			PHASE_U_LOW_ON;
- 63c:	58 9a       	sbi	0x0b, 0	; 11
+			PHASE_U_LOW_OFF;
+ 63c:	58 98       	cbi	0x0b, 0	; 11
 			PHASE_V_LOW_OFF;
  63e:	40 98       	cbi	0x08, 0	; 8
 			PHASE_W_LOW_OFF;
