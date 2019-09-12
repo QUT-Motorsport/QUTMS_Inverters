@@ -355,18 +355,18 @@ int main(void)
 			rotationCounter = 0;		
 		}
 
-		if(canFlag == 1) {
-			canFlag = 0;
-			canArray[0] = motorState;
-			canArray[1] = motorCommand;
-			canArray[2] = rotationCounter >> 8;
-			canArray[3] = rotationCounter;
+		// if(canFlag == 1) {
+			// canFlag = 0;
+			// canArray[0] = motorState;
+			// canArray[1] = motorCommand;
+			// canArray[2] = rotationCounter >> 8;
+			// canArray[3] = rotationCounter;
 			// canArray[4] = ADC_read_phase_W();
 			// canArray[5] = ADC_read_phase_V();
 			// canArray[6] = ADC_read_power_B();
 			// canArray[7] = ADC_read_temp();
-			CAN_TXMOB(CAN_findFreeTXMOB(), 8, canArray, 0x5000000, 0x0100);
-		}
+			// CAN_TXMOB(CAN_findFreeTXMOB(), 8, canArray, 0x5000000, 0x0100);
+		// }
 	}
 }
 
@@ -395,9 +395,9 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 				PHASE_U_LOW_ON;
 				PHASE_W_HIGH_ON;
 			#endif
-			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 2
-				PHASE_U_LOW_ON;
-				PHASE_V_HIGH_ON;
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 5
+				PHASE_U_HIGH_ON;
+				PHASE_V_LOW_ON;
 			#endif
 		#endif
 	} else { // GOING LOW
@@ -416,9 +416,9 @@ ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 				PHASE_W_LOW_ON;
 				PHASE_U_HIGH_ON;
 			#endif
-			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 5
-				PHASE_U_HIGH_ON;
-				PHASE_V_LOW_ON;
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 2
+				PHASE_U_LOW_ON;
+				PHASE_V_HIGH_ON;
 			#endif
 		#endif
 	}
@@ -448,9 +448,9 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 				PHASE_V_LOW_ON;
 				PHASE_U_HIGH_ON;
 			#endif
-			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 6
-				PHASE_V_LOW_ON;
-				PHASE_W_HIGH_ON;
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 3
+				PHASE_V_HIGH_ON;
+				PHASE_W_LOW_ON;
 			#endif
 		#endif
 	} else {
@@ -469,9 +469,9 @@ ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 				PHASE_U_LOW_ON;
 				PHASE_V_HIGH_ON;
 			#endif
-			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 3
-				PHASE_V_HIGH_ON;
-				PHASE_W_LOW_ON;
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 6
+				PHASE_V_LOW_ON;
+				PHASE_W_HIGH_ON;
 			#endif
 		#endif
 	}
@@ -501,9 +501,9 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 				PHASE_W_LOW_ON;
 				PHASE_V_HIGH_ON;
 			#endif
-			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 4
-				PHASE_U_HIGH_ON;
-				PHASE_W_LOW_ON;
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 1
+				PHASE_U_LOW_ON;
+				PHASE_W_HIGH_ON;
 			#endif
 		#endif
 	} else {
@@ -522,9 +522,9 @@ ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 				PHASE_V_LOW_ON;
 				PHASE_W_HIGH_ON;
 			#endif
-			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 1
-				PHASE_U_LOW_ON;
-				PHASE_W_HIGH_ON;
+			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 4
+				PHASE_U_HIGH_ON;
+				PHASE_W_LOW_ON;
 			#endif
 		#endif
 	}
@@ -550,9 +550,9 @@ void kickMotor(void)
 					PHASE_U_LOW_ON;
 					PHASE_V_HIGH_ON;
 				#endif
-				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 3
-					PHASE_V_HIGH_ON;
-					PHASE_W_LOW_ON;
+				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 5
+					PHASE_V_LOW_ON;
+					PHASE_U_HIGH_ON;
 				#endif
 			#endif
 			break;
@@ -568,9 +568,9 @@ void kickMotor(void)
 				#endif
 			#endif
 			#ifdef PLETTENMOTOR // The Pletenburg Motor
-				#ifdef CLOCKWISE // Running Clockwise				> STEP 5
-					PHASE_V_LOW_ON;
-					PHASE_W_HIGH_ON;
+				#ifdef CLOCKWISE // Running Clockwise				> STEP 1
+					PHASE_U_HIGH_ON;
+					PHASE_W_LOW_ON;
 				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 1
 					PHASE_U_LOW_ON;
@@ -590,13 +590,13 @@ void kickMotor(void)
 				#endif
 			#endif
 			#ifdef PLETTENMOTOR // The Pletenburg Motor
-				#ifdef CLOCKWISE // Running Clockwise				> STEP 4
-					PHASE_U_LOW_ON;
-					PHASE_W_HIGH_ON;
-				#endif
-				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 2
-					PHASE_U_LOW_ON;
+				#ifdef CLOCKWISE // Running Clockwise				> STEP 2
 					PHASE_V_HIGH_ON;
+					PHASE_W_LOW_ON;
+				#endif
+				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 6
+					PHASE_V_LOW_ON;
+					PHASE_W_HIGH_ON;
 				#endif
 			#endif
 			break;
@@ -612,13 +612,13 @@ void kickMotor(void)
 				#endif
 			#endif
 			#ifdef PLETTENMOTOR // The Pletenburg Motor
-				#ifdef CLOCKWISE // Running Clockwise				> STEP 1
-					PHASE_W_LOW_ON;
-					PHASE_U_HIGH_ON;
-				#endif
-				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 5
-					PHASE_U_HIGH_ON;
+				#ifdef CLOCKWISE // Running Clockwise				> STEP 5
 					PHASE_V_LOW_ON;
+					PHASE_W_HIGH_ON;
+				#endif
+				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 3
+					PHASE_V_HIGH_ON;
+					PHASE_W_LOW_ON;
 				#endif
 			#endif
 			break;
@@ -634,9 +634,9 @@ void kickMotor(void)
 				#endif
 			#endif
 			#ifdef PLETTENMOTOR // The Pletenburg Motor
-				#ifdef CLOCKWISE // Running Clockwise				> STEP 2
-					PHASE_W_LOW_ON;
-					PHASE_V_HIGH_ON;
+				#ifdef CLOCKWISE // Running Clockwise				> STEP 4
+					PHASE_U_LOW_ON;
+					PHASE_W_HIGH_ON;
 				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 4
 					PHASE_U_HIGH_ON;
@@ -661,8 +661,8 @@ void kickMotor(void)
 					PHASE_U_HIGH_ON;
 				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 6
-					PHASE_V_LOW_ON;
-					PHASE_W_HIGH_ON;
+					PHASE_U_LOW_ON;
+					PHASE_V_HIGH_ON;
 				#endif
 			#endif
 			break;
