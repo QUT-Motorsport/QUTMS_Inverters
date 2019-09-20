@@ -3,31 +3,31 @@ inverterCodeV2.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  0000075e  2**0
+  0 .data         00000000  00800100  00800100  000005fa  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000006ea  00000000  00000000  00000074  2**1
+  1 .text         00000586  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000000e  00800100  00800100  0000075e  2**0
+  2 .bss          00000005  00800100  00800100  000005fa  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  0000075e  2**0
+  3 .comment      00000030  00000000  00000000  000005fa  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000790  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000062c  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000090  00000000  00000000  000007d0  2**0
+  5 .debug_aranges 00000090  00000000  00000000  0000066c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00001131  00000000  00000000  00000860  2**0
+  6 .debug_info   000010dd  00000000  00000000  000006fc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000c82  00000000  00000000  00001991  2**0
+  7 .debug_abbrev 00000c82  00000000  00000000  000017d9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000754  00000000  00000000  00002613  2**0
+  8 .debug_line   0000071e  00000000  00000000  0000245b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000001f8  00000000  00000000  00002d68  2**2
+  9 .debug_frame  000001f8  00000000  00000000  00002b7c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000007ac  00000000  00000000  00002f60  2**0
+ 10 .debug_str    00000789  00000000  00000000  00002d74  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000060b  00000000  00000000  0000370c  2**0
+ 11 .debug_loc    0000060b  00000000  00000000  000034fd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000070  00000000  00000000  00003d17  2**0
+ 12 .debug_ranges 00000070  00000000  00000000  00003b08  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -40,9 +40,9 @@ Disassembly of section .text:
   10:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
   14:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
   18:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
-  1c:	0c 94 c8 01 	jmp	0x390	; 0x390 <__vector_7>
-  20:	0c 94 ee 01 	jmp	0x3dc	; 0x3dc <__vector_8>
-  24:	0c 94 0e 02 	jmp	0x41c	; 0x41c <__vector_9>
+  1c:	0c 94 3a 01 	jmp	0x274	; 0x274 <__vector_7>
+  20:	0c 94 60 01 	jmp	0x2c0	; 0x2c0 <__vector_8>
+  24:	0c 94 80 01 	jmp	0x300	; 0x300 <__vector_9>
   28:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
   2c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
   30:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
@@ -51,7 +51,7 @@ Disassembly of section .text:
   3c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
   40:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
   44:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
-  48:	0c 94 7b 01 	jmp	0x2f6	; 0x2f6 <__vector_18>
+  48:	0c 94 ed 00 	jmp	0x1da	; 0x1da <__vector_18>
   4c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
   50:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
   54:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
@@ -83,11 +83,11 @@ Disassembly of section .text:
   90:	1d 92       	st	X+, r1
 
 00000092 <.do_clear_bss_start>:
-  92:	ae 30       	cpi	r26, 0x0E	; 14
+  92:	a5 30       	cpi	r26, 0x05	; 5
   94:	b2 07       	cpc	r27, r18
   96:	e1 f7       	brne	.-8      	; 0x90 <.do_clear_bss_loop>
-  98:	0e 94 73 02 	call	0x4e6	; 0x4e6 <main>
-  9c:	0c 94 73 03 	jmp	0x6e6	; 0x6e6 <_exit>
+  98:	0e 94 e5 01 	call	0x3ca	; 0x3ca <main>
+  9c:	0c 94 c1 02 	jmp	0x582	; 0x582 <_exit>
 
 000000a0 <__bad_interrupt>:
   a0:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -149,6 +149,12 @@ Disassembly of section .text:
  118:	80 93 db 00 	sts	0x00DB, r24	; 0x8000db <__TEXT_REGION_LENGTH__+0x7e00db>
  11c:	82 e0       	ldi	r24, 0x02	; 2
  11e:	80 93 d8 00 	sts	0x00D8, r24	; 0x8000d8 <__TEXT_REGION_LENGTH__+0x7e00d8>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
  122:	ff ef       	ldi	r31, 0xFF	; 255
  124:	20 e7       	ldi	r18, 0x70	; 112
  126:	82 e0       	ldi	r24, 0x02	; 2
@@ -233,898 +239,711 @@ Disassembly of section .text:
  1d6:	cf 90       	pop	r12
  1d8:	08 95       	ret
 
-000001da <CAN_TXMOB>:
- 1da:	ef 92       	push	r14
- 1dc:	0f 93       	push	r16
- 1de:	1f 93       	push	r17
- 1e0:	82 95       	swap	r24
- 1e2:	80 7f       	andi	r24, 0xF0	; 240
- 1e4:	80 93 ed 00 	sts	0x00ED, r24	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
- 1e8:	ee ee       	ldi	r30, 0xEE	; 238
- 1ea:	f0 e0       	ldi	r31, 0x00	; 0
- 1ec:	80 81       	ld	r24, Z
- 1ee:	8f 7b       	andi	r24, 0xBF	; 191
- 1f0:	80 83       	st	Z, r24
- 1f2:	10 92 f4 00 	sts	0x00F4, r1	; 0x8000f4 <__TEXT_REGION_LENGTH__+0x7e00f4>
- 1f6:	80 2f       	mov	r24, r16
- 1f8:	88 0f       	add	r24, r24
- 1fa:	88 0f       	add	r24, r24
- 1fc:	88 0f       	add	r24, r24
- 1fe:	80 93 f0 00 	sts	0x00F0, r24	; 0x8000f0 <__TEXT_REGION_LENGTH__+0x7e00f0>
- 202:	d9 01       	movw	r26, r18
- 204:	c8 01       	movw	r24, r16
- 206:	68 94       	set
- 208:	14 f8       	bld	r1, 4
- 20a:	b6 95       	lsr	r27
- 20c:	a7 95       	ror	r26
- 20e:	97 95       	ror	r25
- 210:	87 95       	ror	r24
- 212:	16 94       	lsr	r1
- 214:	d1 f7       	brne	.-12     	; 0x20a <CAN_TXMOB+0x30>
- 216:	80 93 f1 00 	sts	0x00F1, r24	; 0x8000f1 <__TEXT_REGION_LENGTH__+0x7e00f1>
- 21a:	d9 01       	movw	r26, r18
- 21c:	c8 01       	movw	r24, r16
- 21e:	07 2e       	mov	r0, r23
- 220:	7d e0       	ldi	r23, 0x0D	; 13
- 222:	b6 95       	lsr	r27
- 224:	a7 95       	ror	r26
- 226:	97 95       	ror	r25
- 228:	87 95       	ror	r24
- 22a:	7a 95       	dec	r23
- 22c:	d1 f7       	brne	.-12     	; 0x222 <CAN_TXMOB+0x48>
- 22e:	70 2d       	mov	r23, r0
- 230:	80 93 f2 00 	sts	0x00F2, r24	; 0x8000f2 <__TEXT_REGION_LENGTH__+0x7e00f2>
- 234:	0f 2e       	mov	r0, r31
- 236:	f5 e1       	ldi	r31, 0x15	; 21
- 238:	36 95       	lsr	r19
- 23a:	27 95       	ror	r18
- 23c:	17 95       	ror	r17
- 23e:	07 95       	ror	r16
- 240:	fa 95       	dec	r31
- 242:	d1 f7       	brne	.-12     	; 0x238 <CAN_TXMOB+0x5e>
- 244:	f0 2d       	mov	r31, r0
- 246:	00 93 f3 00 	sts	0x00F3, r16	; 0x8000f3 <__TEXT_REGION_LENGTH__+0x7e00f3>
- 24a:	66 23       	and	r22, r22
- 24c:	71 f0       	breq	.+28     	; 0x26a <CAN_TXMOB+0x90>
- 24e:	fa 01       	movw	r30, r20
- 250:	8f ef       	ldi	r24, 0xFF	; 255
- 252:	86 0f       	add	r24, r22
- 254:	90 e0       	ldi	r25, 0x00	; 0
- 256:	01 96       	adiw	r24, 0x01	; 1
- 258:	48 0f       	add	r20, r24
- 25a:	59 1f       	adc	r21, r25
- 25c:	aa ef       	ldi	r26, 0xFA	; 250
- 25e:	b0 e0       	ldi	r27, 0x00	; 0
- 260:	81 91       	ld	r24, Z+
- 262:	8c 93       	st	X, r24
- 264:	e4 17       	cp	r30, r20
- 266:	f5 07       	cpc	r31, r21
- 268:	d9 f7       	brne	.-10     	; 0x260 <CAN_TXMOB+0x86>
- 26a:	60 65       	ori	r22, 0x50	; 80
- 26c:	60 93 ef 00 	sts	0x00EF, r22	; 0x8000ef <__TEXT_REGION_LENGTH__+0x7e00ef>
- 270:	ee 20       	and	r14, r14
- 272:	a1 f0       	breq	.+40     	; 0x29c <CAN_TXMOB+0xc2>
- 274:	80 91 ee 00 	lds	r24, 0x00EE	; 0x8000ee <__TEXT_REGION_LENGTH__+0x7e00ee>
- 278:	86 fd       	sbrc	r24, 6
- 27a:	10 c0       	rjmp	.+32     	; 0x29c <CAN_TXMOB+0xc2>
- 27c:	80 e0       	ldi	r24, 0x00	; 0
- 27e:	ee ee       	ldi	r30, 0xEE	; 238
- 280:	f0 e0       	ldi	r31, 0x00	; 0
- 282:	03 c0       	rjmp	.+6      	; 0x28a <CAN_TXMOB+0xb0>
- 284:	90 81       	ld	r25, Z
- 286:	96 fd       	sbrc	r25, 6
- 288:	09 c0       	rjmp	.+18     	; 0x29c <CAN_TXMOB+0xc2>
- 28a:	af e9       	ldi	r26, 0x9F	; 159
- 28c:	bf e0       	ldi	r27, 0x0F	; 15
- 28e:	11 97       	sbiw	r26, 0x01	; 1
- 290:	f1 f7       	brne	.-4      	; 0x28e <CAN_TXMOB+0xb4>
- 292:	00 c0       	rjmp	.+0      	; 0x294 <CAN_TXMOB+0xba>
- 294:	00 00       	nop
- 296:	8f 5f       	subi	r24, 0xFF	; 255
- 298:	e8 12       	cpse	r14, r24
- 29a:	f4 cf       	rjmp	.-24     	; 0x284 <CAN_TXMOB+0xaa>
- 29c:	1f 91       	pop	r17
- 29e:	0f 91       	pop	r16
- 2a0:	ef 90       	pop	r14
- 2a2:	08 95       	ret
-
-000002a4 <CAN_findFreeTXMOB>:
- 2a4:	cf 93       	push	r28
- 2a6:	df 93       	push	r29
- 2a8:	10 92 ed 00 	sts	0x00ED, r1	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
- 2ac:	80 91 ee 00 	lds	r24, 0x00EE	; 0x8000ee <__TEXT_REGION_LENGTH__+0x7e00ee>
- 2b0:	86 fd       	sbrc	r24, 6
- 2b2:	16 c0       	rjmp	.+44     	; 0x2e0 <CAN_findFreeTXMOB+0x3c>
- 2b4:	80 91 ef 00 	lds	r24, 0x00EF	; 0x8000ef <__TEXT_REGION_LENGTH__+0x7e00ef>
- 2b8:	86 ff       	sbrs	r24, 6
- 2ba:	14 c0       	rjmp	.+40     	; 0x2e4 <CAN_findFreeTXMOB+0x40>
- 2bc:	81 e0       	ldi	r24, 0x01	; 1
- 2be:	ad ee       	ldi	r26, 0xED	; 237
- 2c0:	b0 e0       	ldi	r27, 0x00	; 0
- 2c2:	ee ee       	ldi	r30, 0xEE	; 238
- 2c4:	f0 e0       	ldi	r31, 0x00	; 0
- 2c6:	cf ee       	ldi	r28, 0xEF	; 239
- 2c8:	d0 e0       	ldi	r29, 0x00	; 0
- 2ca:	98 2f       	mov	r25, r24
- 2cc:	92 95       	swap	r25
- 2ce:	90 7f       	andi	r25, 0xF0	; 240
- 2d0:	9c 93       	st	X, r25
- 2d2:	90 81       	ld	r25, Z
- 2d4:	96 fd       	sbrc	r25, 6
- 2d6:	0c c0       	rjmp	.+24     	; 0x2f0 <CAN_findFreeTXMOB+0x4c>
- 2d8:	98 81       	ld	r25, Y
- 2da:	96 fd       	sbrc	r25, 6
- 2dc:	05 c0       	rjmp	.+10     	; 0x2e8 <CAN_findFreeTXMOB+0x44>
- 2de:	08 c0       	rjmp	.+16     	; 0x2f0 <CAN_findFreeTXMOB+0x4c>
- 2e0:	80 e0       	ldi	r24, 0x00	; 0
- 2e2:	06 c0       	rjmp	.+12     	; 0x2f0 <CAN_findFreeTXMOB+0x4c>
- 2e4:	80 e0       	ldi	r24, 0x00	; 0
- 2e6:	04 c0       	rjmp	.+8      	; 0x2f0 <CAN_findFreeTXMOB+0x4c>
- 2e8:	8f 5f       	subi	r24, 0xFF	; 255
- 2ea:	84 30       	cpi	r24, 0x04	; 4
- 2ec:	71 f7       	brne	.-36     	; 0x2ca <CAN_findFreeTXMOB+0x26>
- 2ee:	8f ef       	ldi	r24, 0xFF	; 255
- 2f0:	df 91       	pop	r29
- 2f2:	cf 91       	pop	r28
- 2f4:	08 95       	ret
-
-000002f6 <__vector_18>:
+000001da <__vector_18>:
 	currentPowerB = ADC_read_power_B();
 	currentPhaseU = currentPowerB - (currentPhaseW + currentPhaseV);
 } */
 
 ISR(CAN_INT_vect)
 {
- 2f6:	1f 92       	push	r1
- 2f8:	0f 92       	push	r0
- 2fa:	0f b6       	in	r0, 0x3f	; 63
- 2fc:	0f 92       	push	r0
- 2fe:	11 24       	eor	r1, r1
- 300:	cf 92       	push	r12
- 302:	ef 92       	push	r14
- 304:	ff 92       	push	r15
- 306:	0f 93       	push	r16
- 308:	1f 93       	push	r17
- 30a:	2f 93       	push	r18
- 30c:	3f 93       	push	r19
- 30e:	4f 93       	push	r20
- 310:	5f 93       	push	r21
- 312:	6f 93       	push	r22
- 314:	7f 93       	push	r23
- 316:	8f 93       	push	r24
- 318:	9f 93       	push	r25
- 31a:	af 93       	push	r26
- 31c:	bf 93       	push	r27
- 31e:	ef 93       	push	r30
- 320:	ff 93       	push	r31
+ 1da:	1f 92       	push	r1
+ 1dc:	0f 92       	push	r0
+ 1de:	0f b6       	in	r0, 0x3f	; 63
+ 1e0:	0f 92       	push	r0
+ 1e2:	11 24       	eor	r1, r1
+ 1e4:	cf 92       	push	r12
+ 1e6:	ef 92       	push	r14
+ 1e8:	ff 92       	push	r15
+ 1ea:	0f 93       	push	r16
+ 1ec:	1f 93       	push	r17
+ 1ee:	2f 93       	push	r18
+ 1f0:	3f 93       	push	r19
+ 1f2:	4f 93       	push	r20
+ 1f4:	5f 93       	push	r21
+ 1f6:	6f 93       	push	r22
+ 1f8:	7f 93       	push	r23
+ 1fa:	8f 93       	push	r24
+ 1fc:	9f 93       	push	r25
+ 1fe:	af 93       	push	r26
+ 200:	bf 93       	push	r27
+ 202:	ef 93       	push	r30
+ 204:	ff 93       	push	r31
 	//uint8_t authority;
 	//uint8_t mob;
 	if((CANSIT2 & (1 << 5)))	//we received a CAN message on the reverse switch mob
- 322:	80 91 e0 00 	lds	r24, 0x00E0	; 0x8000e0 <__TEXT_REGION_LENGTH__+0x7e00e0>
- 326:	85 ff       	sbrs	r24, 5
- 328:	1d c0       	rjmp	.+58     	; 0x364 <__vector_18+0x6e>
+ 206:	80 91 e0 00 	lds	r24, 0x00E0	; 0x8000e0 <__TEXT_REGION_LENGTH__+0x7e00e0>
+ 20a:	85 ff       	sbrs	r24, 5
+ 20c:	1d c0       	rjmp	.+58     	; 0x248 <__vector_18+0x6e>
 	{
 		
 		CANPAGE = (5 << 4);			//set the canpage to the receiver MOB
- 32a:	80 e5       	ldi	r24, 0x50	; 80
- 32c:	80 93 ed 00 	sts	0x00ED, r24	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
+ 20e:	80 e5       	ldi	r24, 0x50	; 80
+ 210:	80 93 ed 00 	sts	0x00ED, r24	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
 		testChar = CANMSG;
- 330:	ea ef       	ldi	r30, 0xFA	; 250
- 332:	f0 e0       	ldi	r31, 0x00	; 0
- 334:	80 81       	ld	r24, Z
- 336:	80 93 0d 01 	sts	0x010D, r24	; 0x80010d <testChar>
+ 214:	ea ef       	ldi	r30, 0xFA	; 250
+ 216:	f0 e0       	ldi	r31, 0x00	; 0
+ 218:	80 81       	ld	r24, Z
+ 21a:	80 93 04 01 	sts	0x0104, r24	; 0x800104 <testChar>
 		uint8_t tempChar1 = CANMSG;
- 33a:	80 81       	ld	r24, Z
+ 21e:	80 81       	ld	r24, Z
 		tempChar1 = CANMSG;
- 33c:	80 81       	ld	r24, Z
+ 220:	80 81       	ld	r24, Z
 		tempChar1 = CANMSG;
- 33e:	80 81       	ld	r24, Z
+ 222:	80 81       	ld	r24, Z
 		tempChar1 = CANMSG;
- 340:	80 81       	ld	r24, Z
+ 224:	80 81       	ld	r24, Z
 		tempChar1 = CANMSG;
- 342:	80 81       	ld	r24, Z
+ 226:	80 81       	ld	r24, Z
 		tempChar1 = CANMSG;
- 344:	80 81       	ld	r24, Z
+ 228:	80 81       	ld	r24, Z
 		tempChar1 = CANMSG;
- 346:	80 81       	ld	r24, Z
+ 22a:	80 81       	ld	r24, Z
 
 		// canFlag = 1;
 
 		CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
- 348:	cc 24       	eor	r12, r12
- 34a:	c3 94       	inc	r12
- 34c:	e1 2c       	mov	r14, r1
- 34e:	f1 2c       	mov	r15, r1
- 350:	00 e0       	ldi	r16, 0x00	; 0
- 352:	14 e0       	ldi	r17, 0x04	; 4
- 354:	20 e0       	ldi	r18, 0x00	; 0
- 356:	30 e0       	ldi	r19, 0x00	; 0
- 358:	40 e0       	ldi	r20, 0x00	; 0
- 35a:	54 e0       	ldi	r21, 0x04	; 4
- 35c:	68 e0       	ldi	r22, 0x08	; 8
- 35e:	85 e0       	ldi	r24, 0x05	; 5
- 360:	0e 94 a8 00 	call	0x150	; 0x150 <CAN_RXInit>
+ 22c:	cc 24       	eor	r12, r12
+ 22e:	c3 94       	inc	r12
+ 230:	e1 2c       	mov	r14, r1
+ 232:	f1 2c       	mov	r15, r1
+ 234:	00 e0       	ldi	r16, 0x00	; 0
+ 236:	14 e0       	ldi	r17, 0x04	; 4
+ 238:	20 e0       	ldi	r18, 0x00	; 0
+ 23a:	30 e0       	ldi	r19, 0x00	; 0
+ 23c:	40 e0       	ldi	r20, 0x00	; 0
+ 23e:	54 e0       	ldi	r21, 0x04	; 4
+ 240:	68 e0       	ldi	r22, 0x08	; 8
+ 242:	85 e0       	ldi	r24, 0x05	; 5
+ 244:	0e 94 a8 00 	call	0x150	; 0x150 <CAN_RXInit>
 	}
 }
- 364:	ff 91       	pop	r31
- 366:	ef 91       	pop	r30
- 368:	bf 91       	pop	r27
- 36a:	af 91       	pop	r26
- 36c:	9f 91       	pop	r25
- 36e:	8f 91       	pop	r24
- 370:	7f 91       	pop	r23
- 372:	6f 91       	pop	r22
- 374:	5f 91       	pop	r21
- 376:	4f 91       	pop	r20
- 378:	3f 91       	pop	r19
- 37a:	2f 91       	pop	r18
- 37c:	1f 91       	pop	r17
- 37e:	0f 91       	pop	r16
- 380:	ff 90       	pop	r15
- 382:	ef 90       	pop	r14
- 384:	cf 90       	pop	r12
- 386:	0f 90       	pop	r0
- 388:	0f be       	out	0x3f, r0	; 63
- 38a:	0f 90       	pop	r0
- 38c:	1f 90       	pop	r1
- 38e:	18 95       	reti
+ 248:	ff 91       	pop	r31
+ 24a:	ef 91       	pop	r30
+ 24c:	bf 91       	pop	r27
+ 24e:	af 91       	pop	r26
+ 250:	9f 91       	pop	r25
+ 252:	8f 91       	pop	r24
+ 254:	7f 91       	pop	r23
+ 256:	6f 91       	pop	r22
+ 258:	5f 91       	pop	r21
+ 25a:	4f 91       	pop	r20
+ 25c:	3f 91       	pop	r19
+ 25e:	2f 91       	pop	r18
+ 260:	1f 91       	pop	r17
+ 262:	0f 91       	pop	r16
+ 264:	ff 90       	pop	r15
+ 266:	ef 90       	pop	r14
+ 268:	cf 90       	pop	r12
+ 26a:	0f 90       	pop	r0
+ 26c:	0f be       	out	0x3f, r0	; 63
+ 26e:	0f 90       	pop	r0
+ 270:	1f 90       	pop	r1
+ 272:	18 95       	reti
 
-00000390 <__vector_7>:
-		}
+00000274 <__vector_7>:
+		// }
 	}
 }
 
 ISR(INT0_vect)	//if INT0 is going high + - Z   else if INT0 going low - + Z
 {	
- 390:	1f 92       	push	r1
- 392:	0f 92       	push	r0
- 394:	0f b6       	in	r0, 0x3f	; 63
- 396:	0f 92       	push	r0
- 398:	11 24       	eor	r1, r1
- 39a:	8f 93       	push	r24
- 39c:	9f 93       	push	r25
+ 274:	1f 92       	push	r1
+ 276:	0f 92       	push	r0
+ 278:	0f b6       	in	r0, 0x3f	; 63
+ 27a:	0f 92       	push	r0
+ 27c:	11 24       	eor	r1, r1
+ 27e:	8f 93       	push	r24
+ 280:	9f 93       	push	r25
 	PORTB ^= 8;
- 39e:	95 b1       	in	r25, 0x05	; 5
- 3a0:	88 e0       	ldi	r24, 0x08	; 8
- 3a2:	89 27       	eor	r24, r25
- 3a4:	85 b9       	out	0x05, r24	; 5
+ 282:	95 b1       	in	r25, 0x05	; 5
+ 284:	88 e0       	ldi	r24, 0x08	; 8
+ 286:	89 27       	eor	r24, r25
+ 288:	85 b9       	out	0x05, r24	; 5
 	rotationCounter = 0;
- 3a6:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter+0x1>
- 3aa:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <rotationCounter>
+ 28a:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <rotationCounter+0x1>
+ 28e:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <rotationCounter>
 	PHASES_ALL_HIGH_OFF;
- 3ae:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 292:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 	PHASE_U_LOW_OFF;
- 3b2:	58 98       	cbi	0x0b, 0	; 11
+ 296:	58 98       	cbi	0x0b, 0	; 11
 	PHASE_V_LOW_OFF;
- 3b4:	40 98       	cbi	0x08, 0	; 8
+ 298:	40 98       	cbi	0x08, 0	; 8
 	PHASE_W_LOW_OFF;
- 3b6:	28 98       	cbi	0x05, 0	; 5
+ 29a:	28 98       	cbi	0x05, 0	; 5
 		
 	if ((PIND & 64) == 64) { // GOING HIGH
- 3b8:	4e 9b       	sbis	0x09, 6	; 9
- 3ba:	05 c0       	rjmp	.+10     	; 0x3c6 <__vector_7+0x36>
+ 29c:	4e 9b       	sbis	0x09, 6	; 9
+ 29e:	05 c0       	rjmp	.+10     	; 0x2aa <__vector_7+0x36>
 			#ifdef CLOCKWISE // Running Clockwise				> STEP 4
 				PHASE_U_LOW_ON;
 				PHASE_W_HIGH_ON;
 			#endif
 			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 2
-				PHASE_U_LOW_ON;
- 3bc:	58 9a       	sbi	0x0b, 0	; 11
-				PHASE_V_HIGH_ON;
- 3be:	8c e0       	ldi	r24, 0x0C	; 12
- 3c0:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
- 3c4:	04 c0       	rjmp	.+8      	; 0x3ce <__vector_7+0x3e>
+				PHASE_V_LOW_ON;
+ 2a0:	40 9a       	sbi	0x08, 0	; 8
+				PHASE_W_HIGH_ON;
+ 2a2:	80 e3       	ldi	r24, 0x30	; 48
+ 2a4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 2a8:	04 c0       	rjmp	.+8      	; 0x2b2 <__vector_7+0x3e>
 			#ifdef CLOCKWISE // Running Clockwise				> STEP 1
 				PHASE_W_LOW_ON;
 				PHASE_U_HIGH_ON;
 			#endif
 			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 5
-				PHASE_U_HIGH_ON;
- 3c6:	83 e0       	ldi	r24, 0x03	; 3
- 3c8:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-				PHASE_V_LOW_ON;
- 3cc:	40 9a       	sbi	0x08, 0	; 8
+				PHASE_V_HIGH_ON;
+ 2aa:	8c e0       	ldi	r24, 0x0C	; 12
+ 2ac:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+				PHASE_W_LOW_ON;
+ 2b0:	28 9a       	sbi	0x05, 0	; 5
 			#endif
 		#endif
 	}
 }
- 3ce:	9f 91       	pop	r25
- 3d0:	8f 91       	pop	r24
- 3d2:	0f 90       	pop	r0
- 3d4:	0f be       	out	0x3f, r0	; 63
- 3d6:	0f 90       	pop	r0
- 3d8:	1f 90       	pop	r1
- 3da:	18 95       	reti
+ 2b2:	9f 91       	pop	r25
+ 2b4:	8f 91       	pop	r24
+ 2b6:	0f 90       	pop	r0
+ 2b8:	0f be       	out	0x3f, r0	; 63
+ 2ba:	0f 90       	pop	r0
+ 2bc:	1f 90       	pop	r1
+ 2be:	18 95       	reti
 
-000003dc <__vector_8>:
+000002c0 <__vector_8>:
 
 ISR(INT1_vect) //if INT1 is going high - Z +   else if INT1  going low + Z -
 {
- 3dc:	1f 92       	push	r1
- 3de:	0f 92       	push	r0
- 3e0:	0f b6       	in	r0, 0x3f	; 63
- 3e2:	0f 92       	push	r0
- 3e4:	11 24       	eor	r1, r1
- 3e6:	8f 93       	push	r24
+ 2c0:	1f 92       	push	r1
+ 2c2:	0f 92       	push	r0
+ 2c4:	0f b6       	in	r0, 0x3f	; 63
+ 2c6:	0f 92       	push	r0
+ 2c8:	11 24       	eor	r1, r1
+ 2ca:	8f 93       	push	r24
 	rotationCounter = 0;
- 3e8:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter+0x1>
- 3ec:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <rotationCounter>
+ 2cc:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <rotationCounter+0x1>
+ 2d0:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <rotationCounter>
 	PHASES_ALL_HIGH_OFF;
- 3f0:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 2d4:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 	PHASE_U_LOW_OFF;
- 3f4:	58 98       	cbi	0x0b, 0	; 11
+ 2d8:	58 98       	cbi	0x0b, 0	; 11
 	PHASE_V_LOW_OFF;
- 3f6:	40 98       	cbi	0x08, 0	; 8
+ 2da:	40 98       	cbi	0x08, 0	; 8
 	PHASE_W_LOW_OFF;
- 3f8:	28 98       	cbi	0x05, 0	; 5
+ 2dc:	28 98       	cbi	0x05, 0	; 5
 		
 	if ((PINB & 4) == 4) {
- 3fa:	1a 9b       	sbis	0x03, 2	; 3
- 3fc:	05 c0       	rjmp	.+10     	; 0x408 <__LOCK_REGION_LENGTH__+0x8>
+ 2de:	1a 9b       	sbis	0x03, 2	; 3
+ 2e0:	05 c0       	rjmp	.+10     	; 0x2ec <__vector_8+0x2c>
 			#ifdef CLOCKWISE // Running Clockwise				> STEP 6
 				PHASE_V_LOW_ON;
 				PHASE_U_HIGH_ON;
 			#endif
 			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 6
-				PHASE_V_LOW_ON;
- 3fe:	40 9a       	sbi	0x08, 0	; 8
-				PHASE_W_HIGH_ON;
- 400:	80 e3       	ldi	r24, 0x30	; 48
- 402:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
- 406:	04 c0       	rjmp	.+8      	; 0x410 <__LOCK_REGION_LENGTH__+0x10>
+				PHASE_U_HIGH_ON;
+ 2e2:	83 e0       	ldi	r24, 0x03	; 3
+ 2e4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+				PHASE_W_LOW_ON;
+ 2e8:	28 9a       	sbi	0x05, 0	; 5
+ 2ea:	04 c0       	rjmp	.+8      	; 0x2f4 <__vector_8+0x34>
 			#ifdef CLOCKWISE // Running Clockwise				> STEP 3
 				PHASE_U_LOW_ON;
 				PHASE_V_HIGH_ON;
 			#endif
 			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 3
-				PHASE_V_HIGH_ON;
- 408:	8c e0       	ldi	r24, 0x0C	; 12
- 40a:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-				PHASE_W_LOW_ON;
- 40e:	28 9a       	sbi	0x05, 0	; 5
+				PHASE_W_HIGH_ON;
+ 2ec:	80 e3       	ldi	r24, 0x30	; 48
+ 2ee:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+				PHASE_U_LOW_ON;
+ 2f2:	58 9a       	sbi	0x0b, 0	; 11
 			#endif
 		#endif
 	}
 }
- 410:	8f 91       	pop	r24
- 412:	0f 90       	pop	r0
- 414:	0f be       	out	0x3f, r0	; 63
- 416:	0f 90       	pop	r0
- 418:	1f 90       	pop	r1
- 41a:	18 95       	reti
+ 2f4:	8f 91       	pop	r24
+ 2f6:	0f 90       	pop	r0
+ 2f8:	0f be       	out	0x3f, r0	; 63
+ 2fa:	0f 90       	pop	r0
+ 2fc:	1f 90       	pop	r1
+ 2fe:	18 95       	reti
 
-0000041c <__vector_9>:
+00000300 <__vector_9>:
 
 ISR(INT2_vect) //if INT2 is going high Z + -   else if INT2 going low  Z - +
 {
- 41c:	1f 92       	push	r1
- 41e:	0f 92       	push	r0
- 420:	0f b6       	in	r0, 0x3f	; 63
- 422:	0f 92       	push	r0
- 424:	11 24       	eor	r1, r1
- 426:	8f 93       	push	r24
+ 300:	1f 92       	push	r1
+ 302:	0f 92       	push	r0
+ 304:	0f b6       	in	r0, 0x3f	; 63
+ 306:	0f 92       	push	r0
+ 308:	11 24       	eor	r1, r1
+ 30a:	8f 93       	push	r24
 	rotationCounter = 0;
- 428:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter+0x1>
- 42c:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <rotationCounter>
+ 30c:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <rotationCounter+0x1>
+ 310:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <rotationCounter>
 	PHASES_ALL_HIGH_OFF;
- 430:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 314:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 	PHASE_U_LOW_OFF;
- 434:	58 98       	cbi	0x0b, 0	; 11
+ 318:	58 98       	cbi	0x0b, 0	; 11
 	PHASE_V_LOW_OFF;
- 436:	40 98       	cbi	0x08, 0	; 8
+ 31a:	40 98       	cbi	0x08, 0	; 8
 	PHASE_W_LOW_OFF;
- 438:	28 98       	cbi	0x05, 0	; 5
+ 31c:	28 98       	cbi	0x05, 0	; 5
 		
 	if ((PINB & 32) == 32) {
- 43a:	1d 9b       	sbis	0x03, 5	; 3
- 43c:	05 c0       	rjmp	.+10     	; 0x448 <__vector_9+0x2c>
+ 31e:	1d 9b       	sbis	0x03, 5	; 3
+ 320:	05 c0       	rjmp	.+10     	; 0x32c <__vector_9+0x2c>
 			#ifdef CLOCKWISE // Running Clockwise
 				PHASE_W_LOW_ON;
 				PHASE_V_HIGH_ON;
 			#endif
 			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 4
-				PHASE_U_HIGH_ON;
- 43e:	83 e0       	ldi	r24, 0x03	; 3
- 440:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-				PHASE_W_LOW_ON;
- 444:	28 9a       	sbi	0x05, 0	; 5
- 446:	04 c0       	rjmp	.+8      	; 0x450 <__vector_9+0x34>
+				PHASE_V_HIGH_ON;
+ 322:	8c e0       	ldi	r24, 0x0C	; 12
+ 324:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+				PHASE_U_LOW_ON;
+ 328:	58 9a       	sbi	0x0b, 0	; 11
+ 32a:	04 c0       	rjmp	.+8      	; 0x334 <__vector_9+0x34>
 			#ifdef CLOCKWISE // Running Clockwise				> STEP 5
 				PHASE_V_LOW_ON;
 				PHASE_W_HIGH_ON;
 			#endif
 			#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 1
-				PHASE_U_LOW_ON;
- 448:	58 9a       	sbi	0x0b, 0	; 11
-				PHASE_W_HIGH_ON;
- 44a:	80 e3       	ldi	r24, 0x30	; 48
- 44c:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+				PHASE_V_LOW_ON;
+ 32c:	40 9a       	sbi	0x08, 0	; 8
+				PHASE_U_HIGH_ON;
+ 32e:	83 e0       	ldi	r24, 0x03	; 3
+ 330:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 			#endif
 		#endif
 	}
 }
- 450:	8f 91       	pop	r24
- 452:	0f 90       	pop	r0
- 454:	0f be       	out	0x3f, r0	; 63
- 456:	0f 90       	pop	r0
- 458:	1f 90       	pop	r1
- 45a:	18 95       	reti
+ 334:	8f 91       	pop	r24
+ 336:	0f 90       	pop	r0
+ 338:	0f be       	out	0x3f, r0	; 63
+ 33a:	0f 90       	pop	r0
+ 33c:	1f 90       	pop	r1
+ 33e:	18 95       	reti
 
-0000045c <getMotorPosition>:
+00000340 <getMotorPosition>:
 }
 // gets an encoded version of motor position based on hall states
 // adds 4 if HALL3 is high, 2 if HALL2 is HIGH and 1 if HALL 1 is high giving positions 1..6 in total
 uint8_t getMotorPosition(void)
 {
 	return (((PINB & 32) / 8) + ((PINB & 4) / 2) + ((PIND & 64) / 64));
- 45c:	23 b1       	in	r18, 0x03	; 3
- 45e:	93 b1       	in	r25, 0x03	; 3
- 460:	89 b1       	in	r24, 0x09	; 9
- 462:	20 72       	andi	r18, 0x20	; 32
- 464:	30 e0       	ldi	r19, 0x00	; 0
- 466:	a9 01       	movw	r20, r18
- 468:	55 95       	asr	r21
- 46a:	47 95       	ror	r20
- 46c:	55 95       	asr	r21
- 46e:	47 95       	ror	r20
- 470:	55 95       	asr	r21
- 472:	47 95       	ror	r20
- 474:	94 70       	andi	r25, 0x04	; 4
- 476:	29 2f       	mov	r18, r25
- 478:	30 e0       	ldi	r19, 0x00	; 0
- 47a:	35 95       	asr	r19
- 47c:	27 95       	ror	r18
- 47e:	24 0f       	add	r18, r20
- 480:	86 fb       	bst	r24, 6
- 482:	88 27       	eor	r24, r24
- 484:	80 f9       	bld	r24, 0
- 486:	82 0f       	add	r24, r18
- 488:	08 95       	ret
+ 340:	23 b1       	in	r18, 0x03	; 3
+ 342:	93 b1       	in	r25, 0x03	; 3
+ 344:	89 b1       	in	r24, 0x09	; 9
+ 346:	20 72       	andi	r18, 0x20	; 32
+ 348:	30 e0       	ldi	r19, 0x00	; 0
+ 34a:	a9 01       	movw	r20, r18
+ 34c:	55 95       	asr	r21
+ 34e:	47 95       	ror	r20
+ 350:	55 95       	asr	r21
+ 352:	47 95       	ror	r20
+ 354:	55 95       	asr	r21
+ 356:	47 95       	ror	r20
+ 358:	94 70       	andi	r25, 0x04	; 4
+ 35a:	29 2f       	mov	r18, r25
+ 35c:	30 e0       	ldi	r19, 0x00	; 0
+ 35e:	35 95       	asr	r19
+ 360:	27 95       	ror	r18
+ 362:	24 0f       	add	r18, r20
+ 364:	86 fb       	bst	r24, 6
+ 366:	88 27       	eor	r24, r24
+ 368:	80 f9       	bld	r24, 0
+ 36a:	82 0f       	add	r24, r18
+ 36c:	08 95       	ret
 
-0000048a <kickMotor>:
+0000036e <kickMotor>:
 	}
 }
 
 void kickMotor(void)
 {
 	switch (getMotorPosition())
- 48a:	0e 94 2e 02 	call	0x45c	; 0x45c <getMotorPosition>
- 48e:	83 30       	cpi	r24, 0x03	; 3
- 490:	b1 f0       	breq	.+44     	; 0x4be <kickMotor+0x34>
- 492:	28 f4       	brcc	.+10     	; 0x49e <kickMotor+0x14>
- 494:	81 30       	cpi	r24, 0x01	; 1
- 496:	49 f0       	breq	.+18     	; 0x4aa <kickMotor+0x20>
- 498:	82 30       	cpi	r24, 0x02	; 2
- 49a:	61 f0       	breq	.+24     	; 0x4b4 <kickMotor+0x2a>
- 49c:	08 95       	ret
- 49e:	85 30       	cpi	r24, 0x05	; 5
- 4a0:	c1 f0       	breq	.+48     	; 0x4d2 <kickMotor+0x48>
- 4a2:	90 f0       	brcs	.+36     	; 0x4c8 <kickMotor+0x3e>
- 4a4:	86 30       	cpi	r24, 0x06	; 6
- 4a6:	d1 f0       	breq	.+52     	; 0x4dc <kickMotor+0x52>
- 4a8:	08 95       	ret
+ 36e:	0e 94 a0 01 	call	0x340	; 0x340 <getMotorPosition>
+ 372:	83 30       	cpi	r24, 0x03	; 3
+ 374:	b1 f0       	breq	.+44     	; 0x3a2 <kickMotor+0x34>
+ 376:	28 f4       	brcc	.+10     	; 0x382 <kickMotor+0x14>
+ 378:	81 30       	cpi	r24, 0x01	; 1
+ 37a:	49 f0       	breq	.+18     	; 0x38e <kickMotor+0x20>
+ 37c:	82 30       	cpi	r24, 0x02	; 2
+ 37e:	61 f0       	breq	.+24     	; 0x398 <kickMotor+0x2a>
+ 380:	08 95       	ret
+ 382:	85 30       	cpi	r24, 0x05	; 5
+ 384:	c1 f0       	breq	.+48     	; 0x3b6 <kickMotor+0x48>
+ 386:	90 f0       	brcs	.+36     	; 0x3ac <kickMotor+0x3e>
+ 388:	86 30       	cpi	r24, 0x06	; 6
+ 38a:	d1 f0       	breq	.+52     	; 0x3c0 <kickMotor+0x52>
+ 38c:	08 95       	ret
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 3
 					PHASE_U_LOW_ON;
 					PHASE_V_HIGH_ON;
 				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 3
-					PHASE_V_HIGH_ON;
- 4aa:	8c e0       	ldi	r24, 0x0C	; 12
- 4ac:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-					PHASE_W_LOW_ON;
- 4b0:	28 9a       	sbi	0x05, 0	; 5
+					PHASE_U_HIGH_ON;
+ 38e:	83 e0       	ldi	r24, 0x03	; 3
+ 390:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+					PHASE_V_LOW_ON;
+ 394:	40 9a       	sbi	0x08, 0	; 8
 				#endif
 			#endif
 			break;
- 4b2:	08 95       	ret
+ 396:	08 95       	ret
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 5
 					PHASE_V_LOW_ON;
 					PHASE_W_HIGH_ON;
 				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 1
-					PHASE_U_LOW_ON;
- 4b4:	58 9a       	sbi	0x0b, 0	; 11
-					PHASE_W_HIGH_ON;
- 4b6:	80 e3       	ldi	r24, 0x30	; 48
- 4b8:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+					PHASE_W_LOW_ON;
+ 398:	28 9a       	sbi	0x05, 0	; 5
+					PHASE_V_HIGH_ON;
+ 39a:	8c e0       	ldi	r24, 0x0C	; 12
+ 39c:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 				#endif
 			#endif
 			break;
- 4bc:	08 95       	ret
+ 3a0:	08 95       	ret
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 4
 					PHASE_U_LOW_ON;
 					PHASE_W_HIGH_ON;
 				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 2
-					PHASE_U_LOW_ON;
- 4be:	58 9a       	sbi	0x0b, 0	; 11
-					PHASE_V_HIGH_ON;
- 4c0:	8c e0       	ldi	r24, 0x0C	; 12
- 4c2:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+					PHASE_W_LOW_ON;
+ 3a2:	28 9a       	sbi	0x05, 0	; 5
+					PHASE_U_HIGH_ON;
+ 3a4:	83 e0       	ldi	r24, 0x03	; 3
+ 3a6:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 				#endif
 			#endif
 			break;
- 4c6:	08 95       	ret
+ 3aa:	08 95       	ret
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 1
 					PHASE_W_LOW_ON;
 					PHASE_U_HIGH_ON;
 				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 5
-					PHASE_U_HIGH_ON;
- 4c8:	83 e0       	ldi	r24, 0x03	; 3
- 4ca:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-					PHASE_V_LOW_ON;
- 4ce:	40 9a       	sbi	0x08, 0	; 8
+					PHASE_W_HIGH_ON;
+ 3ac:	80 e3       	ldi	r24, 0x30	; 48
+ 3ae:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+					PHASE_U_LOW_ON;
+ 3b2:	58 9a       	sbi	0x0b, 0	; 11
 				#endif
 			#endif
 			break;
- 4d0:	08 95       	ret
+ 3b4:	08 95       	ret
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 2
 					PHASE_W_LOW_ON;
 					PHASE_V_HIGH_ON;
 				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 4
-					PHASE_U_HIGH_ON;
- 4d2:	83 e0       	ldi	r24, 0x03	; 3
- 4d4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
-					PHASE_W_LOW_ON;
- 4d8:	28 9a       	sbi	0x05, 0	; 5
+					PHASE_W_HIGH_ON;
+ 3b6:	80 e3       	ldi	r24, 0x30	; 48
+ 3b8:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+					PHASE_V_LOW_ON;
+ 3bc:	40 9a       	sbi	0x08, 0	; 8
 				#endif
 			#endif
 			break;
- 4da:	08 95       	ret
+ 3be:	08 95       	ret
 				#ifdef CLOCKWISE // Running Clockwise				> STEP 6
 					PHASE_V_LOW_ON;
 					PHASE_U_HIGH_ON;
 				#endif
 				#ifdef ANTICLOCKWISE // Running Anti-Clockwise		> STEP 6
-					PHASE_V_LOW_ON;
- 4dc:	40 9a       	sbi	0x08, 0	; 8
-					PHASE_W_HIGH_ON;
- 4de:	80 e3       	ldi	r24, 0x30	; 48
- 4e0:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
- 4e4:	08 95       	ret
+					PHASE_U_LOW_ON;
+ 3c0:	58 9a       	sbi	0x0b, 0	; 11
+					PHASE_V_HIGH_ON;
+ 3c2:	8c e0       	ldi	r24, 0x0C	; 12
+ 3c4:	80 93 b6 00 	sts	0x00B6, r24	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 3c8:	08 95       	ret
 
-000004e6 <main>:
+000003ca <main>:
 	}
 }
 
 int main(void)
 {
 	DDRB |= 0b11001011;				// make the status LED an output
- 4e6:	84 b1       	in	r24, 0x04	; 4
- 4e8:	8b 6c       	ori	r24, 0xCB	; 203
- 4ea:	84 b9       	out	0x04, r24	; 4
+ 3ca:	84 b1       	in	r24, 0x04	; 4
+ 3cc:	8b 6c       	ori	r24, 0xCB	; 203
+ 3ce:	84 b9       	out	0x04, r24	; 4
 	DDRC |= 0b10000101;
- 4ec:	87 b1       	in	r24, 0x07	; 7
- 4ee:	85 68       	ori	r24, 0x85	; 133
- 4f0:	87 b9       	out	0x07, r24	; 7
+ 3d0:	87 b1       	in	r24, 0x07	; 7
+ 3d2:	85 68       	ori	r24, 0x85	; 133
+ 3d4:	87 b9       	out	0x07, r24	; 7
 	DDRD |= 0b10000001;				// PD7 is CAN STB
- 4f2:	8a b1       	in	r24, 0x0a	; 10
- 4f4:	81 68       	ori	r24, 0x81	; 129
- 4f6:	8a b9       	out	0x0a, r24	; 10
+ 3d6:	8a b1       	in	r24, 0x0a	; 10
+ 3d8:	81 68       	ori	r24, 0x81	; 129
+ 3da:	8a b9       	out	0x0a, r24	; 10
 	
 	PORTB &= ~0b11001011;
- 4f8:	85 b1       	in	r24, 0x05	; 5
- 4fa:	84 73       	andi	r24, 0x34	; 52
- 4fc:	85 b9       	out	0x05, r24	; 5
+ 3dc:	85 b1       	in	r24, 0x05	; 5
+ 3de:	84 73       	andi	r24, 0x34	; 52
+ 3e0:	85 b9       	out	0x05, r24	; 5
 	PORTC &= ~0b00000001;		// Byte 7 = ADC_CS pin
- 4fe:	40 98       	cbi	0x08, 0	; 8
+ 3e2:	40 98       	cbi	0x08, 0	; 8
 	PORTD &= ~0b00000001;
- 500:	58 98       	cbi	0x0b, 0	; 11
+ 3e4:	58 98       	cbi	0x0b, 0	; 11
 	
 	PORTB |= 0b00100100;	//turn hall pullups on
- 502:	85 b1       	in	r24, 0x05	; 5
- 504:	84 62       	ori	r24, 0x24	; 36
- 506:	85 b9       	out	0x05, r24	; 5
+ 3e6:	85 b1       	in	r24, 0x05	; 5
+ 3e8:	84 62       	ori	r24, 0x24	; 36
+ 3ea:	85 b9       	out	0x05, r24	; 5
 	PORTD |= 0b01000000;
- 508:	5e 9a       	sbi	0x0b, 6	; 11
+ 3ec:	5e 9a       	sbi	0x0b, 6	; 11
 	
 	//PLL
 	PLLCSR = 0x02;			//start PLL at 32MHz
- 50a:	82 e0       	ldi	r24, 0x02	; 2
- 50c:	89 bd       	out	0x29, r24	; 41
+ 3ee:	82 e0       	ldi	r24, 0x02	; 2
+ 3f0:	89 bd       	out	0x29, r24	; 41
 	
 	//INTERRUPTS
 	EICRA = 0b00010101;		//turn INT0, INT1 and INT2 either edge sensing on
- 50e:	85 e1       	ldi	r24, 0x15	; 21
- 510:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <__TEXT_REGION_LENGTH__+0x7e0069>
+ 3f2:	85 e1       	ldi	r24, 0x15	; 21
+ 3f4:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <__TEXT_REGION_LENGTH__+0x7e0069>
 	EIMSK = 0b00000111;		//enable INTs 2, 1, 0
- 514:	87 e0       	ldi	r24, 0x07	; 7
- 516:	8d bb       	out	0x1d, r24	; 29
+ 3f8:	87 e0       	ldi	r24, 0x07	; 7
+ 3fa:	8d bb       	out	0x1d, r24	; 29
 	
 	//PSC
 	POCR_RB = 256;
- 518:	80 e0       	ldi	r24, 0x00	; 0
- 51a:	91 e0       	ldi	r25, 0x01	; 1
- 51c:	90 93 b3 00 	sts	0x00B3, r25	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
- 520:	80 93 b2 00 	sts	0x00B2, r24	; 0x8000b2 <__TEXT_REGION_LENGTH__+0x7e00b2>
+ 3fc:	80 e0       	ldi	r24, 0x00	; 0
+ 3fe:	91 e0       	ldi	r25, 0x01	; 1
+ 400:	90 93 b3 00 	sts	0x00B3, r25	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
+ 404:	80 93 b2 00 	sts	0x00B2, r24	; 0x8000b2 <__TEXT_REGION_LENGTH__+0x7e00b2>
 	POCR0SA = POCR1SA = POCR2SA = 220;
- 524:	8c ed       	ldi	r24, 0xDC	; 220
- 526:	90 e0       	ldi	r25, 0x00	; 0
- 528:	90 93 ad 00 	sts	0x00AD, r25	; 0x8000ad <__TEXT_REGION_LENGTH__+0x7e00ad>
- 52c:	80 93 ac 00 	sts	0x00AC, r24	; 0x8000ac <__TEXT_REGION_LENGTH__+0x7e00ac>
- 530:	90 93 a7 00 	sts	0x00A7, r25	; 0x8000a7 <__TEXT_REGION_LENGTH__+0x7e00a7>
- 534:	80 93 a6 00 	sts	0x00A6, r24	; 0x8000a6 <__TEXT_REGION_LENGTH__+0x7e00a6>
- 538:	90 93 a1 00 	sts	0x00A1, r25	; 0x8000a1 <__TEXT_REGION_LENGTH__+0x7e00a1>
- 53c:	80 93 a0 00 	sts	0x00A0, r24	; 0x8000a0 <__TEXT_REGION_LENGTH__+0x7e00a0>
+ 408:	8c ed       	ldi	r24, 0xDC	; 220
+ 40a:	90 e0       	ldi	r25, 0x00	; 0
+ 40c:	90 93 ad 00 	sts	0x00AD, r25	; 0x8000ad <__TEXT_REGION_LENGTH__+0x7e00ad>
+ 410:	80 93 ac 00 	sts	0x00AC, r24	; 0x8000ac <__TEXT_REGION_LENGTH__+0x7e00ac>
+ 414:	90 93 a7 00 	sts	0x00A7, r25	; 0x8000a7 <__TEXT_REGION_LENGTH__+0x7e00a7>
+ 418:	80 93 a6 00 	sts	0x00A6, r24	; 0x8000a6 <__TEXT_REGION_LENGTH__+0x7e00a6>
+ 41c:	90 93 a1 00 	sts	0x00A1, r25	; 0x8000a1 <__TEXT_REGION_LENGTH__+0x7e00a1>
+ 420:	80 93 a0 00 	sts	0x00A0, r24	; 0x8000a0 <__TEXT_REGION_LENGTH__+0x7e00a0>
 	POCR0SB = POCR1SB = POCR2SB = 210;
- 540:	82 ed       	ldi	r24, 0xD2	; 210
- 542:	90 e0       	ldi	r25, 0x00	; 0
- 544:	90 93 b1 00 	sts	0x00B1, r25	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
- 548:	80 93 b0 00 	sts	0x00B0, r24	; 0x8000b0 <__TEXT_REGION_LENGTH__+0x7e00b0>
- 54c:	90 93 ab 00 	sts	0x00AB, r25	; 0x8000ab <__TEXT_REGION_LENGTH__+0x7e00ab>
- 550:	80 93 aa 00 	sts	0x00AA, r24	; 0x8000aa <__TEXT_REGION_LENGTH__+0x7e00aa>
- 554:	90 93 a5 00 	sts	0x00A5, r25	; 0x8000a5 <__TEXT_REGION_LENGTH__+0x7e00a5>
- 558:	80 93 a4 00 	sts	0x00A4, r24	; 0x8000a4 <__TEXT_REGION_LENGTH__+0x7e00a4>
+ 424:	82 ed       	ldi	r24, 0xD2	; 210
+ 426:	90 e0       	ldi	r25, 0x00	; 0
+ 428:	90 93 b1 00 	sts	0x00B1, r25	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 42c:	80 93 b0 00 	sts	0x00B0, r24	; 0x8000b0 <__TEXT_REGION_LENGTH__+0x7e00b0>
+ 430:	90 93 ab 00 	sts	0x00AB, r25	; 0x8000ab <__TEXT_REGION_LENGTH__+0x7e00ab>
+ 434:	80 93 aa 00 	sts	0x00AA, r24	; 0x8000aa <__TEXT_REGION_LENGTH__+0x7e00aa>
+ 438:	90 93 a5 00 	sts	0x00A5, r25	; 0x8000a5 <__TEXT_REGION_LENGTH__+0x7e00a5>
+ 43c:	80 93 a4 00 	sts	0x00A4, r24	; 0x8000a4 <__TEXT_REGION_LENGTH__+0x7e00a4>
 	PCNF = 0b00011100;						//centre-aligned mode
- 55c:	8c e1       	ldi	r24, 0x1C	; 28
- 55e:	80 93 b5 00 	sts	0x00B5, r24	; 0x8000b5 <__TEXT_REGION_LENGTH__+0x7e00b5>
+ 440:	8c e1       	ldi	r24, 0x1C	; 28
+ 442:	80 93 b5 00 	sts	0x00B5, r24	; 0x8000b5 <__TEXT_REGION_LENGTH__+0x7e00b5>
 	PCTL = 0b00100001;						//select PLL clock with no prescale, turn the PSC on
- 562:	81 e2       	ldi	r24, 0x21	; 33
- 564:	80 93 b7 00 	sts	0x00B7, r24	; 0x8000b7 <__TEXT_REGION_LENGTH__+0x7e00b7>
+ 446:	81 e2       	ldi	r24, 0x21	; 33
+ 448:	80 93 b7 00 	sts	0x00B7, r24	; 0x8000b7 <__TEXT_REGION_LENGTH__+0x7e00b7>
 	// ADC_init();
 	// Init SPI
 	// spi_init();
 
 	// start the CAN interface
 	CAN_init();		// Initialise CAN
- 568:	0e 94 52 00 	call	0xa4	; 0xa4 <CAN_init>
+ 44c:	0e 94 52 00 	call	0xa4	; 0xa4 <CAN_init>
 	CAN_RXInit(5,8,0x4000000, 0x4000000, 1);
- 56c:	cc 24       	eor	r12, r12
- 56e:	c3 94       	inc	r12
- 570:	e1 2c       	mov	r14, r1
- 572:	f1 2c       	mov	r15, r1
- 574:	00 e0       	ldi	r16, 0x00	; 0
- 576:	14 e0       	ldi	r17, 0x04	; 4
- 578:	20 e0       	ldi	r18, 0x00	; 0
- 57a:	30 e0       	ldi	r19, 0x00	; 0
- 57c:	40 e0       	ldi	r20, 0x00	; 0
- 57e:	54 e0       	ldi	r21, 0x04	; 4
- 580:	68 e0       	ldi	r22, 0x08	; 8
- 582:	85 e0       	ldi	r24, 0x05	; 5
- 584:	0e 94 a8 00 	call	0x150	; 0x150 <CAN_RXInit>
+ 450:	cc 24       	eor	r12, r12
+ 452:	c3 94       	inc	r12
+ 454:	e1 2c       	mov	r14, r1
+ 456:	f1 2c       	mov	r15, r1
+ 458:	00 e0       	ldi	r16, 0x00	; 0
+ 45a:	14 e0       	ldi	r17, 0x04	; 4
+ 45c:	20 e0       	ldi	r18, 0x00	; 0
+ 45e:	30 e0       	ldi	r19, 0x00	; 0
+ 460:	40 e0       	ldi	r20, 0x00	; 0
+ 462:	54 e0       	ldi	r21, 0x04	; 4
+ 464:	68 e0       	ldi	r22, 0x08	; 8
+ 466:	85 e0       	ldi	r24, 0x05	; 5
+ 468:	0e 94 a8 00 	call	0x150	; 0x150 <CAN_RXInit>
 	
 	// start the interrupts
 	sei();	
- 588:	78 94       	sei
+ 46c:	78 94       	sei
 	
 	//turn the outputs off
 	PHASES_ALL_HIGH_OFF;
- 58a:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
+ 46e:	10 92 b6 00 	sts	0x00B6, r1	; 0x8000b6 <__TEXT_REGION_LENGTH__+0x7e00b6>
 	PHASE_U_LOW_OFF;
- 58e:	58 98       	cbi	0x0b, 0	; 11
+ 472:	58 98       	cbi	0x0b, 0	; 11
 	PHASE_V_LOW_OFF;
- 590:	40 98       	cbi	0x08, 0	; 8
+ 474:	40 98       	cbi	0x08, 0	; 8
 	PHASE_W_LOW_OFF;
- 592:	28 98       	cbi	0x05, 0	; 5
-		}
-		
-		else
-		{
-			// Turn everything off
-			POC = 0b00000000;
- 594:	c6 eb       	ldi	r28, 0xB6	; 182
- 596:	d0 e0       	ldi	r29, 0x00	; 0
-	{
-		motorCommand = 250 - testChar;
-		if(motorCommand < 190) motorCommand = 190;
-		if(motorState == 1)
-		{
-			POCR0SA = POCR1SA = POCR2SA = motorCommand;
- 598:	0f 2e       	mov	r0, r31
- 59a:	fc ea       	ldi	r31, 0xAC	; 172
- 59c:	6f 2e       	mov	r6, r31
- 59e:	71 2c       	mov	r7, r1
- 5a0:	f0 2d       	mov	r31, r0
- 5a2:	0f 2e       	mov	r0, r31
- 5a4:	f6 ea       	ldi	r31, 0xA6	; 166
- 5a6:	8f 2e       	mov	r8, r31
- 5a8:	91 2c       	mov	r9, r1
- 5aa:	f0 2d       	mov	r31, r0
- 5ac:	0f 2e       	mov	r0, r31
- 5ae:	f0 ea       	ldi	r31, 0xA0	; 160
- 5b0:	af 2e       	mov	r10, r31
- 5b2:	b1 2c       	mov	r11, r1
- 5b4:	f0 2d       	mov	r31, r0
-			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
- 5b6:	0f 2e       	mov	r0, r31
- 5b8:	f0 eb       	ldi	r31, 0xB0	; 176
- 5ba:	4f 2e       	mov	r4, r31
- 5bc:	51 2c       	mov	r5, r1
- 5be:	f0 2d       	mov	r31, r0
-			rotationCounter = 0;		
-		}
-
-		if(canFlag == 1) {
-			canFlag = 0;
-			canArray[0] = motorState;
- 5c0:	0f 2e       	mov	r0, r31
- 5c2:	f1 e0       	ldi	r31, 0x01	; 1
- 5c4:	cf 2e       	mov	r12, r31
- 5c6:	f1 e0       	ldi	r31, 0x01	; 1
- 5c8:	df 2e       	mov	r13, r31
- 5ca:	f0 2d       	mov	r31, r0
-	PHASE_V_LOW_OFF;
-	PHASE_W_LOW_OFF;
+ 476:	28 98       	cbi	0x05, 0	; 5
 	
 	while(1)
 	{
 		motorCommand = 250 - testChar;
- 5cc:	0f 2e       	mov	r0, r31
- 5ce:	fa ef       	ldi	r31, 0xFA	; 250
- 5d0:	ff 2e       	mov	r15, r31
- 5d2:	f0 2d       	mov	r31, r0
+ 478:	0f 2e       	mov	r0, r31
+ 47a:	fa ef       	ldi	r31, 0xFA	; 250
+ 47c:	5f 2e       	mov	r5, r31
+ 47e:	f0 2d       	mov	r31, r0
 		if(motorCommand < 190) motorCommand = 190;
- 5d4:	0f 2e       	mov	r0, r31
- 5d6:	fe eb       	ldi	r31, 0xBE	; 190
- 5d8:	3f 2e       	mov	r3, r31
- 5da:	f0 2d       	mov	r31, r0
+ 480:	0f 2e       	mov	r0, r31
+ 482:	fe eb       	ldi	r31, 0xBE	; 190
+ 484:	3f 2e       	mov	r3, r31
+ 486:	f0 2d       	mov	r31, r0
+			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
+		}
+		
+		else
+		{
+			POC = 0b00000000;
+ 488:	c6 eb       	ldi	r28, 0xB6	; 182
+ 48a:	d0 e0       	ldi	r29, 0x00	; 0
+	{
+		motorCommand = 250 - testChar;
+		if(motorCommand < 190) motorCommand = 190;
 		if(motorState == 1)
 		{
 			POCR0SA = POCR1SA = POCR2SA = motorCommand;
+ 48c:	0f 2e       	mov	r0, r31
+ 48e:	fc ea       	ldi	r31, 0xAC	; 172
+ 490:	af 2e       	mov	r10, r31
+ 492:	b1 2c       	mov	r11, r1
+ 494:	f0 2d       	mov	r31, r0
+ 496:	0f 2e       	mov	r0, r31
+ 498:	f6 ea       	ldi	r31, 0xA6	; 166
+ 49a:	cf 2e       	mov	r12, r31
+ 49c:	d1 2c       	mov	r13, r1
+ 49e:	f0 2d       	mov	r31, r0
+ 4a0:	0f 2e       	mov	r0, r31
+ 4a2:	f0 ea       	ldi	r31, 0xA0	; 160
+ 4a4:	ef 2e       	mov	r14, r31
+ 4a6:	f1 2c       	mov	r15, r1
+ 4a8:	f0 2d       	mov	r31, r0
 			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
- 5dc:	04 ea       	ldi	r16, 0xA4	; 164
- 5de:	10 e0       	ldi	r17, 0x00	; 0
+ 4aa:	00 eb       	ldi	r16, 0xB0	; 176
+ 4ac:	10 e0       	ldi	r17, 0x00	; 0
+ 4ae:	0f 2e       	mov	r0, r31
+ 4b0:	fa ea       	ldi	r31, 0xAA	; 170
+ 4b2:	8f 2e       	mov	r8, r31
+ 4b4:	91 2c       	mov	r9, r1
+ 4b6:	f0 2d       	mov	r31, r0
+ 4b8:	0f 2e       	mov	r0, r31
+ 4ba:	f4 ea       	ldi	r31, 0xA4	; 164
+ 4bc:	6f 2e       	mov	r6, r31
+ 4be:	71 2c       	mov	r7, r1
+ 4c0:	f0 2d       	mov	r31, r0
 			motorState = 0;
 			PORTB &= ~8;
 		}
 		else 
 		{
 			motorState = 1;
- 5e0:	ee 24       	eor	r14, r14
- 5e2:	e3 94       	inc	r14
+ 4c2:	44 24       	eor	r4, r4
+ 4c4:	43 94       	inc	r4
 	PHASE_V_LOW_OFF;
 	PHASE_W_LOW_OFF;
 	
 	while(1)
 	{
 		motorCommand = 250 - testChar;
- 5e4:	80 91 0d 01 	lds	r24, 0x010D	; 0x80010d <testChar>
- 5e8:	2f 2d       	mov	r18, r15
- 5ea:	28 1b       	sub	r18, r24
- 5ec:	20 93 0a 01 	sts	0x010A, r18	; 0x80010a <motorCommand>
+ 4c6:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <testChar>
+ 4ca:	25 2d       	mov	r18, r5
+ 4cc:	28 1b       	sub	r18, r24
+ 4ce:	20 93 01 01 	sts	0x0101, r18	; 0x800101 <motorCommand>
 		if(motorCommand < 190) motorCommand = 190;
- 5f0:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <motorCommand>
- 5f4:	8e 3b       	cpi	r24, 0xBE	; 190
- 5f6:	10 f4       	brcc	.+4      	; 0x5fc <main+0x116>
- 5f8:	30 92 0a 01 	sts	0x010A, r3	; 0x80010a <motorCommand>
+ 4d2:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <motorCommand>
+ 4d6:	8e 3b       	cpi	r24, 0xBE	; 190
+ 4d8:	10 f4       	brcc	.+4      	; 0x4de <__LOCK_REGION_LENGTH__+0xde>
+ 4da:	30 92 01 01 	sts	0x0101, r3	; 0x800101 <motorCommand>
 		if(motorState == 1)
- 5fc:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <motorState>
- 600:	81 30       	cpi	r24, 0x01	; 1
- 602:	d9 f4       	brne	.+54     	; 0x63a <main+0x154>
+ 4de:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 4e2:	81 30       	cpi	r24, 0x01	; 1
+ 4e4:	d1 f4       	brne	.+52     	; 0x51a <__LOCK_REGION_LENGTH__+0x11a>
 		{
 			POCR0SA = POCR1SA = POCR2SA = motorCommand;
- 604:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <motorCommand>
- 608:	90 e0       	ldi	r25, 0x00	; 0
- 60a:	f3 01       	movw	r30, r6
- 60c:	91 83       	std	Z+1, r25	; 0x01
- 60e:	80 83       	st	Z, r24
- 610:	f4 01       	movw	r30, r8
- 612:	91 83       	std	Z+1, r25	; 0x01
- 614:	80 83       	st	Z, r24
- 616:	f5 01       	movw	r30, r10
- 618:	91 83       	std	Z+1, r25	; 0x01
- 61a:	80 83       	st	Z, r24
+ 4e6:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <motorCommand>
+ 4ea:	90 e0       	ldi	r25, 0x00	; 0
+ 4ec:	f5 01       	movw	r30, r10
+ 4ee:	91 83       	std	Z+1, r25	; 0x01
+ 4f0:	80 83       	st	Z, r24
+ 4f2:	f6 01       	movw	r30, r12
+ 4f4:	91 83       	std	Z+1, r25	; 0x01
+ 4f6:	80 83       	st	Z, r24
+ 4f8:	f7 01       	movw	r30, r14
+ 4fa:	91 83       	std	Z+1, r25	; 0x01
+ 4fc:	80 83       	st	Z, r24
 			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
- 61c:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <motorCommand>
- 620:	90 e0       	ldi	r25, 0x00	; 0
- 622:	0a 97       	sbiw	r24, 0x0a	; 10
- 624:	f2 01       	movw	r30, r4
- 626:	91 83       	std	Z+1, r25	; 0x01
- 628:	80 83       	st	Z, r24
- 62a:	ea ea       	ldi	r30, 0xAA	; 170
- 62c:	f0 e0       	ldi	r31, 0x00	; 0
- 62e:	91 83       	std	Z+1, r25	; 0x01
- 630:	80 83       	st	Z, r24
- 632:	f8 01       	movw	r30, r16
- 634:	91 83       	std	Z+1, r25	; 0x01
- 636:	80 83       	st	Z, r24
- 638:	04 c0       	rjmp	.+8      	; 0x642 <main+0x15c>
+ 4fe:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <motorCommand>
+ 502:	90 e0       	ldi	r25, 0x00	; 0
+ 504:	0a 97       	sbiw	r24, 0x0a	; 10
+ 506:	f8 01       	movw	r30, r16
+ 508:	91 83       	std	Z+1, r25	; 0x01
+ 50a:	80 83       	st	Z, r24
+ 50c:	f4 01       	movw	r30, r8
+ 50e:	91 83       	std	Z+1, r25	; 0x01
+ 510:	80 83       	st	Z, r24
+ 512:	f3 01       	movw	r30, r6
+ 514:	91 83       	std	Z+1, r25	; 0x01
+ 516:	80 83       	st	Z, r24
+ 518:	04 c0       	rjmp	.+8      	; 0x522 <__LOCK_REGION_LENGTH__+0x122>
 		}
 		
 		else
 		{
-			// Turn everything off
 			POC = 0b00000000;
- 63a:	18 82       	st	Y, r1
+ 51a:	18 82       	st	Y, r1
 			PHASE_U_LOW_OFF;
- 63c:	58 98       	cbi	0x0b, 0	; 11
+ 51c:	58 98       	cbi	0x0b, 0	; 11
 			PHASE_V_LOW_OFF;
- 63e:	40 98       	cbi	0x08, 0	; 8
+ 51e:	40 98       	cbi	0x08, 0	; 8
 			PHASE_W_LOW_OFF;
- 640:	28 98       	cbi	0x05, 0	; 5
+ 520:	28 98       	cbi	0x05, 0	; 5
 		}
 		if(rotationCounter < 1000) rotationCounter ++;
- 642:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <rotationCounter>
- 646:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <rotationCounter+0x1>
- 64a:	88 3e       	cpi	r24, 0xE8	; 232
- 64c:	93 40       	sbci	r25, 0x03	; 3
- 64e:	48 f4       	brcc	.+18     	; 0x662 <main+0x17c>
- 650:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <rotationCounter>
- 654:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <rotationCounter+0x1>
- 658:	01 96       	adiw	r24, 0x01	; 1
- 65a:	90 93 0c 01 	sts	0x010C, r25	; 0x80010c <rotationCounter+0x1>
- 65e:	80 93 0b 01 	sts	0x010B, r24	; 0x80010b <rotationCounter>
+ 522:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <rotationCounter>
+ 526:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <rotationCounter+0x1>
+ 52a:	88 3e       	cpi	r24, 0xE8	; 232
+ 52c:	93 40       	sbci	r25, 0x03	; 3
+ 52e:	48 f4       	brcc	.+18     	; 0x542 <__LOCK_REGION_LENGTH__+0x142>
+ 530:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <rotationCounter>
+ 534:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <rotationCounter+0x1>
+ 538:	01 96       	adiw	r24, 0x01	; 1
+ 53a:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <rotationCounter+0x1>
+ 53e:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <rotationCounter>
 		if(rotationCounter > 999)
- 662:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <rotationCounter>
- 666:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <rotationCounter+0x1>
- 66a:	88 3e       	cpi	r24, 0xE8	; 232
- 66c:	93 40       	sbci	r25, 0x03	; 3
- 66e:	20 f0       	brcs	.+8      	; 0x678 <main+0x192>
+ 542:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <rotationCounter>
+ 546:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <rotationCounter+0x1>
+ 54a:	88 3e       	cpi	r24, 0xE8	; 232
+ 54c:	93 40       	sbci	r25, 0x03	; 3
+ 54e:	20 f0       	brcs	.+8      	; 0x558 <__LOCK_REGION_LENGTH__+0x158>
 		{
 			motorState = 0;
- 670:	10 92 09 01 	sts	0x0109, r1	; 0x800109 <motorState>
+ 550:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <_edata>
 			PORTB &= ~8;
- 674:	2b 98       	cbi	0x05, 3	; 5
- 676:	03 c0       	rjmp	.+6      	; 0x67e <main+0x198>
+ 554:	2b 98       	cbi	0x05, 3	; 5
+ 556:	03 c0       	rjmp	.+6      	; 0x55e <__LOCK_REGION_LENGTH__+0x15e>
 		}
 		else 
 		{
 			motorState = 1;
- 678:	e0 92 09 01 	sts	0x0109, r14	; 0x800109 <motorState>
+ 558:	40 92 00 01 	sts	0x0100, r4	; 0x800100 <_edata>
 			PORTB |= 8;
- 67c:	2b 9a       	sbi	0x05, 3	; 5
+ 55c:	2b 9a       	sbi	0x05, 3	; 5
 		}
 		// motorState = 1; // Part of debugging ignore
 		
 		if((motorState == 0) && (motorCommand < 225))
- 67e:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <motorState>
- 682:	81 11       	cpse	r24, r1
- 684:	0c c0       	rjmp	.+24     	; 0x69e <main+0x1b8>
- 686:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <motorCommand>
- 68a:	81 3e       	cpi	r24, 0xE1	; 225
- 68c:	40 f4       	brcc	.+16     	; 0x69e <main+0x1b8>
+ 55e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 562:	81 11       	cpse	r24, r1
+ 564:	b0 cf       	rjmp	.-160    	; 0x4c6 <__LOCK_REGION_LENGTH__+0xc6>
+ 566:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <motorCommand>
+ 56a:	81 3e       	cpi	r24, 0xE1	; 225
+ 56c:	08 f0       	brcs	.+2      	; 0x570 <__LOCK_REGION_LENGTH__+0x170>
+ 56e:	ab cf       	rjmp	.-170    	; 0x4c6 <__LOCK_REGION_LENGTH__+0xc6>
 		{
 			kickMotor();
- 68e:	0e 94 45 02 	call	0x48a	; 0x48a <kickMotor>
+ 570:	0e 94 b7 01 	call	0x36e	; 0x36e <kickMotor>
 			motorState = 1;	
- 692:	e0 92 09 01 	sts	0x0109, r14	; 0x800109 <motorState>
+ 574:	40 92 00 01 	sts	0x0100, r4	; 0x800100 <_edata>
 			rotationCounter = 0;		
- 696:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <rotationCounter+0x1>
- 69a:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <rotationCounter>
-		}
+ 578:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <rotationCounter+0x1>
+ 57c:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <rotationCounter>
+ 580:	a2 cf       	rjmp	.-188    	; 0x4c6 <__LOCK_REGION_LENGTH__+0xc6>
 
-		if(canFlag == 1) {
- 69e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
- 6a2:	81 30       	cpi	r24, 0x01	; 1
- 6a4:	09 f0       	breq	.+2      	; 0x6a8 <main+0x1c2>
- 6a6:	9e cf       	rjmp	.-196    	; 0x5e4 <main+0xfe>
-			canFlag = 0;
- 6a8:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <_edata>
-			canArray[0] = motorState;
- 6ac:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <motorState>
- 6b0:	f6 01       	movw	r30, r12
- 6b2:	80 83       	st	Z, r24
-			canArray[1] = motorCommand;
- 6b4:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <motorCommand>
- 6b8:	81 83       	std	Z+1, r24	; 0x01
-			canArray[2] = rotationCounter >> 8;
- 6ba:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <rotationCounter>
- 6be:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <rotationCounter+0x1>
- 6c2:	92 83       	std	Z+2, r25	; 0x02
-			canArray[3] = rotationCounter;
- 6c4:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <rotationCounter>
- 6c8:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <rotationCounter+0x1>
- 6cc:	83 83       	std	Z+3, r24	; 0x03
-			// canArray[4] = ADC_read_phase_W();
-			// canArray[5] = ADC_read_phase_V();
-			// canArray[6] = ADC_read_power_B();
-			// canArray[7] = ADC_read_temp();
-			CAN_TXMOB(CAN_findFreeTXMOB(), 8, canArray, 0x5000000, 0x0100);
- 6ce:	0e 94 52 01 	call	0x2a4	; 0x2a4 <CAN_findFreeTXMOB>
- 6d2:	e1 2c       	mov	r14, r1
- 6d4:	00 e0       	ldi	r16, 0x00	; 0
- 6d6:	10 e0       	ldi	r17, 0x00	; 0
- 6d8:	20 e0       	ldi	r18, 0x00	; 0
- 6da:	35 e0       	ldi	r19, 0x05	; 5
- 6dc:	a6 01       	movw	r20, r12
- 6de:	68 e0       	ldi	r22, 0x08	; 8
- 6e0:	0e 94 ed 00 	call	0x1da	; 0x1da <CAN_TXMOB>
- 6e4:	73 cf       	rjmp	.-282    	; 0x5cc <main+0xe6>
+00000582 <_exit>:
+ 582:	f8 94       	cli
 
-000006e6 <_exit>:
- 6e6:	f8 94       	cli
-
-000006e8 <__stop_program>:
- 6e8:	ff cf       	rjmp	.-2      	; 0x6e8 <__stop_program>
+00000584 <__stop_program>:
+ 584:	ff cf       	rjmp	.-2      	; 0x584 <__stop_program>
