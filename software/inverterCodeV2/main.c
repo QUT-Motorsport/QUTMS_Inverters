@@ -319,41 +319,53 @@ int main(void)
 	
 	while(1)
 	{
-		motorCommand = 250 - testChar;
-		if(motorCommand < 190) motorCommand = 190;
-		if(motorState == 1)
-		{
+		// Motor Speed Calculation
+		// --------------------------------------------------------------------
+		
+		motorCommand = 250 - (testChar * 2.2); // Generating PWM duty cycle - Lower value = more on time cycle wise
+		if(motorCommand < 20) motorCommand = 20; // Limit for power applied
+		// If we are spinning the motor
+		if(motorState == 1) {
+			// Set PWM, dead time etc to motor speed command
 			POCR0SA = POCR1SA = POCR2SA = motorCommand;
 			POCR0SB = POCR1SB = POCR2SB = motorCommand - 10;
-		}
-		
-		else
-		{
+		} else {
+			// else  off all outputs now
 			POC = 0b00000000;
 			PHASE_U_LOW_OFF;
 			PHASE_V_LOW_OFF;
 			PHASE_W_LOW_OFF;
 		}
+		
+		// Roll stop code
+		// --------------------------------------------------------------------
+		
+		// If counter is under 1000, increment.
 		if(rotationCounter < 1000) rotationCounter ++;
-		if(rotationCounter > 999)
-		{
+		// If rotation counter is at or greater than 1000
+		if(rotationCounter > 999) {
+			// (at 1000) Turn of motor state machine
 			motorState = 0;
+			// Turn on LED
 			PORTB &= ~8;
-		}
-		else 
-		{
+		} else {
+			// else (less than 1000) Turn on motor state machine
 			motorState = 1;
 			PORTB |= 8;
 		}
-		// motorState = 1; // Part of debugging ignore
 		
-		if((motorState == 0) && (motorCommand < 225))
-		{
-			kickMotor();
-			motorState = 1;	
-			rotationCounter = 0;		
+		// Start up code
+		// --------------------------------------------------------------------
+		
+		// IF statement to handle start up
+		if((motorState == 0) && (motorCommand < 150)) { // If we are 'off' and the motor is not spinning at some 'fast speed'. Was motorCommand < 225, but assmed for high speed 90V testing
+			// This function would run always, but its not supposed to run at high speeds to save clock cycles for the interupt driven operation
+			kickMotor(); // Run the low speed force sense and rotate function
+			motorState = 1;	// We are now running
+			rotationCounter = 0; // Reset rotation counter
 		}
 
+		
 		// if(canFlag == 1) {
 			// canFlag = 0;
 			// canArray[0] = motorState;
